@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
 </head>
 <body>
-$END$
+
+<div th:include="header :: header">
+    &copy;
+</div>
+<div th:include="greeting :: greeting">
+    &copy;
+</div>
+<div th:include="footer :: footer">
+    &copy;
+</div>
 </body>
 </html>
