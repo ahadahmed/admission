@@ -14,7 +14,7 @@ public class TestController {
 	@GetMapping("/greeting")
 	public String greetingForm(Model model) {
 		model.addAttribute("newForm", new Greeting());
-		return "greeting";
+		return "home";
 	}
 	
 	@PostMapping("/processgreeting")
