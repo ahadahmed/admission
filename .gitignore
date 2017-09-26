@@ -1,4 +1,7 @@
 /target
 .classpath
 .project
+.idea
+sureacash-admission.iml
+/sureacash-admission/target/
 /.settings/
