@@ -11,7 +11,7 @@ import com.progoti.surecash.dto.form.Greeting;
 @Controller
 public class TestController {
 
-	@GetMapping("/home")
+	@GetMapping(value = {"/","/home"})
 	public String greetingForm(Model model) {
 		model.addAttribute("newForm", new Greeting());
 		return "home";
