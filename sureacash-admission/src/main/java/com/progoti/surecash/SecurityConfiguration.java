@@ -21,8 +21,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		// TODO Auto-generated method stub
-		//super.configure(auth);
 		/*auth
 			.jdbcAuthentication()
 			.usersByUsernameQuery(usersQuery)
@@ -38,7 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //		super.configure(http);
 		http
 			.authorizeRequests()
-			.antMatchers("/","/resources/**","/home","/academic/validate-info").permitAll()
+			.antMatchers("/","/resources/**","/home","/academic/**").permitAll()
 			.antMatchers("/login").permitAll()
 			.anyRequest()
 			.authenticated()
@@ -80,7 +78,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		// TODO Auto-generated method stub
 		web
 			.ignoring()
 			.antMatchers("/resources/**", "/static/**","/templates/**", "/css/**", "/js/**", "/images/**");
