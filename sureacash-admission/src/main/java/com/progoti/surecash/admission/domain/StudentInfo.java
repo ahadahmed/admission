@@ -2,6 +2,7 @@ package com.progoti.surecash.admission.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Shaown on 10:55 AM.
@@ -38,10 +39,10 @@ public class StudentInfo implements Serializable{
     @Column(name = "ssc_gpa")
     private Double sscGPA;
 
-    @Column(name = "hsc_roll")
+    @Column(name = "hsc_roll", length = 45)
     private String hscRoll;
 
-    @Column(name = "hsc_reg")
+    @Column(name = "hsc_reg", length = 45)
     private String hscReg;
 
     @Column(name = "hsc_gpa")
@@ -52,6 +53,15 @@ public class StudentInfo implements Serializable{
 
     @Column(name = "email")
     private String email;
+
+    @Column(name = "ssc_passing_year", length = 4)
+    private Integer sscPassingYear;
+
+    @Column(name = "hsc_passing_year", length = 4)
+    private Integer hscPassingYear;
+
+    @OneToMany(mappedBy = "studentInfo")
+    private List<StudentApplicationHistory> studentApplicationHistory;
 
     public int getId() {
         return id;
@@ -155,5 +165,29 @@ public class StudentInfo implements Serializable{
 
     public void setUniversity(University university) {
         this.university = university;
+    }
+
+    public Integer getSscPassingYear() {
+        return sscPassingYear;
+    }
+
+    public void setSscPassingYear(Integer sscPassingYear) {
+        this.sscPassingYear = sscPassingYear;
+    }
+
+    public Integer getHscPassingYear() {
+        return hscPassingYear;
+    }
+
+    public void setHscPassingYear(Integer hscPassingYear) {
+        this.hscPassingYear = hscPassingYear;
+    }
+
+    public List<StudentApplicationHistory> getStudentApplicationHistory() {
+        return studentApplicationHistory;
+    }
+
+    public void setStudentApplicationHistory(List<StudentApplicationHistory> studentApplicationHistory) {
+        this.studentApplicationHistory = studentApplicationHistory;
     }
 }
