@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.progoti.surecash.dto.form.Greeting;
 
 @Controller
-public class TestController {
+public class HomeController {
 
-	@GetMapping("/home")
+	@GetMapping(value = {"/","/home"})
 	public String greetingForm(Model model) {
-		model.addAttribute("newForm", new Greeting());
+		
+		// Add model attributes here
+		//model.addAttribute("newForm", new Greeting());
 		return "home";
 	}
 	
