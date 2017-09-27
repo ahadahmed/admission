@@ -36,11 +36,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //		super.configure(http);
 		http
 			.authorizeRequests()
-			.antMatchers("/","/resources/**","/home").permitAll()
+			.antMatchers("/","/resources/**","/home","/academic/**").permitAll()
 			.antMatchers("/login").permitAll()
 			.anyRequest()
 			.authenticated()
 			.and()
+			.csrf().disable()
 			.formLogin()
 			.loginPage("/login")
 			.permitAll()

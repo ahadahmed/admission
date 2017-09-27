@@ -16,17 +16,15 @@ import javax.validation.Valid;
 /**
  * Created by Shaown on 12:07 PM.
  */
-@Controller
+@RestController
 @RequestMapping("academic")
 public class AcademicInfoController {
     @Autowired
     private AcademicRepository academicRepository;
 
     @RequestMapping(value = "validate-info", method = RequestMethod.POST)
-    public String validateAcademicInfo(@RequestBody @Valid AcademicInformationRequest request,Model model){
-        model.addAttribute("studentInfo", academicRepository.getStudentInfo(request));
-        System.out.println(academicRepository.getStudentInfo(request));
-        return "unit_list";
+    public StudentInfoResponse validateAcademicInfo(@RequestBody @Valid AcademicInformationRequest request){
+        return academicRepository.getStudentInfo(request);
     }
 
     @ExceptionHandler(IndexOutOfBoundsException.class)

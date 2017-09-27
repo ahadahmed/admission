@@ -5,9 +5,18 @@
     <title>Title</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript">
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+
+
+        var studentInfo = {
+            "admissionInfo": []
+        };
+        var makeUnittable = function () {
+
+        };
         var fetchAcadenicData = function () {
-            var request={
+            var request = {
                 "securityCode": 68545,
                 "sscInformation": {
                     "board": $('#ssc_board :selected').text(),
@@ -26,11 +35,22 @@
             $.ajax({
                 url: '/academic/validate-info',
                 type: "POST",
-                contentType:"application/json",
+                contentType: "application/json",
+                dataType: "json",
                 data: JSON.stringify(request),
                 success: function (response) {
                     console.log(response);
-                    $("#unitId").html(response);
+                    studentInfo = response;
+                    makeUnittable();
+                    for (var itr = 0; itr < studentInfo.admissionInfo.length; itr++) {
+                        $('<tr>'+
+                            '<td>'+studentInfo.admissionInfo[itr].unitName+'</td>'+
+                            '<td>'+studentInfo.admissionInfo[itr].unitDescription+'</td>'+
+                            '<td>'+studentInfo.admissionInfo[itr].fees+'</td>'+
+                            '</tr>').appendTo("#unit_list_table");
+                    }
+                    $("#academic_info_div").hide();
+                    $("#unit_list_div").show();
                 },
                 error: function (response) {
                     console.log('error');
@@ -40,7 +60,7 @@
                 }
             });
         };
-
+        /*]]>*/
     </script>
 </head>
 <body>
@@ -49,9 +69,9 @@
     &copy;
 </div>
 <div style="margin: auto;">
-<div id="unitId" th:include="academic_info :: academic_info">
-    &copy;
-</div>
+    <div id="unitId" th:include="academic_info :: academic_info">
+        &copy;
+    </div>
 </div>
 <div th:include="footer :: footer">
     &copy;
