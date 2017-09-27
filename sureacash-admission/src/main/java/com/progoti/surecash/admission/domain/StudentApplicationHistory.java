@@ -24,6 +24,10 @@ public class StudentApplicationHistory implements Serializable{
     @JoinColumn(name = "unit_id")
     private Unit unit;
 
+    @ManyToOne
+    @JoinColumn(name = "student_info_id")
+    private StudentInfo studentInfo;
+
     @Column(name = "payable_amount")
     private Double payableAmount;
 
@@ -92,5 +96,13 @@ public class StudentApplicationHistory implements Serializable{
 
     public void setUnit(Unit unit) {
         this.unit = unit;
+    }
+
+    public StudentInfo getStudentInfo() {
+        return studentInfo;
+    }
+
+    public void setStudentInfo(StudentInfo studentInfo) {
+        this.studentInfo = studentInfo;
     }
 }

@@ -4,9 +4,41 @@
     <meta charset="UTF-8"/>
     <title>Title</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
-        var fetchAcadenicData=function(){
-          console.log('ha ha');
+        var fetchAcadenicData = function () {
+            var request={
+                "securityCode": 68545,
+                "sscInformation": {
+                    "board": $('#ssc_board :selected').text(),
+                    "roll": $('#ssc_rollno').val(),
+                    "regNo": $('#ssc_registration_no').val(),
+                    "passingYear": $('#ssc_passing_year :selected').text()
+                },
+                "hscInformation": {
+                    "board": $('#ssc_board :selected').text(),
+                    "roll": $('#hsc_rollno').val(),
+                    "regNo": $('#hsc_registration_no').val(),
+                    "passingYear": $('#hsc_passing_year :selected').text()
+                }
+            };
+            console.log(request);
+            $.ajax({
+                url: '/academic/validate-info',
+                type: "POST",
+                contentType:"application/json",
+                data: JSON.stringify(request),
+                success: function (response) {
+                    console.log(response);
+                    $("#unitId").html(response);
+                },
+                error: function (response) {
+                    console.log('error');
+                },
+                complete: function () {
+
+                }
+            });
         };
 
     </script>
@@ -16,8 +48,10 @@
 <div th:include="header :: header">
     &copy;
 </div>
-<div th:include="academic_info :: academic_info">
+<div style="margin: auto;">
+<div id="unitId" th:include="academic_info :: academic_info">
     &copy;
+</div>
 </div>
 <div th:include="footer :: footer">
     &copy;
