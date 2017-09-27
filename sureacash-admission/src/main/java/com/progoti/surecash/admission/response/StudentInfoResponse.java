@@ -1,20 +1,16 @@
 package com.progoti.surecash.admission.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.progoti.surecash.admission.request.AcademicInformationRequest;
 import com.progoti.surecash.admission.utility.Constants;
 
 /**
  * Created by Shaown on 12:58 PM.
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class StudentInfoResponse {
     private String name;
     private String fatherName;
     private String motherName;
     private Constants.Quota quota;
-    private String email;
-    private String contactNo;
     public AcademicInformationRequest.AcademicInfo sscInfo;
     public AcademicInformationRequest.AcademicInfo hscInfo;
 
@@ -48,22 +44,6 @@ public class StudentInfoResponse {
 
     public void setQuota(Constants.Quota quota) {
         this.quota = quota;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getContactNo() {
-        return contactNo;
-    }
-
-    public void setContactNo(String contactNo) {
-        this.contactNo = contactNo;
     }
 
     public AcademicInformationRequest.AcademicInfo getSscInfo() {
