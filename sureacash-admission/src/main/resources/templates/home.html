@@ -8,13 +8,25 @@
     <script type="text/javascript" th:inline="javascript">
         /*<![CDATA[*/
 
-
         var studentInfo = {
             "admissionInfo": []
         };
-        var makeUnittable = function () {
 
+        var makeUnittable = function () {
+            for (var itr = 0; itr < studentInfo.admissionInfo.length; itr++) {
+                $('<tr>'+
+                    '<td>'+studentInfo.admissionInfo[itr].unitName+'</td>'+
+                    '<td>'+studentInfo.admissionInfo[itr].unitDescription+'</td>'+
+                    '<td>'+studentInfo.admissionInfo[itr].fees+'</td>'+
+                    '</tr>').appendTo("#unit_list_table");
+            }
         };
+
+        var getPersonalInfo = function(){
+            $("#unit_list_div").hide();
+            $("#personal_info_div").show();
+        };
+
         var fetchAcadenicData = function () {
             var request = {
                 "securityCode": 68545,
@@ -42,13 +54,6 @@
                     console.log(response);
                     studentInfo = response;
                     makeUnittable();
-                    for (var itr = 0; itr < studentInfo.admissionInfo.length; itr++) {
-                        $('<tr>'+
-                            '<td>'+studentInfo.admissionInfo[itr].unitName+'</td>'+
-                            '<td>'+studentInfo.admissionInfo[itr].unitDescription+'</td>'+
-                            '<td>'+studentInfo.admissionInfo[itr].fees+'</td>'+
-                            '</tr>').appendTo("#unit_list_table");
-                    }
                     $("#academic_info_div").hide();
                     $("#unit_list_div").show();
                 },
