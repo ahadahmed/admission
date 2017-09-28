@@ -8,7 +8,7 @@ import java.util.List;
  * Created by Shaown on 10:55 AM.
  */
 @Entity
-@Table(name = "student_info")
+@Table(name = "student_info", uniqueConstraints = @UniqueConstraint(columnNames = {"university_id", "user_name"}))
 public class StudentInfo implements Serializable{
     private static final long serialVersionUID = 1L;
 

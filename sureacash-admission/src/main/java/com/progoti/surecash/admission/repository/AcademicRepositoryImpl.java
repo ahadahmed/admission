@@ -1,5 +1,6 @@
 package com.progoti.surecash.admission.repository;
 
+import com.progoti.surecash.admission.domain.AdmissionSession;
 import com.progoti.surecash.admission.request.AcademicInformationRequest;
 import com.progoti.surecash.admission.response.AdmissionInfo;
 import com.progoti.surecash.admission.response.StudentInfoResponse;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -52,7 +54,10 @@ public class AcademicRepositoryImpl implements AcademicRepository {
                 studentInfoResponse.setSscInfo(request.getSscInformation());
                 studentInfoResponse.getSscInfo().setGroup(Constants.Group.valueOf(rs.getString("ssc_group")));
                 studentInfoResponse.getSscInfo().setGpa(rs.getDouble("ssc_gpa"));
-                studentInfoResponse.setAdmissionInfo(admissionInfo);
+
+                List<AdmissionInfo> admissionInfoList = new ArrayList<>();
+                admissionInfoList.add(admissionInfo);
+                studentInfoResponse.setAdmissionInfo(admissionInfoList);
                 return studentInfoResponse;
             }
         });

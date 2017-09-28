@@ -1,5 +1,8 @@
 package com.progoti.surecash.controller;
 
+import com.progoti.surecash.admission.request.ApplicationFormRequest;
+import com.progoti.surecash.admission.response.CredentialResponse;
+import com.progoti.surecash.admission.service.ApplicationSubmitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,11 +14,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.progoti.surecash.admission.service.UserLoginService;
 
+import javax.validation.Valid;
+
 @Controller
 public class LoginController {
 	
 //	@Autowired
 	private UserLoginService userService;
+
+	@Autowired
+	private ApplicationSubmitService applicationSubmitService;
 
 	@RequestMapping(value="/login", method = RequestMethod.GET)
 	public ModelAndView login(){
@@ -25,14 +33,14 @@ public class LoginController {
 	}
 	
 	
-	/*@RequestMapping(value="/registration", method = RequestMethod.GET)
-	public ModelAndView registration(){
+	@RequestMapping(value="/registration", method = RequestMethod.POST)
+	public ModelAndView registration(@Valid ApplicationFormRequest formRequest){
 		ModelAndView modelAndView = new ModelAndView();
-		User user = new User();
-		modelAndView.addObject("user", user);
-		modelAndView.setViewName("registration");
+        CredentialResponse response = applicationSubmitService.submitForm(formRequest);
+        modelAndView.addObject("credential", response);
+		modelAndView.setViewName("confirmation");
 		return modelAndView;
-	}*/
+	}
 	
 	/*
 	 * @RequestMapping(value = "/registration", method = RequestMethod.POST) public
@@ -45,7 +53,7 @@ public class LoginController {
 	 * else { userService.saveUser(user); modelAndView.addObject("successMessage",
 	 * "User has been registered successfully"); modelAndView.addObject("user", new
 	 * User()); modelAndView.setViewName("registration");
-	 * 
+	 *
 	 * } return modelAndView; }
 	 */
 	

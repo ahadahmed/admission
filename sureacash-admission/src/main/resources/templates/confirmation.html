@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head lang="en">
+    <meta charset="UTF-8" content="text/html"/>
+    <title>Confirmation</title>
+</head>
+<div th:include="header :: header">
+    &copy;
+</div>
+<body>
+
+<div class="container-fluid" style="max-width: 40%;">
+    <div class="panel panel-default">
+        <div class="panel-heading"><b>Confirmation</b></div>
+        <div class="panel-body">
+            <h4>Your application has been accepted by the university</h4>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <b>Username: </b>{{ credential.userName }}
+                    </h4>
+                </div>
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <b>Password: </b>{{ credential.password }}
+                    </h4>
+                </div>
+            </div>
+            <a href="" type="button" class="btn btn-info">Proceed</a>
+        </div>
+    </div>
+</div>
+
+</body>
+<div th:include="footer :: footer">
+    &copy;
+</div>
+</html>

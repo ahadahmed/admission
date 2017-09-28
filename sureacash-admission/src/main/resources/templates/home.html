@@ -5,9 +5,38 @@
     <title>Title</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript">
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+
+        var studentInfo;
+
+        var showDetails = function () {
+            var personal_info = {
+                "mobile": $("#mobile_no").val(),
+                "emial": $("#email_id").val(),
+                "password": $("#password_id").val()
+            };
+            studentInfo["personal_info"] = personal_info;
+            console.log(studentInfo);
+        };
+
+        var makeUnittable = function () {
+            for (var itr = 0; itr < studentInfo.admissionInfo.length; itr++) {
+                $('<tr>' +
+                    '<td>' + studentInfo.admissionInfo[itr].unitName + '</td>' +
+                    '<td>' + studentInfo.admissionInfo[itr].unitDescription + '</td>' +
+                    '<td>' + studentInfo.admissionInfo[itr].fees + '</td>' +
+                    '</tr>').appendTo("#unit_list_table");
+            }
+        };
+
+        var getPersonalInfo = function () {
+            $("#unit_list_div").hide();
+            $("#personal_info_div").show();
+        };
+
         var fetchAcadenicData = function () {
-            var request={
+            var request = {
                 "securityCode": 68545,
                 "sscInformation": {
                     "board": $('#ssc_board :selected').text(),
@@ -22,15 +51,19 @@
                     "passingYear": $('#hsc_passing_year :selected').text()
                 }
             };
-            console.log(request);
+
             $.ajax({
                 url: '/academic/validate-info',
                 type: "POST",
-                contentType:"application/json",
+                contentType: "application/json",
+                dataType: "json",
                 data: JSON.stringify(request),
                 success: function (response) {
-                    console.log(response);
-                    $("#unitId").html(response);
+                    studentInfo = response;
+                    console.log(studentInfo);
+                    makeUnittable();
+                    $("#academic_info_div").hide();
+                    $("#unit_list_div").show();
                 },
                 error: function (response) {
                     console.log('error');
@@ -40,7 +73,7 @@
                 }
             });
         };
-
+        /*]]>*/
     </script>
 </head>
 <body>
@@ -49,9 +82,9 @@
     &copy;
 </div>
 <div style="margin: auto;">
-<div id="unitId" th:include="academic_info :: academic_info">
-    &copy;
-</div>
+    <div id="unitId" th:include="academic_info :: academic_info">
+        &copy;
+    </div>
 </div>
 <div th:include="footer :: footer">
     &copy;
