@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8" content="text/html" />
-<title>Admission Form</title>
+    <meta charset="UTF-8" content="text/html"/>
+    <title>Admission Form</title>
 </head>
 <body>
-    <div class="row" th:fragment="academic_info">
+<div th:fragment="academic_info">
+    <div class="row" id="academic_info_div">
         <h1>Form</h1>
         <h4 style="margin-left:0px; ">Step-1 (Academic Information)</h4>
 
-        <form action="" class="login" method="post" accept-charset="utf-8">
+        <form action="" class="login" accept-charset="utf-8">
 
             <div class="col-sm-6 col-md-6 col-lg-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">SSC or Equivalent</div>
                     <div class="panel-body">
                         <div class="form-group">
-                            <label  class="col-lg-4 control-label">Board</label>
+                            <label class="col-lg-4 control-label">Board</label>
                             <div class="col-lg-8 form-group">
                                 <select name="ssc_board" id="ssc_board" class="form-control">
                                     <option value="">Select Board</option>
@@ -31,23 +32,25 @@
                                     <option value="9">Madrasah</option>
                                     <option value="10">Technical</option>
                                 </select>
-                                <div class="error_id"> </div>
+                                <div class="error_id"></div>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label  class="col-lg-4 control-label">Roll No</label>
+                            <label class="col-lg-4 control-label">Roll No</label>
                             <div class="col-lg-8 form-group">
-                                <input type="number" pattern="\d*" name="ssc_rollno" class="form-control" value="" autocomplete="off"/>
-                                <div class="error_id"> </div>
+                                <input type="number" pattern="\d*" id="ssc_rollno" name="ssc_rollno"
+                                       class="form-control" value="" autocomplete="off"/>
+                                <div class="error_id"></div>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label  class="col-lg-4 control-label">Registration No.</label>
+                            <label class="col-lg-4 control-label">Registration No.</label>
                             <div class="col-lg-8 form-group">
-                                <input type="number" pattern="\d*" name="ssc_registration_no" class="form-control"  value="" autocomplete="off"/>
-                                <div class="error_id"> </div>
+                                <input type="number" pattern="\d*" id="ssc_registration_no" name="ssc_registration_no"
+                                       class="form-control" value="" autocomplete="off"/>
+                                <div class="error_id"></div>
                             </div>
 
                         </div>
@@ -55,13 +58,13 @@
                         <div class="form-group">
                             <label class="col-lg-4 control-label">Passing Year</label>
                             <div class="col-lg-8 form-group">
-                                <select name="ssc_passing_year" id="" class="form-control">
+                                <select name="ssc_passing_year" id="ssc_passing_year" class="form-control">
                                     <option value="">Select Year</option>
                                     <option value="2013">2013</option>
                                     <option value="2014">2014</option>
                                     <option value="2015">2015</option>
                                 </select>
-                                <div class="error_id"> </div>
+                                <div class="error_id"></div>
                             </div>
                         </div>
                     </div>
@@ -74,9 +77,9 @@
                     <div class="panel-heading">HSC or Equivalent</div>
                     <div class="panel-body">
                         <div class="form-group">
-                            <label  class="col-lg-4 control-label">Board</label>
+                            <label class="col-lg-4 control-label">Board</label>
                             <div class="col-lg-8 form-group">
-                                <select name="hsc_board" class="form-control">
+                                <select name="hsc_board" id="hsc_board" class="form-control">
                                     <option value="">Select Board</option>
                                     <option value="1">Barisal</option>
                                     <option value="2">Chittagong</option>
@@ -90,7 +93,7 @@
                                     <option value="10">Technical</option>
 
                                 </select>
-                                <div class="error_id"> </div>
+                                <div class="error_id"></div>
                             </div>
 
                         </div>
@@ -98,8 +101,9 @@
                         <div class="form-group">
                             <label class="col-lg-4 control-label">Roll No</label>
                             <div class="col-lg-8 form-group">
-                                <input type="number" pattern="\d*" name="hsc_rollno" class="form-control"  value="" autocomplete="off"/>
-                                <div class="error_id"> </div>
+                                <input type="number" pattern="\d*" id="hsc_rollno" name="hsc_rollno"
+                                       class="form-control" value="" autocomplete="off"/>
+                                <div class="error_id"></div>
                             </div>
 
                         </div>
@@ -107,21 +111,23 @@
                         <div class="form-group">
                             <label class="col-lg-4 control-label">Registration No</label>
                             <div class="col-lg-8 form-group">
-                                <input type="number" pattern="\d*" name="hsc_registration_no" class="form-control"  value="" autocomplete="off"/>
-                                <div class="error_id"> </div>
+                                <input type="number" pattern="\d*" id="hsc_registration_no" name="hsc_registration_no"
+                                       class="form-control" value="" autocomplete="off"/>
+                                <div class="error_id"></div>
                             </div>
 
                         </div>
 
                         <div class="form-group">
-                            <label  class="col-lg-4 control-label">Passing Year</label>
+                            <label class="col-lg-4 control-label">Passing Year</label>
                             <div class="col-lg-8 form-group">
-                                <select name="hsc_passing_year" class="form-control">
+                                <select id="hsc_passing_year" name="hsc_passing_year" class="form-control">
                                     <option value="">Select Year</option>
+                                    <option value="2015">2015</option>
                                     <option value="2016">2016</option>
                                     <option value="2017">2017</option>
                                 </select>
-                                <div class="error_id"> </div>
+                                <div class="error_id"></div>
                             </div>
 
                         </div>
@@ -131,10 +137,11 @@
 
             <div class="row" style="padding: 10px 0;">
                 <div class="form-group">
-                    <label  class="col-lg-2 control-label">Quota (if any)</label>
+                    <label class="col-lg-2 control-label">Quota (if any)</label>
                     <div class="col-lg-10">
                         <div class="radio-inline">
-                            <label><input name="quota" type="radio" value="1" autocomplete="off"/>Freedom Fighter </label>
+                            <label><input name="quota" type="radio" value="1" autocomplete="off"/>Freedom Fighter
+                            </label>
                         </div>
                         <div class="radio-inline">
                             <label><input name="quota" type="radio" value="2" autocomplete="off"/>Tribal (SEQ)</label>
@@ -150,13 +157,95 @@
             </div>
             <div class="row">
                 <div class="col-md-10">
-                    <p class="error_id text" style="font-size:14px;font-weight: 600;">If you have applied previously, enter your profile for the application to a new unit. Improvement candidates will choose Passing Year of their Improvement Result. If all the information required by an applicant is not available in the database provided by the education board, or if the information does not comply, please submit enquiry  any time or call us 8801727220169 / 09611444451 (09:00 AM to 08:00 PM) .</p>
+                    <p class="error_id text" style="font-size:14px;font-weight: 600;">If you have applied previously,
+                        enter your profile for the application to a new unit. Improvement candidates will choose Passing
+                        Year of their Improvement Result. If all the information required by an applicant is not
+                        available in the database provided by the education board, or if the information does not
+                        comply, please submit enquiry any time or call us 8801727220169 / 09611444451 (09:00 AM to 08:00
+                        PM) .</p>
                 </div>
-                <div class="col-lg-2"><button class="btn btn-lg btn-primary pull-right" style="margin-right:15px;"
-                                              onclick="fetchAcadenicData()">NEXT</button></div>
+                <div class="col-lg-2"><input type="button" value="NEXT" class="btn btn-lg btn-primary pull-right"
+                                             style="margin-right:15px;"
+                                             onclick="fetchAcadenicData()"/></div>
 
             </div>
         </form>
     </div>
+
+    <div id="unit_list_div" style="display: none">
+        <div>
+            <table id="unit_list_table" class="table table-bordered">
+                <tr>
+                    <th> #</th>
+                    <th> Unit</th>
+                    <th> Name</th>
+                    <th> Fees</th>
+                </tr>
+            </table>
+            <div class="row">
+                <div class="col-md-10">
+                </div>
+                <div class="col-lg-2">
+                    <input type="button" value="NEXT" class="btn btn-lg btn-primary pull-right"
+                           style="margin-right:15px;" onclick="getPersonalInfo()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="personal_info_div" style="display: none">
+        <form action="" class="login" accept-charset="utf-8">
+            <div class="form-group">
+                <label class="col-lg-4 control-label">Mobile Number</label>
+                <div class="col-lg-8 form-group">
+                    <input type="number" pattern="\d*" id="mobile_no" name="mobile_no" class="form-control" value=""
+                           autocomplete="off"/>
+                    <div class="error_id"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-4 control-label">Retype Mobile Number</label>
+                <div class="col-lg-8 form-group">
+                    <input type="number" pattern="\d*" id="retype_mobile_no" name="retype_mobile_no"
+                           class="form-control" value="" autocomplete="off"/>
+                    <div class="error_id"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-4 control-label">Email</label>
+                <div class="col-lg-8 form-group">
+                    <input type="email" id="email_id" name="email_id" class="form-control" value=""
+                           autocomplete="off"/>
+                    <div class="error_id"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-4 control-label">Password</label>
+                <div class="col-lg-8 form-group">
+                    <input type="password" id="password_id" name="password_id" class="form-control" value=""
+                           autocomplete="off"/>
+                    <div class="error_id"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-4 control-label">Retype Password</label>
+                <div class="col-lg-8 form-group">
+                    <input type="password" id="retype_passwprd_id" name="retype_passwprd_id"
+                           class="form-control" value="" autocomplete="off"/>
+                    <div class="error_id"></div>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-md-10">
+            </div>
+            <div class="col-lg-2">
+                <input type="button" value="NEXT" class="btn btn-lg btn-primary pull-right"
+                       style="margin-right:15px;" onclick="showDetails()"/>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

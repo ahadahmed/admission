@@ -3,6 +3,8 @@ package com.progoti.surecash.admission.response;
 import com.progoti.surecash.admission.request.AcademicInformationRequest;
 import com.progoti.surecash.admission.utility.Constants;
 
+import java.util.List;
+
 /**
  * Created by Shaown on 12:58 PM.
  */
@@ -13,7 +15,7 @@ public class StudentInfoResponse {
     private Constants.Quota quota;
     public AcademicInformationRequest.AcademicInfo sscInfo;
     public AcademicInformationRequest.AcademicInfo hscInfo;
-
+    public List<AdmissionInfo> admissionInfo;
     public String getName() {
         return name;
     }
@@ -60,5 +62,13 @@ public class StudentInfoResponse {
 
     public void setHscInfo(AcademicInformationRequest.AcademicInfo hscInfo) {
         this.hscInfo = hscInfo;
+    }
+
+    public List<AdmissionInfo> getAdmissionInfo() {
+        return admissionInfo;
+    }
+
+    public void setAdmissionInfo(List<AdmissionInfo> admissionInfo) {
+        this.admissionInfo = admissionInfo;
     }
 }

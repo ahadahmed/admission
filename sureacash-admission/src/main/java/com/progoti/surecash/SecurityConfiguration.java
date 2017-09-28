@@ -17,17 +17,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private DataSource dataSource;
-	private String usersQuery = "select email, password, active from student_info where application_id=?";
+	private String usersQuery = "select * from student_info where application_id=?";
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		// TODO Auto-generated method stub
-		super.configure(auth);
-		auth
-			.jdbcAuthentication().usersByUsernameQuery(usersQuery)
+		/*auth
+			.jdbcAuthentication()
+			.usersByUsernameQuery(usersQuery)
 			//.authoritiesByUsernameQuery(rolesQuery)
 			.dataSource(dataSource);
 			//.passwordEncoder(bCryptPasswordEncoder);
+*/		auth.inMemoryAuthentication().withUser("testuser").password("123456").roles("USER");
 	}
 
 	@Override
@@ -36,17 +36,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //		super.configure(http);
 		http
 			.authorizeRequests()
-			.antMatchers("/","/resources/**","/home").permitAll()
+			.antMatchers("/","/resources/**","/home","/academic/**").permitAll()
 			.antMatchers("/login").permitAll()
 			.anyRequest()
 			.authenticated()
-			.and().csrf().disable()
+			.and()
+			.csrf().disable()
 			.formLogin()
 			.loginPage("/login")
+			.failureUrl("/login?error=true")
+			.defaultSuccessUrl("/enquiry")
+			.usernameParameter("applicantId")
+			.passwordParameter("password")
 			.permitAll()
 			.and()
 			.logout()
-			.permitAll();
+			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+			.logoutSuccessUrl("/").and().exceptionHandling()
+			.accessDeniedPage("/accessdenied");
+//			.permitAll();
 //			.antMatchers("/registration").permitAll()
 //			.antMatchers("/admin/**").hasAuthority("ADMIN")
 /*			.anyRequest()
@@ -70,8 +78,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		// TODO Auto-generated method stub
-		super.configure(web);
+		web
+			.ignoring()
+			.antMatchers("/resources/**", "/static/**","/templates/**", "/css/**", "/js/**", "/images/**");
 	}
 
 }

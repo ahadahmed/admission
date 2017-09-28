@@ -1,6 +1,8 @@
 package com.progoti.surecash.admission.repository;
 
+import com.progoti.surecash.admission.domain.AdmissionSession;
 import com.progoti.surecash.admission.request.AcademicInformationRequest;
+import com.progoti.surecash.admission.response.AdmissionInfo;
 import com.progoti.surecash.admission.response.StudentInfoResponse;
 import com.progoti.surecash.admission.utility.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,6 +41,10 @@ public class AcademicRepositoryImpl implements AcademicRepository {
             @Override
             public StudentInfoResponse mapRow(ResultSet rs, int rowNum) throws SQLException {
                 StudentInfoResponse studentInfoResponse = new StudentInfoResponse();
+                AdmissionInfo admissionInfo =new AdmissionInfo();
+                admissionInfo.setUnitName("A");
+                admissionInfo.setUnitDescription("Engineering");
+                admissionInfo.setFees("500.00");
                 studentInfoResponse.setName(rs.getString("name"));
                 studentInfoResponse.setFatherName(rs.getString("fname"));
                 studentInfoResponse.setMotherName(rs.getString("mname"));
@@ -48,6 +55,9 @@ public class AcademicRepositoryImpl implements AcademicRepository {
                 studentInfoResponse.getSscInfo().setGroup(Constants.Group.valueOf(rs.getString("ssc_group")));
                 studentInfoResponse.getSscInfo().setGpa(rs.getDouble("ssc_gpa"));
 
+                List<AdmissionInfo> admissionInfoList = new ArrayList<>();
+                admissionInfoList.add(admissionInfo);
+                studentInfoResponse.setAdmissionInfo(admissionInfoList);
                 return studentInfoResponse;
             }
         });
