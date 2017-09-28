@@ -11,23 +11,26 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.progoti.surecash.admission.service.UserLoginService;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	private DataSource dataSource;
-	private String usersQuery = "select * from student_info where application_id=?";
+	private UserLoginService userDetailsService;
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		/*auth
 			.jdbcAuthentication()
 			.usersByUsernameQuery(usersQuery)
-			//.authoritiesByUsernameQuery(rolesQuery)
+			.authoritiesByUsernameQuery(rolesQuery)
 			.dataSource(dataSource);
-			//.passwordEncoder(bCryptPasswordEncoder);
-*/		auth.inMemoryAuthentication().withUser("testuser").password("123456").roles("USER");
+			.passwordEncoder(bCryptPasswordEncoder);
+		 */		
+//		auth.inMemoryAuthentication().withUser("testuser").password("123456").roles("USER");
+		auth.userDetailsService(userDetailsService);
 	}
 
 	@Override
@@ -65,7 +68,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.permitAll()
 			.and()
 			.logout()
-			.permitAll();*/
+			.permitAll();
+*/
 //			.failureUrl("/login?error=true");
 //			.defaultSuccessUrl("/admin/home")
 //			.usernameParameter("email")
