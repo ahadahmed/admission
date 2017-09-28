@@ -34,11 +34,11 @@ public class StudentApplicationHistory implements Serializable{
     @Column(name = "is_active")
     private Boolean active;
 
-    @Temporal(TemporalType.TIME)
-    @Column(name = "application_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "application_date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date applicationDate;
 
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "update_date")
     private Date updateDate;
 

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	   xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8"/>
-    <title>Title</title>
+    <title>Home</title>
 </head>
 <body>
 <div th:fragment="header">
@@ -33,6 +34,7 @@
                     <li><a href="/howtopay">How To Pay</a></li>
                     <li><a href="/contact">Contact</a></li>
                     <li><a href="/login">Login</a></li>
+                    <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
 
                     <!-- Logged user -->
                     <!-- end-->

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
     <meta charset="UTF-8" content="text/html"/>
     <title>Confirmation</title>
@@ -18,12 +18,12 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <b>Username: </b>{{ credential.userName }}
+                        <b>Username: </b><span th:text="${credential.userName}"></span>
                     </h4>
                 </div>
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <b>Password: </b>{{ credential.password }}
+                        <b>Password: </b><span th:text="${credential.password}"></span>
                     </h4>
                 </div>
             </div>
