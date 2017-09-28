@@ -23,6 +23,7 @@
         var makeUnittable = function () {
             for (var itr = 0; itr < studentInfo.admissionInfo.length; itr++) {
                 $('<tr>' +
+                    '<td><input id="checkBox" type="checkbox"/></td>' +
                     '<td>' + studentInfo.admissionInfo[itr].unitName + '</td>' +
                     '<td>' + studentInfo.admissionInfo[itr].unitDescription + '</td>' +
                     '<td>' + studentInfo.admissionInfo[itr].fees + '</td>' +
@@ -76,18 +77,17 @@
         /*]]>*/
     </script>
 </head>
+
 <body>
 
-<div th:include="header :: header">
-    &copy;
+<div th:include="header :: header">&copy;
 </div>
-<div style="margin: auto;">
-    <div id="unitId" th:include="academic_info :: academic_info">
-        &copy;
-    </div>
+
+<div id="unitId" th:include="academic_info :: academic_info">&copy;
 </div>
-<div th:include="footer :: footer">
-    &copy;
+
+<div th:include="footer :: footer">&copy;
 </div>
+
 </body>
 </html>
