@@ -32,7 +32,7 @@ public class AcademicInfoController {
         return academicRepository.getStudentInfo(request);
     }
 
-    @RequestMapping(value = "submit-form", method = RequestMethod.POST)
+    @RequestMapping(value = "registration", method = RequestMethod.POST)
     public CredentialResponse submitApplicationForm(@RequestBody @Valid ApplicationFormRequest request){
         return applicationSubmitService.submitForm(request);
     }

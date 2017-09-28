@@ -10,40 +10,93 @@
 
         var studentInfo;
 
-        var submitApplication = function(){
-            console.log('ok');
+        var setConfirmationPanel=function(response_obj){
+            $('#user_name_id').html(response_obj.userName);
+            $('#confirmation_password_id').html(response_obj.password);
         };
 
-        var appendTOApplicationDiv=function(){
+        var submitApplication = function () {
+            var unit_list=[];
+            for (var itr = 0; itr < studentInfo.admissionInfo.length; itr++) {
+                unit_list.push(studentInfo.admissionInfo[itr].id);
+            }
+            var request = {
+                "name": studentInfo.name,
+                "fatherName": studentInfo.fatherName,
+                "motherName": studentInfo.motherName,
+                "sscInfo": {
+                    "board": studentInfo.sscInfo.board,
+                    "roll": studentInfo.sscInfo.roll,
+                    "regNo": studentInfo.sscInfo.regNo,
+                    "passingYear": studentInfo.sscInfo.passingYear,
+                    "gpa": studentInfo.sscInfo.gpa,
+                    "group": studentInfo.sscInfo.group
+                },
+                "hscInfo": {
+                    "board": studentInfo.hscInfo.board,
+                    "roll": studentInfo.hscInfo.roll,
+                    "regNo": studentInfo.hscInfo.regNo,
+                    "passingYear": studentInfo.hscInfo.passingYear,
+                    "gpa": studentInfo.hscInfo.gpa,
+                    "group": studentInfo.hscInfo.group
+                },
+                "quota": null,
+                "email": studentInfo.personal_info.emial,
+                "mobile": studentInfo.personal_info.mobile,
+                "unitList": unit_list,
+                "password": studentInfo.personal_info.password
+            };
+            $.ajax({
+                url: '/academic/registration',
+                type: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify(request),
+                success: function (response) {
+                    console.log(response);
+                    setConfirmationPanel(response);
+                    $('#application_preview_div').hide();
+                    $('#application_confirmation_div').show();
+                },
+                error: function (response) {
+                    console.log('error');
+                },
+                complete: function () {
+
+                }
+            });
+        };
+
+        var appendTOApplicationDiv = function () {
             $('#application_email_id').html(studentInfo.personal_info.emial);
             $('#application_contact_id').html(studentInfo.personal_info.mobile);
             $('#applicant_name_id').html(studentInfo.name);
             $('#father_name_id').html(studentInfo.fatherName);
             $('#mother_name_id').html(studentInfo.motherName);
             $('<tr>' +
-                '<td>' + 'SSC'+ '</td>' +
-                '<td>' + studentInfo.sscInfo.board+ '</td>' +
+                '<td>' + 'SSC' + '</td>' +
+                '<td>' + studentInfo.sscInfo.board + '</td>' +
                 '<td>' + studentInfo.sscInfo.roll + '</td>' +
                 '<td>' + studentInfo.sscInfo.passingYear + '</td>' +
                 '<td>' + studentInfo.sscInfo.group + '</td>' +
                 '<td>' + studentInfo.sscInfo.gpa + '</td>' +
                 '</tr>').appendTo("#appalication_academic_id");
             $('<tr>' +
-                '<td>' + 'HSC'+ '</td>' +
-                '<td>' + studentInfo.hscInfo.board+ '</td>' +
+                '<td>' + 'HSC' + '</td>' +
+                '<td>' + studentInfo.hscInfo.board + '</td>' +
                 '<td>' + studentInfo.hscInfo.roll + '</td>' +
                 '<td>' + studentInfo.hscInfo.passingYear + '</td>' +
                 '<td>' + studentInfo.hscInfo.group + '</td>' +
                 '<td>' + studentInfo.hscInfo.gpa + '</td>' +
                 '</tr>').appendTo("#appalication_academic_id");
-            var total_fees=0;
+            var total_fees = 0;
             for (var itr = 0; itr < studentInfo.admissionInfo.length; itr++) {
                 $('<tr>' +
                     '<td>' + studentInfo.admissionInfo[itr].unitName + '</td>' +
                     '<td>' + studentInfo.admissionInfo[itr].unitDescription + '</td>' +
                     '<td>' + parseInt(studentInfo.admissionInfo[itr].fees) + '</td>' +
                     '</tr>').appendTo("#appalication_unit_info_id");
-                total_fees=total_fees+parseInt(studentInfo.admissionInfo[itr].fees);
+                total_fees = total_fees + parseInt(studentInfo.admissionInfo[itr].fees);
             }
             $('<tr>' +
                 '<td colspan="2">' + 'Total' + '</td>' +

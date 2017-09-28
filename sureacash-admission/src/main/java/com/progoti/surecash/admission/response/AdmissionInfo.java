@@ -1,6 +1,7 @@
 package com.progoti.surecash.admission.response;
 
 public class AdmissionInfo {
+    private int id;
     private String unitName;
     private String unitDescription;
     private String fees;
@@ -27,4 +28,11 @@ public class AdmissionInfo {
         this.fees=fees;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

@@ -45,6 +45,7 @@ public class AcademicRepositoryImpl implements AcademicRepository {
                 admissionInfo.setUnitName("A");
                 admissionInfo.setUnitDescription("Engineering");
                 admissionInfo.setFees("500.00");
+                admissionInfo.setId(1);
                 studentInfoResponse.setName(rs.getString("name"));
                 studentInfoResponse.setFatherName(rs.getString("fname"));
                 studentInfoResponse.setMotherName(rs.getString("mname"));

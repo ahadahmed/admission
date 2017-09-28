@@ -31,16 +31,7 @@ public class LoginController {
 		modelAndView.setViewName("login");
 		return modelAndView;
 	}
-	
-	
-	@RequestMapping(value="/registration", method = RequestMethod.POST)
-	public ModelAndView registration(@Valid ApplicationFormRequest formRequest){
-		ModelAndView modelAndView = new ModelAndView();
-        CredentialResponse response = applicationSubmitService.submitForm(formRequest);
-        modelAndView.addObject("credential", response);
-		modelAndView.setViewName("confirmation");
-		return modelAndView;
-	}
+
 	
 	/*
 	 * @RequestMapping(value = "/registration", method = RequestMethod.POST) public
