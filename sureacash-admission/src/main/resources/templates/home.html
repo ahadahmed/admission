@@ -8,21 +8,29 @@
     <script type="text/javascript" th:inline="javascript">
         /*<![CDATA[*/
 
-        var studentInfo = {
-            "admissionInfo": []
+        var studentInfo;
+
+        var showDetails = function () {
+            var personal_info = {
+                "mobile": $("#mobile_no").val(),
+                "emial": $("#email_id").val(),
+                "password": $("#password_id").val()
+            };
+            studentInfo["personal_info"] = personal_info;
+            console.log(studentInfo);
         };
 
         var makeUnittable = function () {
             for (var itr = 0; itr < studentInfo.admissionInfo.length; itr++) {
-                $('<tr>'+
-                    '<td>'+studentInfo.admissionInfo[itr].unitName+'</td>'+
-                    '<td>'+studentInfo.admissionInfo[itr].unitDescription+'</td>'+
-                    '<td>'+studentInfo.admissionInfo[itr].fees+'</td>'+
+                $('<tr>' +
+                    '<td>' + studentInfo.admissionInfo[itr].unitName + '</td>' +
+                    '<td>' + studentInfo.admissionInfo[itr].unitDescription + '</td>' +
+                    '<td>' + studentInfo.admissionInfo[itr].fees + '</td>' +
                     '</tr>').appendTo("#unit_list_table");
             }
         };
 
-        var getPersonalInfo = function(){
+        var getPersonalInfo = function () {
             $("#unit_list_div").hide();
             $("#personal_info_div").show();
         };
@@ -43,7 +51,7 @@
                     "passingYear": $('#hsc_passing_year :selected').text()
                 }
             };
-            console.log(request);
+
             $.ajax({
                 url: '/academic/validate-info',
                 type: "POST",
@@ -51,8 +59,8 @@
                 dataType: "json",
                 data: JSON.stringify(request),
                 success: function (response) {
-                    console.log(response);
                     studentInfo = response;
+                    console.log(studentInfo);
                     makeUnittable();
                     $("#academic_info_div").hide();
                     $("#unit_list_div").show();
