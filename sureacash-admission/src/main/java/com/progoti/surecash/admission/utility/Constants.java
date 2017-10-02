@@ -19,8 +19,17 @@ public class Constants {
     }
     public enum ErrorMessage {
         INVALID_ACADEMIC_INFO("SSC & HSC information mismatch");
+
         public String value;
         ErrorMessage(String value) {
+            this.value = value;
+        }
+    }
+    public enum AdmissionSession {
+        SESSION_2017_2018("2017-2018");
+
+        public String value;
+        AdmissionSession(String value) {
             this.value = value;
         }
     }

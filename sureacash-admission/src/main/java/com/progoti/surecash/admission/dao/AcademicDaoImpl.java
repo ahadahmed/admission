@@ -1,8 +1,13 @@
-package com.progoti.surecash.admission.repository;
+package com.progoti.surecash.admission.dao;
 
 import com.progoti.surecash.admission.domain.AdmissionSession;
+import com.progoti.surecash.admission.domain.Unit;
+import com.progoti.surecash.admission.domain.University;
+import com.progoti.surecash.admission.repository.AdmissionSessionRepository;
+import com.progoti.surecash.admission.repository.UnitRepository;
+import com.progoti.surecash.admission.repository.UniversityRepository;
 import com.progoti.surecash.admission.request.AcademicInformationRequest;
-import com.progoti.surecash.admission.response.AdmissionInfo;
+import com.progoti.surecash.admission.response.UnitInfo;
 import com.progoti.surecash.admission.response.StudentInfoResponse;
 import com.progoti.surecash.admission.utility.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +19,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Shaown on 1:27 PM.
  */
 @Repository
-public class AcademicRepositoryImpl implements AcademicRepository {
+public class AcademicDaoImpl implements AcademicDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private UnitRepository unitRepository;
+    @Autowired
+    private AdmissionSessionRepository admissionSessionRepository;
+    @Autowired
+    private UniversityRepository universityRepository;
 
     @Override
     public StudentInfoResponse getStudentInfo(AcademicInformationRequest request) {
@@ -41,11 +54,6 @@ public class AcademicRepositoryImpl implements AcademicRepository {
             @Override
             public StudentInfoResponse mapRow(ResultSet rs, int rowNum) throws SQLException {
                 StudentInfoResponse studentInfoResponse = new StudentInfoResponse();
-                AdmissionInfo admissionInfo =new AdmissionInfo();
-                admissionInfo.setUnitName("A");
-                admissionInfo.setUnitDescription("Engineering");
-                admissionInfo.setFees("500.00");
-                admissionInfo.setId(1);
                 studentInfoResponse.setName(rs.getString("name"));
                 studentInfoResponse.setFatherName(rs.getString("fname"));
                 studentInfoResponse.setMotherName(rs.getString("mname"));
@@ -55,14 +63,31 @@ public class AcademicRepositoryImpl implements AcademicRepository {
                 studentInfoResponse.setSscInfo(request.getSscInformation());
                 studentInfoResponse.getSscInfo().setGroup(Constants.Group.valueOf(rs.getString("ssc_group")));
                 studentInfoResponse.getSscInfo().setGpa(rs.getDouble("ssc_gpa"));
+                studentInfoResponse.setUnitInfo(getUnitInfoListFromUniversityAndSession(universityRepository.findOne(1), Constants.AdmissionSession.SESSION_2017_2018));
 
-                List<AdmissionInfo> admissionInfoList = new ArrayList<>();
-                admissionInfoList.add(admissionInfo);
-                studentInfoResponse.setAdmissionInfo(admissionInfoList);
                 return studentInfoResponse;
             }
         });
 
         return studentInfoResponseList.get(0);
     }
+
+    @Override
+    public List<UnitInfo> getUnitInfoListFromUniversityAndSession(University university, Constants.AdmissionSession session) {
+        List<Unit> unitList = unitRepository.findAllByUniversity(university);
+
+        List<AdmissionSession> admissionSessionList = admissionSessionRepository.findAllBySessionAndUnitIn(session.value, unitList);
+        Map<Integer, Double> unitPrice = new HashMap<>();
+        for(AdmissionSession admissionSession : admissionSessionList){
+            unitPrice.put(admissionSession.getUnit().getId(), admissionSession.getFormPrice());
+        }
+
+        List<UnitInfo> unitInfoList = new ArrayList<>();
+
+        for(Unit unit : unitList){
+            unitInfoList.add(new UnitInfo(unit.getCode(), unit.getName(), String.valueOf(unitPrice.get(unit.getId()))));
+        }
+        return unitInfoList;
+    }
+
 }

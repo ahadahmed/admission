@@ -1,6 +1,6 @@
 package com.progoti.surecash.controller;
 
-import com.progoti.surecash.admission.repository.AcademicRepository;
+import com.progoti.surecash.admission.dao.AcademicDao;
 import com.progoti.surecash.admission.request.AcademicInformationRequest;
 import com.progoti.surecash.admission.request.ApplicationFormRequest;
 import com.progoti.surecash.admission.response.CredentialResponse;
@@ -10,8 +10,6 @@ import com.progoti.surecash.admission.service.ApplicationSubmitService;
 import com.progoti.surecash.admission.utility.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,13 +21,13 @@ import javax.validation.Valid;
 @RequestMapping("academic")
 public class AcademicInfoController {
     @Autowired
-    private AcademicRepository academicRepository;
+    private AcademicDao academicDao;
     @Autowired
     private ApplicationSubmitService applicationSubmitService;
 
     @RequestMapping(value = "validate-info", method = RequestMethod.POST)
     public StudentInfoResponse validateAcademicInfo(@RequestBody @Valid AcademicInformationRequest request){
-        return academicRepository.getStudentInfo(request);
+        return academicDao.getStudentInfo(request);
     }
 
     @RequestMapping(value = "registration", method = RequestMethod.POST)

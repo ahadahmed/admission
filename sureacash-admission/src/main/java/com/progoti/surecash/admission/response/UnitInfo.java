@@ -1,10 +1,19 @@
 package com.progoti.surecash.admission.response;
 
-public class AdmissionInfo {
+public class UnitInfo {
     private int id;
     private String unitName;
     private String unitDescription;
     private String fees;
+
+    public UnitInfo() {
+    }
+
+    public UnitInfo(String unitName, String unitDescription, String fees) {
+        this.unitName = unitName;
+        this.unitDescription = unitDescription;
+        this.fees = fees;
+    }
 
     public String getUnitName(){
         return unitName;
