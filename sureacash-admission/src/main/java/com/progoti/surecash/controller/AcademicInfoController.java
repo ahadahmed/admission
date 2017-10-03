@@ -1,12 +1,14 @@
 package com.progoti.surecash.controller;
 
 import com.progoti.surecash.admission.dao.AcademicDao;
+import com.progoti.surecash.admission.domain.Enquiry;
+import com.progoti.surecash.admission.repository.EnquiryRepository;
 import com.progoti.surecash.admission.request.AcademicInformationRequest;
 import com.progoti.surecash.admission.request.ApplicationFormRequest;
 import com.progoti.surecash.admission.response.CredentialResponse;
 import com.progoti.surecash.admission.response.ErrorResponse;
 import com.progoti.surecash.admission.response.StudentInfoResponse;
-import com.progoti.surecash.admission.service.ApplicationSubmitService;
+import com.progoti.surecash.admission.service.FormSubmitService;
 import com.progoti.surecash.admission.utility.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +25,7 @@ public class AcademicInfoController {
     @Autowired
     private AcademicDao academicDao;
     @Autowired
-    private ApplicationSubmitService applicationSubmitService;
+    private FormSubmitService formSubmitService;
 
     @RequestMapping(value = "validate-info", method = RequestMethod.POST)
     public StudentInfoResponse validateAcademicInfo(@RequestBody @Valid AcademicInformationRequest request){
@@ -32,7 +34,7 @@ public class AcademicInfoController {
 
     @RequestMapping(value = "registration", method = RequestMethod.POST)
     public CredentialResponse submitApplicationForm(@RequestBody @Valid ApplicationFormRequest request){
-        return applicationSubmitService.submitForm(request);
+        return formSubmitService.submitForm(request);
     }
 
     @ExceptionHandler(IndexOutOfBoundsException.class)

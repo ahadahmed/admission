@@ -6,6 +6,6 @@ import com.progoti.surecash.admission.response.CredentialResponse;
 /**
  * Created by Shaown on 3:13 PM.
  */
-public interface ApplicationSubmitService {
+public interface FormSubmitService {
     CredentialResponse submitForm(ApplicationFormRequest request);
 }

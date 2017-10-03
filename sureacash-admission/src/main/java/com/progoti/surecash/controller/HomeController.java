@@ -1,23 +1,38 @@
 package com.progoti.surecash.controller;
 
+import com.progoti.surecash.admission.domain.Enquiry;
+import com.progoti.surecash.admission.repository.EnquiryRepository;
+import com.progoti.surecash.dto.form.Greeting;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.progoti.surecash.dto.form.Greeting;
-
 @Controller
 public class HomeController {
 
+    @Autowired
+    private EnquiryRepository enquiryRepository;
+
 	@GetMapping(value = {"/","/home"})
 	public String greetingForm(Model model) {
-		
-		// Add model attributes here
-		//model.addAttribute("newForm", new Greeting());
 		return "home";
 	}
+
+    @GetMapping(value = "/general-enquiry")
+    public String enquiryForm(Model model, @ModelAttribute("enquiry") Enquiry enquiry) {
+        model.addAttribute("submitted", false);
+        return "general_enquiry";
+    }
+
+    @PostMapping(value="/submit-enquiry")
+    public String submitEnquiry(Model model, @ModelAttribute("enquiry") Enquiry enquiry){
+        enquiryRepository.save(enquiry);
+        model.addAttribute("submitted", true);
+        return "general_enquiry";
+    }
 	
 	@PostMapping("/processgreeting")
 	public String processGreetingForm(@ModelAttribute("newForm") Greeting greeting) {
