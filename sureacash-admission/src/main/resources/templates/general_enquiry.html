@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Enquiry</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/fixed-footer.css" th:href="@{/css/fixed-footer.css}"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+
+        $(document).ready(function () {
+            $('#success-div').delay(5000).fadeOut('slow');
+            $('#enquiryForm').find("input[type=text], input[type=email], textarea").val("");
+        });
+
+        /*]]>*/
+    </script>
+</head>
+<body>
+<div th:include="header :: header"></div>
+<div class="container" style="margin-top:10rem">
+    <div class="alert alert-success" id="success-div" th:if="${submitted}">
+        <strong>Success!</strong> Enquiry submission completed.
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="well well-sm">
+                <form id="enquiryForm" action="#" th:action="@{./submit-enquiry}" method="POST" th:object="${enquiry}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">
+                                    Name</label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" th:field="${enquiry.name}"
+                                       required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactNo">
+                                    Contact No</label>
+
+                                <div class="input-group">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span>
+                                </span>
+                                    <input type="text" class="form-control" id="contactNo" name="contactNo" placeholder="Enter contact no" th:field="${enquiry.contactNo}"
+                                           required="required"/></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">
+                                    Email</label>
+                                <div class="input-group">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span>
+                                </span>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" th:field="${enquiry.email}"/></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">
+                                    Enquiry Details</label>
+                            <textarea name="details" id="details" class="form-control" rows="9" cols="25" th:field="${enquiry.details}"
+                                      required="required" placeholder="Enquiry Details"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary pull-right" id="btnContactUs">
+                                Submit Enquiry
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <form>
+                <legend><span class="glyphicon glyphicon-globe"></span> Remark</legend>
+                <address style="color:red">
+                    Please add your SSC Board name,
+                    Passing Year, Roll No, Registration No
+                    And HSC Board name, Passing Year, Roll No
+                    Registration No in Enquiry Details
+                </address>
+                <address>
+                    if you have any issue with picture upload,
+                    please send email at:
+                    info@surecashbd.com
+                </address>
+            </form>
+        </div>
+    </div>
+</div>
+<footer th:include="footer :: footer" class="footer"></footer>
+</body>
+</html>

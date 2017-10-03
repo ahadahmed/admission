@@ -1,7 +1,6 @@
 package com.progoti.surecash;
 
-import javax.sql.DataSource;
-
+import com.progoti.surecash.admission.service.UserLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,8 +9,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-import com.progoti.surecash.admission.service.UserLoginService;
 
 @Configuration
 @EnableWebSecurity
@@ -39,7 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //		super.configure(http);
 		http
 			.authorizeRequests()
-			.antMatchers("/","/resources/**","/home","/academic/**").permitAll()
+			.antMatchers("/","/resources/**","/home","/academic/**", "/general-enquiry", "/submit-enquiry").permitAll()
 			.antMatchers("/login").permitAll()
 			.antMatchers("/registration").permitAll()
 			.anyRequest()

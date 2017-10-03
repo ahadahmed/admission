@@ -1,20 +1,15 @@
 package com.progoti.surecash.controller;
 
-import com.progoti.surecash.admission.request.ApplicationFormRequest;
-import com.progoti.surecash.admission.response.CredentialResponse;
-import com.progoti.surecash.admission.service.ApplicationSubmitService;
+import com.progoti.surecash.admission.service.FormSubmitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.progoti.surecash.admission.service.UserLoginService;
-
-import javax.validation.Valid;
 
 @Controller
 public class LoginController {
@@ -23,7 +18,7 @@ public class LoginController {
 	private UserLoginService userService;
 
 	@Autowired
-	private ApplicationSubmitService applicationSubmitService;
+	private FormSubmitService formSubmitService;
 
 	@RequestMapping(value="/login", method = RequestMethod.GET)
 	public ModelAndView login(){

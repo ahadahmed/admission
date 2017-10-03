@@ -2,10 +2,7 @@ package com.progoti.surecash.admission.service;
 
 import com.progoti.surecash.admission.domain.StudentApplicationHistory;
 import com.progoti.surecash.admission.domain.StudentInfo;
-import com.progoti.surecash.admission.repository.AdmissionSessionRepository;
-import com.progoti.surecash.admission.repository.StudentApplicationHistoryRepository;
-import com.progoti.surecash.admission.repository.StudentInfoRepository;
-import com.progoti.surecash.admission.repository.UnitRepository;
+import com.progoti.surecash.admission.repository.*;
 import com.progoti.surecash.admission.request.ApplicationFormRequest;
 import com.progoti.surecash.admission.response.CredentialResponse;
 import com.progoti.surecash.admission.utility.Constants;
@@ -14,14 +11,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
  * Created by Shaown on 3:14 PM.
  */
 @Service
-public class ApplicationSubmitServiceImpl implements ApplicationSubmitService {
+public class FormSubmitServiceImpl implements FormSubmitService {
     @Autowired
     private StudentInfoRepository studentInfoRepository;
     @Autowired
@@ -30,6 +26,8 @@ public class ApplicationSubmitServiceImpl implements ApplicationSubmitService {
     private UnitRepository unitRepository;
     @Autowired
     private AdmissionSessionRepository admissionSessionRepository;
+    @Autowired
+    private EnquiryRepository enquiryRepository;
 
 
     @Override
