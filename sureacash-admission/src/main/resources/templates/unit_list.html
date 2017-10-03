@@ -17,9 +17,9 @@
             </tr>
             <tr th:each="row : ${studentInfo}">
                 <td><input id="checkBox1" type="checkbox"/></td>
-                <td th:text="${row.admissionInfo.unitName}"></td>
-                <td th:text="${row.admissionInfo.unitDescription}"></td>
-                <td th:text="${row.admissionInfo.fees}"></td>
+                <td th:text="${row.unitInfo.unitName}"></td>
+                <td th:text="${row.unitInfo.unitDescription}"></td>
+                <td th:text="${row.unitInfo.fees}"></td>
             </tr>
         </table>
         <input type="button" value="NEXT" class="btn btn-lg btn-primary pull-right" style="margin-right:15px;"/>

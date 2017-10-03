@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Title</title>
+    <title>Home</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="../static/css/fixed-footer.css" th:href="@{/css/fixed-footer.css}"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -18,8 +18,8 @@
 
         var submitApplication = function () {
             var unit_list=[];
-            for (var itr = 0; itr < studentInfo.admissionInfo.length; itr++) {
-                unit_list.push(studentInfo.admissionInfo[itr].id);
+            for (var itr = 0; itr < studentInfo.unitInfo.length; itr++) {
+                unit_list.push(studentInfo.unitInfo[itr].id);
             }
             var request = {
                 "name": studentInfo.name,
@@ -91,13 +91,13 @@
                 '<td>' + studentInfo.hscInfo.gpa + '</td>' +
                 '</tr>').appendTo("#appalication_academic_id");
             var total_fees = 0;
-            for (var itr = 0; itr < studentInfo.admissionInfo.length; itr++) {
+            for (var itr = 0; itr < studentInfo.unitInfo.length; itr++) {
                 $('<tr>' +
-                    '<td>' + studentInfo.admissionInfo[itr].unitName + '</td>' +
-                    '<td>' + studentInfo.admissionInfo[itr].unitDescription + '</td>' +
-                    '<td>' + parseInt(studentInfo.admissionInfo[itr].fees) + '</td>' +
+                    '<td>' + studentInfo.unitInfo[itr].unitName + '</td>' +
+                    '<td>' + studentInfo.unitInfo[itr].unitDescription + '</td>' +
+                    '<td>' + parseInt(studentInfo.unitInfo[itr].fees) + '</td>' +
                     '</tr>').appendTo("#appalication_unit_info_id");
-                total_fees = total_fees + parseInt(studentInfo.admissionInfo[itr].fees);
+                total_fees = total_fees + parseInt(studentInfo.unitInfo[itr].fees);
             }
             $('<tr>' +
                 '<td colspan="2">' + 'Total' + '</td>' +
@@ -119,12 +119,12 @@
         };
 
         var makeUnittable = function () {
-            for (var itr = 0; itr < studentInfo.admissionInfo.length; itr++) {
+            for (var itr = 0; itr < studentInfo.unitInfo.length; itr++) {
                 $('<tr>' +
                     '<td><input id="checkBox" type="checkbox"/></td>' +
-                    '<td>' + studentInfo.admissionInfo[itr].unitName + '</td>' +
-                    '<td>' + studentInfo.admissionInfo[itr].unitDescription + '</td>' +
-                    '<td>' + studentInfo.admissionInfo[itr].fees + '</td>' +
+                    '<td>' + studentInfo.unitInfo[itr].unitName + '</td>' +
+                    '<td>' + studentInfo.unitInfo[itr].unitDescription + '</td>' +
+                    '<td>' + studentInfo.unitInfo[itr].fees + '</td>' +
                     '</tr>').appendTo("#unit_list_table");
             }
         };

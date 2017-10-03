@@ -15,7 +15,7 @@ public class StudentInfoResponse {
     private Constants.Quota quota;
     public AcademicInformationRequest.AcademicInfo sscInfo;
     public AcademicInformationRequest.AcademicInfo hscInfo;
-    public List<AdmissionInfo> admissionInfo;
+    public List<UnitInfo> unitInfo;
     public String getName() {
         return name;
     }
@@ -64,11 +64,11 @@ public class StudentInfoResponse {
         this.hscInfo = hscInfo;
     }
 
-    public List<AdmissionInfo> getAdmissionInfo() {
-        return admissionInfo;
+    public List<UnitInfo> getUnitInfo() {
+        return unitInfo;
     }
 
-    public void setAdmissionInfo(List<AdmissionInfo> admissionInfo) {
-        this.admissionInfo = admissionInfo;
+    public void setUnitInfo(List<UnitInfo> unitInfo) {
+        this.unitInfo = unitInfo;
     }
 }
