@@ -3,6 +3,7 @@ package com.progoti.surecash.admission.domain;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Shaown on 10:55 AM.
@@ -62,6 +63,13 @@ public class StudentInfo implements Serializable{
 
     @OneToMany(mappedBy = "studentInfo")
     private List<StudentApplicationHistory> studentApplicationHistory;
+    
+   
+    
+    /*@ManyToOne
+	@JoinColumn(name = "role_id")
+	StudentInfo studentInfo;*/
+
 
     public int getId() {
         return id;
@@ -190,4 +198,14 @@ public class StudentInfo implements Serializable{
     public void setStudentApplicationHistory(List<StudentApplicationHistory> studentApplicationHistory) {
         this.studentApplicationHistory = studentApplicationHistory;
     }
+
+	/*public Set<Role> getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(Set<Role> userRole) {
+		this.userRole = userRole;
+	}*/
+    
+    
 }
