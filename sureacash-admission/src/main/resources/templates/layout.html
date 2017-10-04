@@ -20,7 +20,7 @@
 </head>
 
 <body>
-<nav th:fragment="layout_nav" id="layout-nav-bar" class="navbar navbar-default navbar-inverse navbar-fixed-top bg-color-primary" role="navigation">
+<nav th:fragment="layout_nav(item)" id="layout-nav-bar" class="navbar navbar-default navbar-fixed-top bg-color-primary" role="navigation">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
@@ -29,24 +29,24 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="#" style="padding: 11px;">
         <img id="nav-brand-image" class="img-responsive" src="http://my-smashing.smashingapps.netdna-cdn.com/wp-content/uploads/2010/01/circular-logo/circularlogo_6.jpg"/>
       </a>
-      <a id="nav-brand-text" class="navbar-brand" href="#">ABC University </a>
+      <a id="nav-brand-text" class="navbar-brand nav-item" href="#">ABC University </a>
     </div>
 
     <div class="collapse navbar-collapse" id="navbar-collapse">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/home">Apply</a></li>
-        <li><a href="/circular">Circular</a></li>
-        <li><a href="/pdf-form">PDF Form(O and A Level)</a></li>
-        <li><a href="/application">Application</a></li>
-        <li><a href="/payment">Payment</a></li>
-        <li><a href="/general-enquiry">Enquiry</a></li>
-        <li><a href="/howtopay">How To Pay</a></li>
-        <li><a href="/contact">Contact</a></li>
-        <li><a href="/login">Login</a></li>
-        <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+        <li th:classappend="${item==1?'active':''}"><a class="nav-item" href="/home">Apply</a></li>
+        <li th:classappend="${item==2?'active':''}"><a class="nav-item" href="/circular">Circular</a></li>
+        <li th:classappend="${item==3?'active':''}"><a class="nav-item" href="/pdf-form">PDF Form(O and A Level)</a></li>
+        <li th:classappend="${item==4?'active':''}"><a class="nav-item" href="/application">Application</a></li>
+        <li th:classappend="${item==5?'active':''}"><a class="nav-item" href="/payment">Payment</a></li>
+        <li th:classappend="${item==6?'active':''}"><a class="nav-item" href="/general-enquiry">Enquiry</a></li>
+        <li th:classappend="${item==7?'active':''}"><a class="nav-item" href="/howtopay">How To Pay</a></li>
+        <li th:classappend="${item==8?'active':''}"><a class="nav-item" href="/contact">Contact</a></li>
+        <li th:classappend="${item==9?'active':''}"><a class="nav-item" href="/login">Login</a></li>
+        <li sec:authorize="isAuthenticated()"><a class="nav-item" th:href="@{/logout}">Logout</a></li>
         <!-- Logged user -->
         <!-- end-->
       </ul>

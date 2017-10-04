@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head lang="en">
-    <meta charset="UTF-8" content="text/html"/>
+<head th:replace="layout::layout_header(~{::title}, ~{}, ~{})">
     <title>Confirmation</title>
 </head>
-<div th:include="header :: header">
-    &copy;
-</div>
+
 <body>
+<nav th:replace="layout::layout_nav(999)">
+</nav>
 
 <div class="container-fluid" style="max-width: 40%;">
     <div class="panel panel-default">
@@ -32,8 +31,8 @@
     </div>
 </div>
 
+<footer th:replace="layout::layout_footer">
+</footer>
+
 </body>
-<div th:include="footer :: footer">
-    &copy;
-</div>
 </html>

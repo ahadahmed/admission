@@ -29,6 +29,14 @@ body {
     width: 1.5em;
 }
 
+.nav-item {
+    color: #fff !important;
+}
+
+.nav-item:hover {
+    color: #cdcec7 !important;
+}
+
 .bg-color-primary {
     background: #317eac;
     color: #fff;
