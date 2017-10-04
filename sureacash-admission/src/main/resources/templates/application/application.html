@@ -1,0 +1,89 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout::layout_header(~{::title}, ~{}, ~{})">
+  <title>Application</title>
+</head>
+
+<body>
+<nav th:replace="layout::layout_nav">
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+
+    <!--Page Body-->
+    <div class="col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">Application Section</div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-sm-6">
+              <p>If you want to apply more units, you can select from below section and hit apply.</p>
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <thead>
+                  <tr>
+                    <th class="col-sm-1 col-xs-2">Unit</th>
+                    <th class="col-sm-9 col-xs-8">Disciplines</th>
+                    <th class="col-sm-2 col-xs-2">Fees(BDT)</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td>E</td>
+                    <td>Physical Education and Sports Science</td>
+                    <td>550.00</td>
+                  </tr>
+                  <tr>
+                    <td>E</td>
+                    <td>Computer Science and Engineering</td>
+                    <td>750.00</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <button type="button" class="btn btn-success">Apply</button>
+            </div>
+            <div class="col-sm-6">
+              <p>If you want to cancel application, you can press <span class="glyphicon glyphicon-trash"></span> in the below section</p>
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <thead>
+                  <tr>
+                    <th class="col-sm-1 col-xs-2">Unit</th>
+                    <th class="col-sm-8 col-xs-8">Disciplines</th>
+                    <th class="col-sm-2 col-xs-2">Fees(BDT)</th>
+                    <th class="col-sm-1">Option</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td>F</td>
+                    <td>Accounting and Information Systems</td>
+                    <td>500.00</td>
+                    <td><span class="glyphicon glyphicon-trash color-red"></span></td>
+                  </tr>
+                  <tr>
+                    <td>F</td>
+                    <td>Electrical and Electronics Engineering</td>
+                    <td>650.00</td>
+                    <td><span class="glyphicon glyphicon-trash color-red"></span></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--End Page Body-->
+
+  </div>
+</div>
+
+<footer th:replace="layout::layout_footer">
+</footer>
+
+</body>
+</html>

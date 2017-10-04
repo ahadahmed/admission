@@ -1,0 +1,68 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout::layout_header(~{::title}, ~{}, ~{})">
+  <title>Payment</title>
+</head>
+
+<body>
+<nav th:replace="layout::layout_nav">
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+
+    <!--Page Body-->
+    <div class="col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
+      <h3>Payment Section</h3>
+      <hr/>
+      <div class="row">
+        <div class="col-sm-10 col-sm-offset-1">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+              <tr>
+                <th class="col-sm-3 col-xs-2">Application ID</th>
+                <th class="col-sm-3 col-xs-8">Unit</th>
+                <th class="col-sm-3 col-xs-2">Fees(BDT)</th>
+                <th class="col-sm-3 col-xs-2">Payment Status</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>9307052</td>
+                <td>F</td>
+                <td>500.00</td>
+                <td><span class="bg-color-red bold due-text">Due</span></td>
+              </tr>
+              <tr>
+                <td>0904090</td>
+                <td>C</td>
+                <td>650.00</td>
+                <td><span class="bg-color-red bold due-text">Due</span></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <button type="button" class="btn btn-success">Confirm</button>
+        </div>
+      </div>
+
+      <p>
+      <ul>
+        <li>Before click confirm, you have to pay application free for each selected unit
+          <strong>using your personal surecash account</strong> and please keep <strong>Transaction
+          Number</strong> after getting confirmation SMS.
+        </li>
+      </ul>
+      </p>
+    </div>
+    <!--End Page Body-->
+
+  </div>
+</div>
+
+<footer th:replace="layout::layout_footer">
+</footer>
+
+</body>
+</html>
