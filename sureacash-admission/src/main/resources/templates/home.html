@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Home</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="../static/css/fixed-footer.css" th:href="@{/css/fixed-footer.css}"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<head th:replace="layout::layout_header(~{::title}, ~{}, ~{::script})">
+    <title>Apply</title>
     <script type="text/javascript" th:inline="javascript">
         /*<![CDATA[*/
 
@@ -178,13 +174,13 @@
 
 <body>
 
-<div th:include="header :: header">
-</div>
+<nav th:replace="layout::layout_nav(1)">
+</nav>
 
 <div id="unitId" th:include="academic_info :: academic_info">
 </div>
 
-<footer th:include="footer :: footer" class="footer">
+<footer th:replace="layout::layout_footer">
 </footer>
 
 </body>

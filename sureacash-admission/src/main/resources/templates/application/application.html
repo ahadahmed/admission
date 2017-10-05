@@ -1,0 +1,81 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout::layout_header(~{::title}, ~{}, ~{::script})">
+  <title>Application</title>
+  <script type="text/javascript" th:src="@{/views/application-view.js}"></script>
+</head>
+
+<body>
+<nav th:replace="layout::layout_nav(4)">
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+
+    <!--Page Body-->
+    <div class="col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">Application Section</div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-sm-6">
+              <p>If you want to apply more units, you can select from below section and hit apply.</p>
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <thead>
+                  <tr>
+                    <th class="col-sm-1 col-xs-2">Unit</th>
+                    <th class="col-sm-9 col-xs-8">Disciplines</th>
+                    <th class="col-sm-2 col-xs-2">Fees(BDT)</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:each="unit, unitStat : ${availableUnits}" th:id="${'tbl-avl-row-'+unitStat.count}">
+                    <td><input type="checkbox" /> <span th:text="${unit.code}"></span></td>
+                    <td th:text="${unit.name}"></td>
+                    <td th:text="${unit.formattedFees}"></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <button type="button" class="btn btn-success">Apply</button>
+            </div>
+            <div class="col-sm-6">
+              <p>If you want to cancel application, you can press <span class="glyphicon glyphicon-trash"></span> in the below section</p>
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <thead>
+                  <tr>
+                    <th class="col-sm-1 col-xs-2">Unit</th>
+                    <th class="col-sm-8 col-xs-8">Disciplines</th>
+                    <th class="col-sm-2 col-xs-2">Fees(BDT)</th>
+                    <th class="col-sm-1">Option</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:each="unit, unitStat : ${appliedUnits}" th:id="${'tbl-apl-row-'+unit.id}">
+                    <td th:text="${unit.code}"></td>
+                    <td th:text="${unit.name}"></td>
+                    <td th:text="${unit.formattedFees}"></td>
+                    <td><button class="glyphicon glyphicon-trash color-red text-btn"
+                                th:onclick="${'deleteUnit('+unit.id+')'}"></button>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--End Page Body-->
+
+  </div>
+</div>
+
+<footer th:replace="layout::layout_footer">
+</footer>
+
+</body>
+</html>
