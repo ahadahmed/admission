@@ -36,7 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //		super.configure(http);
 		http
 			.authorizeRequests()
-			.antMatchers("/","/resources/**","/home","/academic/**", "/general-enquiry", "/submit-enquiry").permitAll()
+			.antMatchers("/","/resources/**","/home","/academic/**","/submit-enquiry").permitAll()
 			.antMatchers("/login").permitAll()
 			.antMatchers("/registration").permitAll()
 			.anyRequest()
@@ -46,7 +46,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.formLogin()
 			.loginPage("/login")
 			.failureUrl("/login?error=true")
-			.defaultSuccessUrl("/enquiry")
+			.defaultSuccessUrl("/general-enquiry")
 			.usernameParameter("applicantId")
 			.passwordParameter("password")
 			.permitAll()
