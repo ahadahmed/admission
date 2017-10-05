@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:fragment="layout_header(title, links, scripts)">
   <title th:replace="${title}">Home</title>
@@ -45,7 +45,7 @@
         <li th:classappend="${item==6?'active':''}"><a class="nav-item" href="/general-enquiry">Enquiry</a></li>
         <li th:classappend="${item==7?'active':''}"><a class="nav-item" href="/howtopay">How To Pay</a></li>
         <li th:classappend="${item==8?'active':''}"><a class="nav-item" href="/contact">Contact</a></li>
-        <li th:classappend="${item==9?'active':''}"><a class="nav-item" href="/login">Login</a></li>
+        <li sec:authorize="isAnonymous()" th:classappend="${item==9?'active':''}"><a class="nav-item" href="/login">Login</a></li>
         <li sec:authorize="isAuthenticated()"><a class="nav-item" th:href="@{/logout}">Logout</a></li>
         <!-- Logged user -->
         <!-- end-->

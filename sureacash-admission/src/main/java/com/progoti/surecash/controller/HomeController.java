@@ -50,22 +50,22 @@ public class HomeController {
         List<UnitDto> availableUnits = new ArrayList<>();
         List<UnitDto> appliedUnits = new ArrayList<>();
 
-        availableUnits.add(new UnitDto(1, "Physical Education and Sports Science", "E", "demo",
+        availableUnits.add(new UnitDto(1, 11, "Physical Education and Sports Science", "E", "demo",
                 "ABC University", "550.00"));
-        availableUnits.add(new UnitDto(2, "Computer Science and Engineering", "E", "demo",
+        availableUnits.add(new UnitDto(2, 22, "Computer Science and Engineering", "E", "demo",
                 "ABC University", "950.00"));
-        availableUnits.add(new UnitDto(3, "Accounting and Information Systems", "F", "demo",
+        availableUnits.add(new UnitDto(3, 33, "Accounting and Information Systems", "F", "demo",
                 "ABC University", "450.00"));
-        availableUnits.add(new UnitDto(4, "Electrical and Electronics Engineering", "E", "demo",
+        availableUnits.add(new UnitDto(4, 44, "Electrical and Electronics Engineering", "E", "demo",
                 "ABC University", "850.00"));
 
-        appliedUnits.add(new UnitDto(5, "English and Linguistics", "B", "demo",
+        appliedUnits.add(new UnitDto(5, 55, "English and Linguistics", "B", "demo",
                 "ABC University", "150.00"));
-        appliedUnits.add(new UnitDto(6, "Philosophy, Politics and Economics", "A", "demo",
+        appliedUnits.add(new UnitDto(6, 66, "Philosophy, Politics and Economics", "A", "demo",
                 "ABC University", "250.00"));
-        appliedUnits.add(new UnitDto(7, "Clothing and Textile Sciences", "C", "demo",
+        appliedUnits.add(new UnitDto(7, 77, "Clothing and Textile Sciences", "C", "demo",
                 "ABC University", "350.00"));
-        appliedUnits.add(new UnitDto(8, "Geographic Information Systems", "D", "demo",
+        appliedUnits.add(new UnitDto(8, 88, "Geographic Information Systems", "D", "demo",
                 "ABC University", "400.00"));
 
         model.addAttribute("availableUnits", availableUnits);
