@@ -1,7 +1,8 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout::layout_header(~{::title}, ~{}, ~{})">
+<head th:replace="layout::layout_header(~{::title}, ~{}, ~{::script})">
   <title>Application</title>
+  <script type="text/javascript" th:src="@{/views/application-view.js}"></script>
 </head>
 
 <body>
@@ -29,15 +30,10 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>E</td>
-                    <td>Physical Education and Sports Science</td>
-                    <td>550.00</td>
-                  </tr>
-                  <tr>
-                    <td>E</td>
-                    <td>Computer Science and Engineering</td>
-                    <td>750.00</td>
+                  <tr th:each="unit, unitStat : ${availableUnits}" th:id="${'tbl-avl-row-'+unitStat.count}">
+                    <td><input type="checkbox" /> <span th:text="${unit.code}"></span></td>
+                    <td th:text="${unit.name}"></td>
+                    <td th:text="${unit.formattedFees}"></td>
                   </tr>
                   </tbody>
                 </table>
@@ -57,17 +53,13 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>F</td>
-                    <td>Accounting and Information Systems</td>
-                    <td>500.00</td>
-                    <td><span class="glyphicon glyphicon-trash color-red"></span></td>
-                  </tr>
-                  <tr>
-                    <td>F</td>
-                    <td>Electrical and Electronics Engineering</td>
-                    <td>650.00</td>
-                    <td><span class="glyphicon glyphicon-trash color-red"></span></td>
+                  <tr th:each="unit, unitStat : ${appliedUnits}" th:id="${'tbl-apl-row-'+unit.id}">
+                    <td th:text="${unit.code}"></td>
+                    <td th:text="${unit.name}"></td>
+                    <td th:text="${unit.formattedFees}"></td>
+                    <td><button class="glyphicon glyphicon-trash color-red text-btn"
+                                th:onclick="${'deleteUnit('+unit.id+')'}"></button>
+                    </td>
                   </tr>
                   </tbody>
                 </table>

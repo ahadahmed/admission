@@ -28,17 +28,14 @@
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <td>9307052</td>
-                <td>F</td>
-                <td>500.00</td>
-                <td><span class="bg-color-red bold due-text">Due</span></td>
-              </tr>
-              <tr>
-                <td>0904090</td>
-                <td>C</td>
-                <td>650.00</td>
-                <td><span class="bg-color-red bold due-text">Due</span></td>
+              <tr th:each="payment, paymentStat : ${paymentRequests}" th:id="${'tbl-pmt-row-'+paymentStat.count}">
+                <td th:text="${payment.applicationId}"></td>
+                <td th:text="${payment.unit}"></td>
+                <td th:text="${payment.formattedFees}"></td>
+                <td><span class="bold status-text"
+                        th:classappend="${payment.shouldPaid?'bg-color-red':'bg-color-green'}"
+                        th:text="${payment.shouldPaid?'Due':'Paid'}">Due</span>
+                </td>
               </tr>
               </tbody>
             </table>
@@ -49,7 +46,7 @@
 
       <p>
       <ul>
-        <li>Before click confirm, you have to pay application free for each selected unit
+        <li>Before click confirm, you have to pay application fee for each selected unit
           <strong>using your personal surecash account</strong> and please keep <strong>Transaction
           Number</strong> after getting confirmation SMS.
         </li>
