@@ -85,7 +85,7 @@ public class AcademicDaoImpl implements AcademicDao {
         List<UnitInfo> unitInfoList = new ArrayList<>();
 
         for(Unit unit : unitList){
-            unitInfoList.add(new UnitInfo(unit.getCode(), unit.getName(), String.valueOf(unitPrice.get(unit.getId()))));
+            unitInfoList.add(new UnitInfo(unit.getId(), unit.getCode(), unit.getName(), String.valueOf(unitPrice.get(unit.getId()))));
         }
         return unitInfoList;
     }

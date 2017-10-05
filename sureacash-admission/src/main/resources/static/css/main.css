@@ -33,8 +33,12 @@ body {
     color: #fff !important;
 }
 
-.nav-item:hover {
+.nav-item:hover, .active>a:hover {
     color: #cdcec7 !important;
+}
+
+.active>a {
+    background-color: #f78b05 !important;
 }
 
 .bg-color-primary {
@@ -47,6 +51,11 @@ body {
     color: #fff;
 }
 
+.bg-color-green {
+    background-color: #0ba50b;
+    color: #ffffff;
+}
+
 .bold {
     font-weight: bold;
 }
@@ -55,7 +64,12 @@ body {
     color: #f00;
 }
 
-.due-text {
+.status-text {
     padding: 3px;
     border-radius: 3px;
+}
+
+.text-btn {
+    background: #ffffff;
+    border: none;
 }
