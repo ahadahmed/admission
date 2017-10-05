@@ -9,7 +9,8 @@ public class UnitInfo {
     public UnitInfo() {
     }
 
-    public UnitInfo(String unitName, String unitDescription, String fees) {
+    public UnitInfo(int id, String unitName, String unitDescription, String fees) {
+        this.id = id;
         this.unitName = unitName;
         this.unitDescription = unitDescription;
         this.fees = fees;
