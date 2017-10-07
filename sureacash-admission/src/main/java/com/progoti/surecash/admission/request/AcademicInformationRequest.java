@@ -1,5 +1,6 @@
 package com.progoti.surecash.admission.request;
 
+import com.progoti.surecash.admission.domain.StudentInfo;
 import com.progoti.surecash.admission.utility.Constants;
 
 import javax.validation.Valid;
@@ -107,6 +108,22 @@ public class AcademicInformationRequest {
 
     public void setHscInformation(AcademicInfo hscInformation) {
         this.hscInformation = hscInformation;
+    }
+
+    public void doReflectionFromStudentInfo(StudentInfo studentInfo) {
+        AcademicInfo sscInfo = new AcademicInfo();
+        sscInfo.setRoll(Integer.valueOf(studentInfo.getSscRoll()));
+        sscInfo.setRegNo(Integer.valueOf(studentInfo.getSscReg()));
+        sscInfo.setPassingYear(studentInfo.getSscPassingYear());
+        sscInfo.setBoard(Constants.Board.Dhaka);
+        this.setSscInformation(sscInfo);
+
+        AcademicInfo hscInfo = new AcademicInfo();
+        hscInfo.setRoll(Integer.valueOf(studentInfo.getHscRoll()));
+        hscInfo.setRegNo(Integer.valueOf(studentInfo.getHscReg()));
+        hscInfo.setPassingYear(studentInfo.getHscPassingYear());
+        hscInfo.setBoard(Constants.Board.Dhaka);
+        this.setHscInformation(hscInfo);
     }
 
 }

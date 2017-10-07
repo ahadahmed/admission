@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout::layout_header(~{::title}, ~{}, ~{::script})">
+    <title>Profile</title>
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+
+        var showMessageDiv = function(msg){
+            var divElement = $('#msg-div');
+            divElement.removeClass();
+            divElement.addClass('alert alert-danger');
+            divElement.empty().text(msg);
+            divElement.show();
+            divElement.delay(5000).fadeOut('slow');
+            $('#image').hide();
+            $('#default-image').show();
+            $('#image-file').val('');
+        };
+
+        var imageHandler = function(e2)
+        {
+            var img = new Image();
+            img.src = e2.target.result;
+            img.onload = function(){
+                if(img.height === 300 && img.width === 300){
+                    if(e2.loaded <= 64*1021){
+                        $('#default-image').attr('src', e2.target.result);
+                    } else{
+                        showMessageDiv('Image size must be not greater than 64KB')
+                    }
+                } else{
+                    showMessageDiv('Image dimension must be 300*300 and size not greater than 64KB');
+                }
+            };
+        };
+
+
+        var loadImage = function(evt){
+            var filename = evt.target.files[0];
+            var fr = new FileReader();
+            fr.onload = imageHandler;
+            fr.readAsDataURL(filename);
+        };
+
+        $(document).ready(function () {
+            var imageElement = document.getElementById("image-file");
+            if(document.body.contains(imageElement)){
+                imageElement.addEventListener("change", function (evt) {
+                    var imageFile = this.files[0];
+                    if (imageFile.type.match(/image.*/)) {
+                        loadImage(evt);
+                    } else{
+                        showMessageDiv('File type must be jpg,png')
+                    }
+                });
+            }
+        });
+
+        var update = function() {
+            var form = $('#image-upload-form')[0];
+            console.log(form);
+            var data = new FormData(form);
+            data.append("email", $('#emailId').val());
+            $.ajax({
+                type: "POST",
+                enctype: 'multipart/form-data',
+                url: "/academic/profile-update",
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
+                timeout: 600000,
+                success: function (data) {
+                    $('#image-upload-form').hide();
+                },
+                error: function (e) {
+                    console.log(e);
+                    $('#image-file').val('');
+                }
+            });
+        };
+
+        var showModal = function() {
+            $('#confirmationModal').modal('show');
+        };
+
+        var closeModal = function() {
+            $('#confirmationModal').modal('hide');
+        };
+
+
+        /*]]>*/
+    </script>
+</head>
+<body>
+
+<nav th:replace="layout::layout_nav(9)">
+</nav>
+
+<div class="container">
+    <div class="" id="msg-div" style="display: none;">
+
+    </div>
+    <h1>Edit Profile</h1>
+    <hr/>
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-3">
+            <div class="text-center">
+                <img id="default-image" th:if="${profile.imageData == null}" src="../static/images/login-photo.png" th:src="@{/images/login-photo.png}"
+                     class="avatar img-thumbnail" alt="avatar" height="200" width="200"/>
+                <img id="image" src="" th:src="@{${'data:image/jpeg;base64,' + profile.base64Image}}" th:if="${profile.imageData != null}"
+                     class="avatar img-thumbnail" alt="avatar" height="200" width="200" />
+
+                <form class="form-horizontal" role="form" id="image-upload-form" enctype="multipart/form-data">
+                    <input id="image-file" name="image-file" type="file" class="form-control"  th:if="${profile.imageData == null}" />
+                </form>
+            </div>
+        </div>
+
+        <!-- edit form column -->
+        <div class="col-md-9 personal-info">
+            <h3>Personal info</h3>
+
+            <form class="form-horizontal" role="form" id="profile-upload-form">
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Applicant Name</label>
+
+                    <div class="col-lg-8">
+                        <input class="form-control" type="text" th:value="${profile.name}" th:disabled="disabled"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Father's Name</label>
+
+                    <div class="col-lg-8">
+                        <input class="form-control" type="text" th:value="${profile.fatherName}"
+                               th:disabled="disabled"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Mother's Name</label>
+
+                    <div class="col-lg-8">
+                        <input class="form-control" type="text" th:value="${profile.motherName}"
+                               th:disabled="disabled"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Quota(if any)</label>
+
+                    <div class="col-lg-8">
+                        <input class="form-control" type="text" th:value="${profile.quota}" th:disabled="disabled"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Contact No</label>
+
+                    <div class="col-lg-8">
+                        <input class="form-control" type="text" th:value="${profile.contactNo}" th:disabled="disabled"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Email</label>
+
+                    <div class="col-lg-8">
+                        <input class="form-control" id="emailId" type="text" th:value="${profile.email}"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label"></label>
+
+                    <div class="col-md-8">
+                        <input type="button" class="btn btn-primary" value="Save Changes" onclick="showModal()"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="confirmationModalLabel" style="text-align: center">Profile Update Confirmation</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="" id="validation-body-div">
+                        <h2>Please click confirm to update profile information</h2>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="submit-btn" data-dismiss="modal" onclick="update()">Confirm</button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal" onclick="closeModal()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="layout::layout_footer">
+</footer>
+
+</body>
+</html>

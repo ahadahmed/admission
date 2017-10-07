@@ -36,7 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //		super.configure(http);
 		http
 			.authorizeRequests()
-			.antMatchers("/","/resources/**","/home","/academic/**", "/general-enquiry", "/submit-enquiry").permitAll()
+			.antMatchers("/","/resources/**","/home","/academic/**", "/general-enquiry", "/submit-enquiry", "/edit-profile").permitAll()
 			.antMatchers("/login").permitAll()
 			.antMatchers("/registration").permitAll()
 			.anyRequest()

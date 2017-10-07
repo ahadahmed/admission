@@ -1,10 +1,14 @@
 package com.progoti.surecash.admission.service;
 
+import com.progoti.surecash.admission.dao.AcademicDao;
 import com.progoti.surecash.admission.domain.StudentApplicationHistory;
 import com.progoti.surecash.admission.domain.StudentInfo;
 import com.progoti.surecash.admission.repository.*;
+import com.progoti.surecash.admission.request.AcademicInformationRequest;
 import com.progoti.surecash.admission.request.ApplicationFormRequest;
 import com.progoti.surecash.admission.response.CredentialResponse;
+import com.progoti.surecash.admission.response.ProfileResponse;
+import com.progoti.surecash.admission.response.StudentInfoResponse;
 import com.progoti.surecash.admission.utility.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +32,8 @@ public class FormSubmitServiceImpl implements FormSubmitService {
     private AdmissionSessionRepository admissionSessionRepository;
     @Autowired
     private EnquiryRepository enquiryRepository;
+    @Autowired
+    private AcademicDao academicDao;
 
 
     @Override
@@ -43,6 +49,24 @@ public class FormSubmitServiceImpl implements FormSubmitService {
 
         studentApplicationHistoryRepository.save(studentApplicationHistoryList);
         return new CredentialResponse(studentInfo.getUserName(), request.getPassword());
+    }
+
+    @Override
+    public ProfileResponse getStudentProfile(StudentInfo studentInfo) {
+
+        AcademicInformationRequest request = new AcademicInformationRequest();
+        request.doReflectionFromStudentInfo(studentInfo);
+
+        StudentInfoResponse studentInfoResponse = academicDao.getStudentInfo(request);
+
+        ProfileResponse profileResponse = new ProfileResponse(null, studentInfo.getEmail(), studentInfo.getMobile());
+        profileResponse.setImageData(studentInfo.getImage());
+        profileResponse.setBase64Image();
+        profileResponse.setName(studentInfoResponse.getName());
+        profileResponse.setFatherName(studentInfoResponse.getFatherName());
+        profileResponse.setMotherName(studentInfoResponse.getMotherName());
+
+        return profileResponse;
     }
 
     @Transactional

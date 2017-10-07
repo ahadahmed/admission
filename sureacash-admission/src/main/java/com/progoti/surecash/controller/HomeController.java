@@ -2,6 +2,8 @@ package com.progoti.surecash.controller;
 
 import com.progoti.surecash.admission.domain.Enquiry;
 import com.progoti.surecash.admission.repository.EnquiryRepository;
+import com.progoti.surecash.admission.repository.StudentInfoRepository;
+import com.progoti.surecash.admission.service.FormSubmitService;
 import com.progoti.surecash.dto.PaymentRequestDto;
 import com.progoti.surecash.dto.UnitDto;
 import com.progoti.surecash.dto.form.Greeting;
@@ -19,6 +21,10 @@ public class HomeController {
 
     @Autowired
     private EnquiryRepository enquiryRepository;
+    @Autowired
+    private FormSubmitService formSubmitService;
+    @Autowired
+    private StudentInfoRepository studentInfoRepository;
 
     @GetMapping(value = {"/", "/home"})
     public String greetingForm(Model model) {
@@ -29,6 +35,12 @@ public class HomeController {
     public String enquiryForm(Model model, @ModelAttribute("enquiry") Enquiry enquiry) {
         model.addAttribute("submitted", false);
         return "general_enquiry";
+    }
+
+    @GetMapping(value = "/edit-profile")
+    public String editProfile(Model model) {
+        model.addAttribute("profile", formSubmitService.getStudentProfile(studentInfoRepository.getOne(7)));
+        return "edit_profile";
     }
 
     @PostMapping(value = "/submit-enquiry")

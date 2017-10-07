@@ -70,6 +70,10 @@ public class StudentInfo implements Serializable{
 	@JoinColumn(name = "role_id")
 	StudentInfo studentInfo;*/
 
+    @Lob
+    @Column(name = "image_data", columnDefinition = "mediumblob")
+    private byte[] image;
+
 
     public int getId() {
         return id;
@@ -206,6 +210,12 @@ public class StudentInfo implements Serializable{
 	public void setUserRole(Set<Role> userRole) {
 		this.userRole = userRole;
 	}*/
-    
-    
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 }
