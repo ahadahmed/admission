@@ -13,10 +13,8 @@
         };
 
         var submitApplication = function () {
-            var unit_list=[];
-            for (var itr = 0; itr < studentInfo.unitInfo.length; itr++) {
-                unit_list.push(studentInfo.unitInfo[itr].id);
-            }
+            var unit_list = [];
+            unit_list = $('input[type=checkbox][class=unit]:checked').map(function(_, el) { return $(el).val(); }).get();
             var request = {
                 "name": studentInfo.name,
                 "fatherName": studentInfo.fatherName,
@@ -37,7 +35,7 @@
                     "gpa": studentInfo.hscInfo.gpa,
                     "group": studentInfo.hscInfo.group
                 },
-                "quota": null,
+                "quota": $('input[name=quota]:checked').val(),
                 "email": studentInfo.personal_info.emial,
                 "mobile": studentInfo.personal_info.mobile,
                 "unitList": unit_list,
@@ -70,6 +68,7 @@
             $('#applicant_name_id').html(studentInfo.name);
             $('#father_name_id').html(studentInfo.fatherName);
             $('#mother_name_id').html(studentInfo.motherName);
+            $('#quota_id').html($('input[name=quota]:checked').val());
             $('<tr>' +
                 '<td>' + 'SSC' + '</td>' +
                 '<td>' + studentInfo.sscInfo.board + '</td>' +
@@ -87,18 +86,24 @@
                 '<td>' + studentInfo.hscInfo.gpa + '</td>' +
                 '</tr>').appendTo("#appalication_academic_id");
             var total_fees = 0;
+            var selectedUnitIdList = $('input[type=checkbox][class=unit]:checked').map(function(_, el) {
+                return $(el).val();
+            }).get();
             for (var itr = 0; itr < studentInfo.unitInfo.length; itr++) {
-                $('<tr>' +
-                    '<td>' + studentInfo.unitInfo[itr].unitName + '</td>' +
-                    '<td>' + studentInfo.unitInfo[itr].unitDescription + '</td>' +
-                    '<td>' + parseInt(studentInfo.unitInfo[itr].fees) + '</td>' +
-                    '</tr>').appendTo("#appalication_unit_info_id");
-                total_fees = total_fees + parseInt(studentInfo.unitInfo[itr].fees);
+                var id = studentInfo.unitInfo[itr].id.toString();
+                if(selectedUnitIdList.includes(id)){
+                    $('<tr>' +
+                            '<td>' + studentInfo.unitInfo[itr].unitName + '</td>' +
+                            '<td>' + studentInfo.unitInfo[itr].unitDescription + '</td>' +
+                            '<td>' + parseInt(studentInfo.unitInfo[itr].fees) + '</td>' +
+                            '</tr>').appendTo("#application_unit_info_id");
+                    total_fees = total_fees + parseInt(studentInfo.unitInfo[itr].fees);
+                }
             }
             $('<tr>' +
                 '<td colspan="2">' + 'Total' + '</td>' +
                 '<td>' + total_fees + '</td>' +
-                '</tr>').appendTo("#appalication_unit_info_id");
+                '</tr>').appendTo("#application_unit_info_id");
         };
 
         var showDetails = function () {
@@ -114,10 +119,10 @@
             $('#application_preview_div').show();
         };
 
-        var makeUnittable = function () {
+        var makeUnitTable = function () {
             for (var itr = 0; itr < studentInfo.unitInfo.length; itr++) {
                 $('<tr>' +
-                    '<td><input id="checkBox" type="checkbox"/></td>' +
+                    '<td><input type="checkbox" class="unit" value="' + studentInfo.unitInfo[itr].id + '"/></td>' +
                     '<td>' + studentInfo.unitInfo[itr].unitName + '</td>' +
                     '<td>' + studentInfo.unitInfo[itr].unitDescription + '</td>' +
                     '<td>' + studentInfo.unitInfo[itr].fees + '</td>' +
@@ -126,11 +131,27 @@
         };
 
         var getPersonalInfo = function () {
-            $("#unit_list_div").hide();
-            $("#personal_info_div").show();
+            var selectedUnitList = $('input[type=checkbox][class=unit]:checked').map(function(_, el) {
+                return $(el).val();
+            }).get();
+            if(selectedUnitList.length > 0){
+                $("#unit_list_div").hide();
+                $("#personal_info_div").show();
+            } else{
+                showErrorMessage('You have to select at least one unit for next step')
+            }
         };
 
-        var fetchAcadenicData = function () {
+        var showErrorMessage = function(msg) {
+            var divElement = $('#error-info-div');
+            divElement.removeClass();
+            divElement.addClass('alert alert-danger');
+            divElement.empty().text(msg);
+            divElement.show();
+            divElement.delay(5000).fadeOut('slow');
+        };
+
+        var fetchAcademicData = function () {
             var request = {
                 "securityCode": 68545,
                 "sscInformation": {
@@ -156,7 +177,7 @@
                 success: function (response) {
                     studentInfo = response;
                     console.log(studentInfo);
-                    makeUnittable();
+                    makeUnitTable();
                     $("#academic_info_div").hide();
                     $("#unit_list_div").show();
                 },
@@ -168,6 +189,7 @@
                 }
             });
         };
+
         /*]]>*/
     </script>
 </head>

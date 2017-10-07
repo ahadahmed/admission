@@ -9,7 +9,7 @@ import java.util.UUID;
 public class Constants {
     private static SecureRandom secureRandom = new SecureRandom();
     public enum Quota {
-        FREEDOM_FIGHTER, TRIBAL, DISABLED, POSSHO
+        FREEDOM_FIGHTER, TRIBAL, DISABLED, POSSHO, NONE
     }
     public enum Board {
         Barisal, Chittagong, Comilla, Dhaka, Dinajpur, Jessore, Rajshahi, Sylhet, Madrasah, Technical

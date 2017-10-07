@@ -1,5 +1,7 @@
 package com.progoti.surecash.admission.domain;
 
+import com.progoti.surecash.admission.utility.Constants;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -40,6 +42,10 @@ public class StudentInfo implements Serializable{
     @Column(name = "ssc_gpa")
     private Double sscGPA;
 
+    @Column(name = "ssc_board")
+    @Enumerated(EnumType.STRING)
+    private Constants.Board sscBoard;
+
     @Column(name = "hsc_roll", length = 45)
     private String hscRoll;
 
@@ -48,6 +54,14 @@ public class StudentInfo implements Serializable{
 
     @Column(name = "hsc_gpa")
     private Double hscGPA;
+
+    @Column(name = "hsc_board")
+    @Enumerated(EnumType.STRING)
+    private Constants.Board hscBoard;
+
+    @Column(name = "quota")
+    @Enumerated(EnumType.STRING)
+    private Constants.Quota quota;
 
     @Column(name = "mobile_no", length = 11)
     private String mobile;
@@ -217,5 +231,29 @@ public class StudentInfo implements Serializable{
 
     public void setImage(byte[] image) {
         this.image = image;
+    }
+
+    public Constants.Board getSscBoard() {
+        return sscBoard;
+    }
+
+    public void setSscBoard(Constants.Board sscBoard) {
+        this.sscBoard = sscBoard;
+    }
+
+    public Constants.Board getHscBoard() {
+        return hscBoard;
+    }
+
+    public void setHscBoard(Constants.Board hscBoard) {
+        this.hscBoard = hscBoard;
+    }
+
+    public Constants.Quota getQuota() {
+        return quota;
+    }
+
+    public void setQuota(Constants.Quota quota) {
+        this.quota = quota;
     }
 }

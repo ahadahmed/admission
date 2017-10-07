@@ -97,5 +97,8 @@ public class FormSubmitServiceImpl implements FormSubmitService {
         studentInfo.setEmail(request.getEmail());
         studentInfo.setSscPassingYear(request.getSscInfo().getPassingYear());
         studentInfo.setHscPassingYear(request.getHscInfo().getPassingYear());
+        studentInfo.setSscBoard(request.getSscInfo().getBoard());
+        studentInfo.setHscBoard(request.getHscInfo().getBoard());
+        studentInfo.setQuota(request.getQuota());
     }
 }
