@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface UniversityRepository extends JpaRepository<University, Integer>{
+    University findOneByBillerCode(String billerCode);
 }
