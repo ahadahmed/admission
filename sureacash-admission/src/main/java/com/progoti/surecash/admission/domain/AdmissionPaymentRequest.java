@@ -3,6 +3,7 @@ package com.progoti.surecash.admission.domain;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -37,6 +38,7 @@ public class AdmissionPaymentRequest implements Serializable{
     private String applicantId;
 
     @Column(name = "from_wallet")
+    @Size(max = 12)
     private String fromWallet;
 
     @Column(name = "to_wallet")
@@ -53,6 +55,7 @@ public class AdmissionPaymentRequest implements Serializable{
     private Date reqTime = new Date();
 
     @Column(name = "pin")
+    @Size(max = 4)
     private String pin;
 
     @Column(name = "channel")

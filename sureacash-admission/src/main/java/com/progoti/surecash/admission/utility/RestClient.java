@@ -33,7 +33,6 @@ public class RestClient {
 	public static Map<String, String> parseResponseText(HttpResponse response) throws IOException {
 		String responseString = EntityUtils.toString(response.getEntity(), "UTF-8");
 		System.out.println(responseString);
-		System.out.println(response.getEntity().toString());
 		EntityUtils.consume(response.getEntity());
 		System.out.println(responseString.replaceAll("\n", ""));
 		Type type = new TypeToken<Map<String, String>>(){}.getType();
@@ -57,7 +56,9 @@ public class RestClient {
 		post.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
 		post.setHeader(HttpHeaders.ACCEPT, "application/json");
 
-		post.setEntity(new StringEntity(gson.toJson(request)));
+        String requestString = gson.toJson(request);
+        System.out.println("switch payment request:->" + requestString);
+        post.setEntity(new StringEntity(requestString));
 
 		return client.execute(post);
 	}

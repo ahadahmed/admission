@@ -1,6 +1,7 @@
 package com.progoti.surecash.dto;
 
 import com.progoti.surecash.admission.domain.AdmissionPaymentRequest;
+import com.progoti.surecash.admission.utility.Constants;
 
 /**
  * Created by Shaown on 4:25 PM.
@@ -104,7 +105,7 @@ public class SwitchPaymentRequestDto {
         this.amount = String.valueOf(request.getAmount());
         this.pin = request.getPin();
         this.customerRefId = request.getApplicantId();
-        this.trnxCode = this.externalCustomer == null ? "1202" : "107";
+        this.trnxCode = this.externalCustomer == null ? Constants.TranxCode.P2B.value : Constants.TranxCode.A2B.value;
         this.channel = request.getChannel();
     }
 }

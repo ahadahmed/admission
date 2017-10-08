@@ -13,6 +13,7 @@ import com.progoti.surecash.admission.request.AcademicInformationRequest;
 import com.progoti.surecash.admission.request.ApplicationFormRequest;
 import com.progoti.surecash.admission.response.CredentialResponse;
 import com.progoti.surecash.admission.response.ErrorResponse;
+import com.progoti.surecash.admission.response.PaymentResponse;
 import com.progoti.surecash.admission.response.StudentInfoResponse;
 import com.progoti.surecash.admission.service.FormSubmitService;
 import com.progoti.surecash.admission.utility.Constants;
@@ -73,9 +74,12 @@ public class AcademicInfoController {
     }
 
     @RequestMapping(value = "doPayment", method = RequestMethod.POST)
-    public String doPayment(@RequestBody AdmissionPaymentRequest paymentRequest) throws IOException, URISyntaxException {
+    public PaymentResponse doPayment(@RequestBody AdmissionPaymentRequest paymentRequest) throws IOException, URISyntaxException {
         University university = universityRepository.findOneByBillerCode(paymentRequest.getBillerCode());
+
+        // TODO: need to change contact to wallet in attribute
         paymentRequest.setToWallet(university.getContact());
+
         AdmissionPaymentRequest request = admissionPaymentRequestRepository.saveAndFlush(paymentRequest);
         TransactionHistory transactionHistory = transactionHistoryRepository.findOneByAdmissionPaymentRequest(request);
 
@@ -91,7 +95,7 @@ public class AcademicInfoController {
 
         transactionHistoryRepository.save(transactionHistory);
 
-        return "SUCCESS";
+        return new PaymentResponse(responseMap);
     }
 
     @ExceptionHandler(IndexOutOfBoundsException.class)

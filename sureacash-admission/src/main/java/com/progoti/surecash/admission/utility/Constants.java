@@ -25,6 +25,14 @@ public class Constants {
             this.value = value;
         }
     }
+    public enum TranxCode {
+        A2B("107"), P2B("1202");
+
+        public String value;
+        TranxCode(String value) {
+            this.value = value;
+        }
+    }
     public enum AdmissionSession {
         SESSION_2017_2018("2017-2018");
 
