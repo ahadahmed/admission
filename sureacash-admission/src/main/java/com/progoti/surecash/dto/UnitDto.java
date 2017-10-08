@@ -4,7 +4,8 @@ import com.google.common.base.MoreObjects;
 
 public class UnitDto {
 
-    private int id;
+    private int unitId;
+    private int historyId;
     private String name;
     private String code;
     private String description;
@@ -13,9 +14,10 @@ public class UnitDto {
 
     public UnitDto() {}
 
-    public UnitDto(int id, String name, String code, String description,
+    public UnitDto(int unitId, int historyId, String name, String code, String description,
             String universityName, String formattedFees) {
-        this.id = id;
+        this.unitId = unitId;
+        this.historyId = historyId;
         this.name = name;
         this.code = code;
         this.description = description;
@@ -23,12 +25,20 @@ public class UnitDto {
         this.formattedFees = formattedFees;
     }
 
-    public int getId() {
-        return id;
+    public int getUnitId() {
+        return unitId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUnitId(int unitId) {
+        this.unitId = unitId;
+    }
+
+    public int getHistoryId() {
+        return historyId;
+    }
+
+    public void setHistoryId(int historyId) {
+        this.historyId = historyId;
     }
 
     public String getName() {
@@ -74,7 +84,8 @@ public class UnitDto {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
-                .add("id", id)
+                .add("unitId", unitId)
+                .add("historyId", historyId)
                 .add("name", name)
                 .add("code", code)
                 .add("description", description)
