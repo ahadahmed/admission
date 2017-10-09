@@ -35,6 +35,7 @@ public class UserLoginService implements UserDetailsService{
 		user.setPassword(student.getPassword());
 		user.setRole("USER");
 		user.setEmail(student.getEmail());
+		user.setUniv(university);
 		return new UserDetailsImpl(user);
 	}
 	
