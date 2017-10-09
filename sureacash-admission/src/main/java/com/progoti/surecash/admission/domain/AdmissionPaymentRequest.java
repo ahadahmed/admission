@@ -3,6 +3,7 @@ package com.progoti.surecash.admission.domain;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
@@ -31,14 +32,17 @@ public class AdmissionPaymentRequest implements Serializable{
 
     @Column(name = "biller_code")
     @JsonProperty("schoolName")
+    @NotNull
     private String billerCode;
 
     @Column(name = "applicant_id")
     @JsonProperty("studentId")
+    @NotNull
     private String applicantId;
 
     @Column(name = "from_wallet")
     @Size(max = 12)
+    @NotNull
     private String fromWallet;
 
     @Column(name = "to_wallet")
@@ -48,13 +52,15 @@ public class AdmissionPaymentRequest implements Serializable{
     private String externalCustomer;
 
     @Column(name = "amount")
+    @NotNull
     private Double amount;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "req_time", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false, updatable = false)
     private Date reqTime = new Date();
 
-    @Column(name = "pin")
+    @Transient
+    @NotNull
     @Size(max = 4)
     private String pin;
 
@@ -71,6 +77,9 @@ public class AdmissionPaymentRequest implements Serializable{
 
     @OneToOne(mappedBy = "admissionPaymentRequest")
     private TransactionHistory transactionHistory;
+
+    @Column(name = "remark")
+    private String remark;
 
 //    these property will be used later
 
@@ -189,5 +198,13 @@ public class AdmissionPaymentRequest implements Serializable{
 
     public void setTransactionHistory(TransactionHistory transactionHistory) {
         this.transactionHistory = transactionHistory;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

@@ -47,7 +47,7 @@ public class RestClient {
 		return client.execute(request);
 	}*/
 
-	public static HttpResponse doPostRequest(SwitchPaymentRequestDto request)
+	public static HttpResponse doSwitchPaymentRequest(SwitchPaymentRequestDto request)
 			throws URISyntaxException, IOException {
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpPost post = new HttpPost(new URIBuilder(SWITCH_PAYMENT_API).build().toURL().toURI());

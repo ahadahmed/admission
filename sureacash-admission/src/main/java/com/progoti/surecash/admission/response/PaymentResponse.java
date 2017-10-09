@@ -18,7 +18,7 @@ public class PaymentResponse {
 
     public PaymentResponse(Map<String, String> responseMap) {
         this.status = responseMap.get("status");
-        this.status = responseMap.get("description");
+        this.description = responseMap.get("description");
         this.trxnId = responseMap.get("trnxId");
     }
 

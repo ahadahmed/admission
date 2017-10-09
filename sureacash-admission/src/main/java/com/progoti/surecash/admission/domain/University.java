@@ -1,6 +1,7 @@
 package com.progoti.surecash.admission.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
@@ -20,8 +21,9 @@ public class University implements Serializable{
     @Column(name = "university_name", length = 100)
     private String name;
 
-    @Column(name = "contact", length = 45)
-    private String contact;
+    @Column(name = "wallet", length = 45)
+    @Size(max = 12)
+    private String wallet;
 
     @Column(name = "biller_code", unique = true)
     private String billerCode;
@@ -31,6 +33,9 @@ public class University implements Serializable{
 
     @OneToMany(mappedBy = "university")
     private List<StudentInfo> studentInfo;
+
+    @OneToMany(mappedBy = "university")
+    private List<StudentApplicationHistory> studentApplicationHistoryList;
 
     public int getId() {
         return id;
@@ -48,12 +53,12 @@ public class University implements Serializable{
         this.name = name;
     }
 
-    public String getContact() {
-        return contact;
+    public String getWallet() {
+        return wallet;
     }
 
-    public void setContact(String contact) {
-        this.contact = contact;
+    public void setWallet(String wallet) {
+        this.wallet = wallet;
     }
 
     public String getBillerCode() {
@@ -78,5 +83,13 @@ public class University implements Serializable{
 
     public void setStudentInfo(List<StudentInfo> studentInfo) {
         this.studentInfo = studentInfo;
+    }
+
+    public List<StudentApplicationHistory> getStudentApplicationHistoryList() {
+        return studentApplicationHistoryList;
+    }
+
+    public void setStudentApplicationHistoryList(List<StudentApplicationHistory> studentApplicationHistoryList) {
+        this.studentApplicationHistoryList = studentApplicationHistoryList;
     }
 }

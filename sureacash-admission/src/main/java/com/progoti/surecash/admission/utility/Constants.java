@@ -15,10 +15,19 @@ public class Constants {
         Barisal, Chittagong, Comilla, Dhaka, Dinajpur, Jessore, Rajshahi, Sylhet, Madrasah, Technical
     }
     public enum Group {
-        HUMANITIES, SCIENCE, BUSINESS_STUDIES, MUSIC, HOME_ECONOMICS
+        HUMANITIES("HUMANITIES"), SCIENCE("SCIENCE"), BUSINESS_STUDIES("BUSINESS STUDIES"), MUSIC("MUSIC"), HOME_ECONOMICS("HOME ECONOMICS");
+
+        public String value;
+        Group(String value) {
+            this.value = value;
+        }
+    }
+    public enum Transaction_Status {
+        PROCESSED, ERROR, UNSUCCESSFUL, FAILED, RECONCILE
     }
     public enum ErrorMessage {
-        INVALID_ACADEMIC_INFO("SSC & HSC information mismatch");
+        INVALID_ACADEMIC_INFO("SSC & HSC information mismatch"), INSTITUTION_NOT_FOUND("Institution not found : STATUS_CODE_1009"),
+        NO_DUE("Amount is greater than due amount. Due amount: 0.00"), INVALID_AMOUNT("Amount is less than due amount. Due amount: ?");
 
         public String value;
         ErrorMessage(String value) {

@@ -3,23 +3,16 @@ package com.progoti.surecash.controller;
 import com.progoti.surecash.admission.dao.AcademicDao;
 import com.progoti.surecash.admission.domain.AdmissionPaymentRequest;
 import com.progoti.surecash.admission.domain.StudentInfo;
-import com.progoti.surecash.admission.domain.TransactionHistory;
-import com.progoti.surecash.admission.domain.University;
-import com.progoti.surecash.admission.repository.AdmissionPaymentRequestRepository;
 import com.progoti.surecash.admission.repository.StudentInfoRepository;
-import com.progoti.surecash.admission.repository.TransactionHistoryRepository;
-import com.progoti.surecash.admission.repository.UniversityRepository;
 import com.progoti.surecash.admission.request.AcademicInformationRequest;
 import com.progoti.surecash.admission.request.ApplicationFormRequest;
+import com.progoti.surecash.admission.request.ReconcileRequest;
 import com.progoti.surecash.admission.response.CredentialResponse;
 import com.progoti.surecash.admission.response.ErrorResponse;
 import com.progoti.surecash.admission.response.PaymentResponse;
 import com.progoti.surecash.admission.response.StudentInfoResponse;
-import com.progoti.surecash.admission.service.FormSubmitService;
+import com.progoti.surecash.admission.service.AdmissionService;
 import com.progoti.surecash.admission.utility.Constants;
-import com.progoti.surecash.admission.utility.RestClient;
-import com.progoti.surecash.dto.SwitchPaymentRequestDto;
-import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Date;
-import java.util.Map;
 
 /**
  * Created by Shaown on 12:07 PM.
@@ -40,15 +31,10 @@ public class AcademicInfoController {
     @Autowired
     private AcademicDao academicDao;
     @Autowired
-    private FormSubmitService formSubmitService;
+    private AdmissionService admissionService;
     @Autowired
     private StudentInfoRepository studentInfoRepository;
-    @Autowired
-    private AdmissionPaymentRequestRepository admissionPaymentRequestRepository;
-    @Autowired
-    private UniversityRepository universityRepository;
-    @Autowired
-    private TransactionHistoryRepository transactionHistoryRepository;
+
 
     @RequestMapping(value = "validate-info", method = RequestMethod.POST)
     public StudentInfoResponse validateAcademicInfo(@RequestBody @Valid AcademicInformationRequest request){
@@ -57,7 +43,9 @@ public class AcademicInfoController {
 
     @RequestMapping(value = "registration", method = RequestMethod.POST)
     public CredentialResponse submitApplicationForm(@RequestBody @Valid ApplicationFormRequest request){
-        return formSubmitService.submitForm(request);
+        //TODO: need to set university id
+        request.setUniversityId(1);
+        return admissionService.submitForm(request);
     }
 
     @RequestMapping(value = "profile-update", method = RequestMethod.POST)
@@ -74,28 +62,34 @@ public class AcademicInfoController {
     }
 
     @RequestMapping(value = "doPayment", method = RequestMethod.POST)
-    public PaymentResponse doPayment(@RequestBody AdmissionPaymentRequest paymentRequest) throws IOException, URISyntaxException {
-        University university = universityRepository.findOneByBillerCode(paymentRequest.getBillerCode());
+    public PaymentResponse doPayment(@RequestBody @Valid AdmissionPaymentRequest paymentRequest) throws IOException, URISyntaxException {
+        /* request body should have these attributes
+        {
+            "amount": "",
+            "schoolName": "",
+            "pin": "",
+            "studentId": "",
+            "fromWallet": "",
+            "externalCustomer": "",
+            "channel": ""
+        }
+         */
+        return admissionService.doPayment(paymentRequest);
+    }
 
-        // TODO: need to change contact to wallet in attribute
-        paymentRequest.setToWallet(university.getContact());
-
-        AdmissionPaymentRequest request = admissionPaymentRequestRepository.saveAndFlush(paymentRequest);
-        TransactionHistory transactionHistory = transactionHistoryRepository.findOneByAdmissionPaymentRequest(request);
-
-        SwitchPaymentRequestDto switchPaymentRequestDto = new SwitchPaymentRequestDto();
-        switchPaymentRequestDto.doReflectionUsingAdmissionPaymentRequest(request);
-
-        HttpResponse response = RestClient.doPostRequest(switchPaymentRequestDto);
-        Map<String, String> responseMap = RestClient.parseResponseText(response);
-
-        transactionHistory.setStatus(responseMap.get("status"));
-        transactionHistory.setTrnxId(responseMap.get("trnxId"));
-        transactionHistory.setUpdateDate(new Date());
-
-        transactionHistoryRepository.save(transactionHistory);
-
-        return new PaymentResponse(responseMap);
+    @RequestMapping(value = "reconcilePayment", method = RequestMethod.POST)
+    public PaymentResponse reconcilePayment(@RequestBody @Valid ReconcileRequest reconcileRequest) {
+        /* request body must has these attributes
+        {
+          "fromWallet": "",
+          "amount": "",
+          "pin":"",
+          "schoolName": "",
+          "studentId": "",
+          "profinoTransactionId": ""
+        }
+         */
+        return admissionService.reconcilePayment(reconcileRequest);
     }
 
     @ExceptionHandler(IndexOutOfBoundsException.class)
