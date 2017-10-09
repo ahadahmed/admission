@@ -77,9 +77,11 @@ public class StudentInfo implements Serializable{
 
     @OneToMany(mappedBy = "studentInfo")
     private List<StudentApplicationHistory> studentApplicationHistory;
-    
-   
-    
+
+    @Column(name = "hsc_group")
+    @Enumerated(EnumType.STRING)
+    private Constants.Group group;
+
     /*@ManyToOne
 	@JoinColumn(name = "role_id")
 	StudentInfo studentInfo;*/
@@ -255,5 +257,13 @@ public class StudentInfo implements Serializable{
 
     public void setQuota(Constants.Quota quota) {
         this.quota = quota;
+    }
+
+    public Constants.Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Constants.Group group) {
+        this.group = group;
     }
 }

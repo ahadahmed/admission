@@ -3,6 +3,7 @@ package com.progoti.surecash.admission.domain;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Shaown on 10:39 AM.
@@ -31,7 +32,7 @@ public class StudentApplicationHistory implements Serializable{
     @Column(name = "payable_amount")
     private Double payableAmount;
 
-    @Column(name = "is_active")
+    @Column(name = "is_active", nullable = true)
     private Boolean active;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -41,6 +42,16 @@ public class StudentApplicationHistory implements Serializable{
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "update_date")
     private Date updateDate;
+
+    @ManyToOne
+    @JoinColumn(name = "university_id")
+    private University university;
+
+    @Column(name = "is_paid")
+    private Boolean paid;
+
+    @Column(name = "tranx_id", nullable = true)
+    private String tranxId;
 
     public int getId() {
         return id;
@@ -104,5 +115,29 @@ public class StudentApplicationHistory implements Serializable{
 
     public void setStudentInfo(StudentInfo studentInfo) {
         this.studentInfo = studentInfo;
+    }
+
+    public University getUniversity() {
+        return university;
+    }
+
+    public void setUniversity(University university) {
+        this.university = university;
+    }
+
+    public Boolean getPaid() {
+        return paid;
+    }
+
+    public void setPaid(Boolean paid) {
+        this.paid = paid;
+    }
+
+    public String getTranxId() {
+        return tranxId;
+    }
+
+    public void setTranxId(String tranxId) {
+        this.tranxId = tranxId;
     }
 }

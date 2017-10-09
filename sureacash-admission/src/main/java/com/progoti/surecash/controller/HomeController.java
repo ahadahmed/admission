@@ -3,7 +3,7 @@ package com.progoti.surecash.controller;
 import com.progoti.surecash.admission.domain.Enquiry;
 import com.progoti.surecash.admission.repository.EnquiryRepository;
 import com.progoti.surecash.admission.repository.StudentInfoRepository;
-import com.progoti.surecash.admission.service.FormSubmitService;
+import com.progoti.surecash.admission.service.AdmissionService;
 import com.progoti.surecash.dto.PaymentRequestDto;
 import com.progoti.surecash.dto.UnitDto;
 import com.progoti.surecash.dto.form.Greeting;
@@ -22,7 +22,7 @@ public class HomeController {
     @Autowired
     private EnquiryRepository enquiryRepository;
     @Autowired
-    private FormSubmitService formSubmitService;
+    private AdmissionService admissionService;
     @Autowired
     private StudentInfoRepository studentInfoRepository;
 
@@ -39,7 +39,7 @@ public class HomeController {
 
     @GetMapping(value = "/edit-profile")
     public String editProfile(Model model) {
-        model.addAttribute("profile", formSubmitService.getStudentProfile(studentInfoRepository.getOne(7)));
+        model.addAttribute("profile", admissionService.getStudentProfile(studentInfoRepository.getOne(7)));
         return "edit_profile";
     }
 

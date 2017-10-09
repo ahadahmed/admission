@@ -1,6 +1,6 @@
 package com.progoti.surecash.controller;
 
-import com.progoti.surecash.admission.service.FormSubmitService;
+import com.progoti.surecash.admission.service.AdmissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +18,7 @@ public class LoginController {
 	private UserLoginService userService;
 
 	@Autowired
-	private FormSubmitService formSubmitService;
+	private AdmissionService admissionService;
 
 	@RequestMapping(value="/login", method = RequestMethod.GET)
 	public ModelAndView login(){
