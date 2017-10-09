@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -16,6 +17,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserLoginService userDetailsService;
+	@Autowired
+	private CustomAuthenticationFilter customAuthenticationFilter;
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -35,6 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		// TODO Auto-generated method stub
 //		super.configure(http);
 		http
+			.addFilterBefore(customAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
 			.authorizeRequests()
 			.antMatchers("/","/resources/**","/home","/academic/**", "/general-enquiry", "/submit-enquiry", "/edit-profile").permitAll()
 			.antMatchers("/login").permitAll()
