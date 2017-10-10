@@ -1,6 +1,8 @@
 package com.progoti.surecash.admission.repository;
 
 import com.progoti.surecash.admission.domain.StudentInfo;
+import com.progoti.surecash.admission.domain.University;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,5 +11,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository()
 public interface StudentInfoRepository extends JpaRepository<StudentInfo, Integer>{
-	StudentInfo findOneByUserName(String userName);
+	StudentInfo findOneByUserNameAndUniversity(String userName, University university);
 }
