@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout::layout_header(~{::title}, ~{}, ~{::script})">
+    <title>Unit Details</title>
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+        $(document).ready(function () {
+            $('#applicant-table').DataTable(
+                    {
+                        "aLengthMenu": [25, 50, 75, "All"],
+                        "iDisplayLength": 50
+                    }
+            );
+        });
+
+
+        /*]]>*/
+    </script>
+</head>
+
+<body>
+<nav th:replace="layout::admin_layout_nav(6)">
+</nav>
+
+<div class="container">
+    <div class="row col-md-12">
+        <table id="applicant-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Applicant Id</th>
+                <th>Applicant Name</th>
+                <th>SSC GPA</th>
+                <th>HSC GPA</th>
+                <th>Group</th>
+                <th>Application Date</th>
+                <th>Payment Status</th>
+                <th>Transaction Id</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <tr>
+                <th>#</th>
+                <th>Applicant Id</th>
+                <th>Applicant Name</th>
+                <th>SSC GPA</th>
+                <th>HSC GPA</th>
+                <th>Group</th>
+                <th>Application Date</th>
+                <th>Payment Status</th>
+                <th>Transaction Id</th>
+            </tr>
+            </tfoot>
+            <tbody>
+            <tr th:each="applicant, itr: ${applicantList}">
+                <td th:text="${itr.count}"></td>
+                <td th:text="${applicant.applicationId}"></td>
+                <td><a href="#" th:text="${applicant.studentInfo.name}"></a></td>
+                <td th:text="${applicant.studentInfo.sscGPA}"></td>
+                <td th:text="${applicant.studentInfo.hscGPA}"></td>
+                <td th:text="${applicant.studentInfo.group}"></td>
+                <td th:text="${applicant.applicationDate}"></td>
+                <td th:if="${applicant.paid == null}"><span class="badge alert-danger" th:text="'Due'"></span></td>
+                <td th:if="${applicant.paid != null}"><span class="badge alert-success" th:text="'Paid'"></span></td>
+                <td th:text="''" th:if="${applicant.tranxId == null}"></td>
+                <td th:text="${applicant.tranxId}" th:if="${applicant.tranxId != null}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<footer th:replace="layout::layout_footer">
+</footer>
+
+</body>
+</html>
