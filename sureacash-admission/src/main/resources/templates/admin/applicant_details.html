@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout::layout_header(~{::title}, ~{}, ~{::script})">
+    <title>Admin Dashboard</title>
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+
+
+
+        /*]]>*/
+    </script>
+</head>
+
+<body>
+<nav th:replace="layout::admin_layout_nav(6)">
+</nav>
+
+<div class="container">
+    <div class="row">
+        <h4>Applicant Details</h4>
+        <div class="row">
+            <div class="col-sm-2 col-md-2 col-lg-2" style="text-align: center;">
+                <img src="../static/images/login-photo.png" th:src="@{/images/login-photo.png}" class="avatar img-thumbnail" alt="avatar" style="max-width: 70%"/>
+            </div>
+            <div class="col-sm-5 col-md-5 col-lg-5">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Applicant Name</th>
+                        <td class="text-center">:</td>
+                        <td>MD. NAYIM</td>
+                    </tr>
+                    <tr>
+                        <th>Father`s Name</th>
+                        <td class="text-center">:</td>
+                        <td>ABDUL KARIM</td>
+                    </tr>
+                    <tr>
+                        <th>Mother`s Name</th>
+                        <td class="text-center">:</td>
+                        <td>SHIRINA AKHTER</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-sm-5 col-md-5 col-lg-5">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Status</th>
+                        <td class="text-center">:</td>
+                        <td>ACTIVE</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td class="text-center">:</td>
+                        <td>amirul@surecash.net</td>
+                    </tr>
+                    <tr>
+                        <th>Contact Number</th>
+                        <td class="text-center">:</td>
+                        <td>019145625456</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Exam</th>
+                            <th>Board</th>
+                            <th>Roll</th>
+                            <th>Year</th>
+                            <th>Group</th>
+                            <th>GPA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>SSC/Equivalent</td>
+                            <td>DHAKA</td>
+                            <td>541010</td>
+                            <td>2015</td>
+                            <td>BUSINESS</td>
+                            <td>3.89</td>
+                        </tr>
+                        <tr>
+                            <td>HSC/Equivalent</td>
+                            <td>DHAKA</td>
+                            <td>545682</td>
+                            <td>2017</td>
+                            <td>BUSINESS</td>
+                            <td>3.83</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Unit</th>
+                            <th>Disciplines</th>
+                            <th>Application Id</th>
+                            <th>Quota</th>
+                            <th>Fees(BDT)</th>
+                            <th>Payment Status</th>
+                            <th>Transaction Id</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>F</td>
+                            <td th:text="${#strings.toUpperCase('Accounting and Information Systems')}"></td>
+                            <td>152468</td>
+                            <td>NONE</td>
+                            <td th:text="${#numbers.formatDecimal(500, 0, 'COMMA', 2, 'POINT')}"></td>
+                            <td class="text-center"><span class="badge alert-success">PAID</span></td>
+                            <td>RB00004812245</td>
+                        </tr>
+                        <tr>
+                            <td>G</td>
+                            <td>Finance and Management</td>
+                            <td>126468</td>
+                            <td>NONE</td>
+                            <td th:text="${#numbers.formatDecimal(600, 0, 'COMMA', 2, 'POINT')}"></td>
+                            <td class="text-center"><span class="badge alert-danger">DUE</span></td>
+                            <td></td>
+                        </tr>
+                    <tr>
+                        <th colspan="4">Total Payable Amount</th>
+                        <th th:text="${#numbers.formatDecimal(1100, 0, 'COMMA', 2, 'POINT')}"></th>
+                        <th>Total Paid</th>
+                        <th th:text="${#numbers.formatDecimal(500, 0, 'COMMA', 2, 'POINT')}"></th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<footer th:replace="layout::layout_footer">
+</footer>
+
+</body>
+</html>

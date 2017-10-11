@@ -52,7 +52,22 @@ public class AdminController {
             List<StudentApplicationHistory> applicantList = studentApplicationHistoryRepository.findAllByUniversityAndUnit(universityRepository.getOne(1), unitRepository.getOne(unitId));
             model.addAttribute("applicantList", applicantList);
         }
-        return "admin/unit-details";
+        return "admin/unit_details";
 
+    }
+
+    @GetMapping(value = "/applicant-details")
+    public String getApplicantDetails(Model model){
+        return "admin/applicant_details";
+    }
+
+    @GetMapping(value = "/university-details")
+    public String getUniversityDetails(Model model){
+        return "admin/university_details";
+    }
+
+    @GetMapping(value = "/show-university-profile")
+    public String showUniversityProfile(Model model){
+        return "admin/edit_university_profile";
     }
 }
