@@ -56,7 +56,7 @@
             <tr th:each="applicant, itr: ${applicantList}">
                 <td th:text="${itr.count}"></td>
                 <td th:text="${applicant.applicationId}"></td>
-                <td><a href="" th:href="@{/admin/applicant-details}" th:target="_blank" th:text="${applicant.studentInfo.name}"></a></td>
+                <td><a href="" th:href="@{/admin/applicant-details(studentId=${applicant.id})}" th:target="_blank" th:text="${applicant.studentInfo.name}"></a></td>
                 <td th:text="${applicant.studentInfo.sscGPA}"></td>
                 <td th:text="${applicant.studentInfo.hscGPA}"></td>
                 <td th:text="${applicant.studentInfo.group}"></td>

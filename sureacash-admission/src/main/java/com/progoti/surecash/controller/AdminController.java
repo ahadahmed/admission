@@ -1,6 +1,7 @@
 package com.progoti.surecash.controller;
 
 import com.progoti.surecash.admission.domain.StudentApplicationHistory;
+import com.progoti.surecash.admission.domain.Unit;
 import com.progoti.surecash.admission.domain.University;
 import com.progoti.surecash.admission.repository.StudentApplicationHistoryRepository;
 import com.progoti.surecash.admission.repository.UnitRepository;
@@ -33,31 +34,37 @@ public class AdminController {
         //TODO: need to change this static value
         University university = universityRepository.getOne(1);
         List<AdminDashboardDto> universityStatus = studentApplicationHistoryRepository.findUniversityStatus(university);
-        int totalApplicant = 0, totalPaid = 0;
+        int totalApplicant = 0, totalPaid = 0, totalQuotaApplicant = 0;
         for (AdminDashboardDto dto : universityStatus) {
+            Unit unit = unitRepository.getOne(dto.getUnitId());
+            dto.setBoardStatusList(studentApplicationHistoryRepository.findBoardStatusByUnit(university, unit));
+            dto.setGroupStatusList(studentApplicationHistoryRepository.findGroupStatusByUnit(university, unit));
+
             totalApplicant += dto.getApplicantCount();
             totalPaid += dto.getPaidApplicant();
+            totalQuotaApplicant += dto.getQuotaApplicant();
+
         }
         model.addAttribute("statusList", universityStatus);
         model.addAttribute("unit", universityStatus.size());
         model.addAttribute("totalApplicant", totalApplicant);
         model.addAttribute("totalPaidApplicant", totalPaid);
+        model.addAttribute("totalQuotaApplicant", totalQuotaApplicant);
+
         return "admin/dashboard";
 
     }
 
     @GetMapping(value = "/unit-details")
-    public String getAdminSearch(Model model, @RequestParam(value = "unitId", required = false) Integer unitId) {
-        if (unitId != null) {
-            List<StudentApplicationHistory> applicantList = studentApplicationHistoryRepository.findAllByUniversityAndUnit(universityRepository.getOne(1), unitRepository.getOne(unitId));
-            model.addAttribute("applicantList", applicantList);
-        }
+    public String getAdminSearch(Model model, @RequestParam(value = "unitId", required = true) Integer unitId) {
+        List<StudentApplicationHistory> applicantList = studentApplicationHistoryRepository.findAllByUniversityAndUnit(universityRepository.getOne(1), unitRepository.getOne(unitId));
+        model.addAttribute("applicantList", applicantList);
         return "admin/unit_details";
 
     }
 
     @GetMapping(value = "/applicant-details")
-    public String getApplicantDetails(Model model){
+    public String getApplicantDetails(Model model, @RequestParam(value = "studentId", required = true) Integer studentId){
         return "admin/applicant_details";
     }
 

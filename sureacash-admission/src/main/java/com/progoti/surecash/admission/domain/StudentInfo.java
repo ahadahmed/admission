@@ -4,6 +4,7 @@ import com.progoti.surecash.admission.utility.Constants;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -59,10 +60,6 @@ public class StudentInfo implements Serializable{
     @Enumerated(EnumType.STRING)
     private Constants.Board hscBoard;
 
-    @Column(name = "quota")
-    @Enumerated(EnumType.STRING)
-    private Constants.Quota quota;
-
     @Column(name = "mobile_no", length = 11)
     private String mobile;
 
@@ -89,6 +86,14 @@ public class StudentInfo implements Serializable{
     @Lob
     @Column(name = "image_data", columnDefinition = "mediumblob")
     private byte[] image;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "insert_date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date insertDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "update_date")
+    private Date updateDate;
 
 
     public int getId() {
@@ -251,19 +256,27 @@ public class StudentInfo implements Serializable{
         this.hscBoard = hscBoard;
     }
 
-    public Constants.Quota getQuota() {
-        return quota;
-    }
-
-    public void setQuota(Constants.Quota quota) {
-        this.quota = quota;
-    }
-
     public Constants.Group getGroup() {
         return group;
     }
 
     public void setGroup(Constants.Group group) {
         this.group = group;
+    }
+
+    public Date getInsertDate() {
+        return insertDate;
+    }
+
+    public void setInsertDate(Date insertDate) {
+        this.insertDate = insertDate;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
     }
 }

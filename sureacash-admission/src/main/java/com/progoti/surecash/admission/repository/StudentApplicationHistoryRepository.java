@@ -20,8 +20,9 @@ import java.util.List;
 public interface StudentApplicationHistoryRepository extends JpaRepository<StudentApplicationHistory, Integer>{
     StudentApplicationHistory findOneByApplicationIdAndUniversity(String applicantId, University university);
 
-    @Query(value = "SELECT NEW com.progoti.surecash.dto.AdminDashboardDto(u.id, u.name, COUNT(sah.id), " +
-            "COUNT(CASE WHEN sah.paid IS NOT NULL THEN TRUE END)) " +
+    @Query(value = "SELECT NEW com.progoti.surecash.dto.AdminDashboardDto(u.id, u.name, u.code, COUNT(sah.id), " +
+            "COUNT(CASE WHEN sah.paid IS NOT NULL THEN TRUE END), " +
+            "COUNT(CASE WHEN (sah.quota IS NOT NULL OR sah.quota <> 'NONE') THEN TRUE END)) " +
             "FROM StudentApplicationHistory sah " +
             "INNER JOIN sah.unit u " +
             "WHERE sah.university = :university " +
@@ -33,4 +34,20 @@ public interface StudentApplicationHistoryRepository extends JpaRepository<Stude
 
     @Query("select h from StudentApplicationHistory h join h.studentInfo s join h.unit where s.userName = :userName")
     List<StudentApplicationHistory> loadHistoryByUserName(@Param("userName") String userName);
+
+    @Query(value = "SELECT si.group, COUNT(si.group) " +
+            "FROM StudentApplicationHistory sah " +
+            "INNER JOIN sah.studentInfo si " +
+            "WHERE sah.university = :university AND sah.unit = :unit " +
+            "GROUP BY si.group " +
+            "ORDER BY si.group")
+    List<Object[]> findGroupStatusByUnit(@Param("university") University university, @Param("unit") Unit unit);
+
+    @Query(value = "SELECT si.hscBoard, COUNT(si.hscBoard) " +
+            "FROM StudentApplicationHistory sah " +
+            "INNER JOIN sah.studentInfo si " +
+            "WHERE sah.university = :university AND sah.unit = :unit " +
+            "GROUP BY si.hscBoard " +
+            "ORDER BY si.hscBoard ")
+    List<Object[]> findBoardStatusByUnit(@Param("university") University university, @Param("unit") Unit unit);
 }

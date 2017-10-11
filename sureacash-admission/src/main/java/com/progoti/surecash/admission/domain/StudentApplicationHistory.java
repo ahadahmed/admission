@@ -1,9 +1,10 @@
 package com.progoti.surecash.admission.domain;
 
+import com.progoti.surecash.admission.utility.Constants;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by Shaown on 10:39 AM.
@@ -53,6 +54,10 @@ public class StudentApplicationHistory implements Serializable{
 
     @Column(name = "tranx_id", nullable = true)
     private String tranxId;
+
+    @Column(name = "quota")
+    @Enumerated(EnumType.STRING)
+    private Constants.Quota quota;
 
     public int getId() {
         return id;
@@ -140,5 +145,13 @@ public class StudentApplicationHistory implements Serializable{
 
     public void setTranxId(String tranxId) {
         this.tranxId = tranxId;
+    }
+
+    public Constants.Quota getQuota() {
+        return quota;
+    }
+
+    public void setQuota(Constants.Quota quota) {
+        this.quota = quota;
     }
 }

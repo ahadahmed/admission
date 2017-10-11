@@ -225,6 +225,7 @@ public class AdmissionServiceImpl implements AdmissionService {
             applicationHistory.setPayableAmount(admissionSessionRepository.findOneByUnit(unitRepository.getOne(unitId)).getFormPrice());
             applicationHistory.setApplicationId(String.valueOf(Constants.applicationIdGenerator(unitId)));
             applicationHistory.setUniversity(universityRepository.getOne(request.getUniversityId()));
+            applicationHistory.setQuota(request.getQuota());
             studentApplicationHistoryList.add(applicationHistory);
         }
     }
@@ -245,7 +246,6 @@ public class AdmissionServiceImpl implements AdmissionService {
         studentInfo.setHscPassingYear(request.getHscInfo().getPassingYear());
         studentInfo.setSscBoard(request.getSscInfo().getBoard());
         studentInfo.setHscBoard(request.getHscInfo().getBoard());
-        studentInfo.setQuota(request.getQuota());
         studentInfo.setGroup(request.getHscInfo().getGroup());
     }
 }

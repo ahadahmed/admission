@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Date;
 
 /**
  * Created by Shaown on 12:07 PM.
@@ -58,6 +59,7 @@ public class AcademicInfoController {
         if(imageFile != null){
             studentInfo.setImage(imageFile.getBytes());
         }
+        studentInfo.setUpdateDate(new Date());
         studentInfoRepository.saveAndFlush(studentInfo);
         return "SUCCESS";
     }
