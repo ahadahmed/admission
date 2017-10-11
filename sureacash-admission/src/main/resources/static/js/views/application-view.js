@@ -1,17 +1,40 @@
 
-function btnApplyClicked() {
-    var ids = [];
-    $("#tbl-available").find(">tbody>tr>td>input:checked").each(function () {
-        var elemId = $(this).parent().parent().attr("id");
-        var arr = elemId.split("-");
-        var id = arr[arr.length - 1];
-        ids.push(id);
-    });
-    if (ids.length > 0) {
-        console.log(ids);
+function applyUnit(base) {
+    if (confirm("Are you sure?")) {
+        var ids = [];
+        $("#tbl-available").find(">tbody>tr>td>input:checked").each(
+                function () {
+                    var elemId = $(this).parent().parent().attr("id");
+                    var arr = elemId.split("-");
+                    var id = arr[arr.length - 1];
+                    ids.push(id);
+                });
+        if (ids.length > 0) {
+            console.log(ids);
 
-        //TODO: call service
-        location.reload();
+            var url = base + "applicationStatus/apply";
+            $.ajax({
+                url: url,
+                method: "POST",
+                data: JSON.stringify(ids),
+                dataType: "json",
+                contentType: 'application/json; charset=utf-8',
+                statusCode: {
+                    200: function (response) {
+                        //TODO: Show success tooltip
+                        location.reload();
+                    }
+                },
+                success: function (result, status, xhr) {
+                    console.log("result: " + result);
+                    console.log("status: " + status);
+                    console.log("code: " + xhr.status);
+                },
+                error: function (xhr) {
+                    //TODO: Show error tooltip
+                }
+            });
+        }
     }
 }
 

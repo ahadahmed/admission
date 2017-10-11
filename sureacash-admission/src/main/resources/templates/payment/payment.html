@@ -41,7 +41,7 @@
               </tbody>
             </table>
           </div>
-          <button type="button" class="btn btn-success" onclick="btnConfirmClicked()">Confirm</button>
+          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirm-modal">Confirm</button>
         </div>
       </div>
 
@@ -55,6 +55,28 @@
       </p>
     </div>
     <!--End Page Body-->
+
+    <!-- Modal -->
+    <div class="modal fade" id="confirm-modal" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Payment Confirmation</h4>
+          </div>
+          <div class="modal-body">
+            <p>You should confirm your total payment</p>
+            <p>To confirm your payment please follow payment guide. For more info please contact
+               to our help center.
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Modal -->
 
   </div>
 </div>

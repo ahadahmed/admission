@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -38,6 +40,13 @@ public class ApplicationStatusController {
         model.addAttribute("appliedUnits", appliedUnits);
 
         return "application/application.html";
+    }
+
+    @PostMapping("/apply")
+    @ResponseBody
+    public ResponseEntity applyUnit(@RequestBody List<Integer> unitIds) {
+        applicationStatusService.applyUnit(1, "2017-2018", unitIds);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/delete/{historyId}")
