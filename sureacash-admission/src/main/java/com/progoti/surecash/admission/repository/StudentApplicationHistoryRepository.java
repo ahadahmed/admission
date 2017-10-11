@@ -30,4 +30,7 @@ public interface StudentApplicationHistoryRepository extends JpaRepository<Stude
 
     @EntityGraph(value = "StudentApplicationHistory.detail", type = EntityGraph.EntityGraphType.LOAD)
     List<StudentApplicationHistory> findAllByUniversityAndUnit(University university, Unit unit);
+
+    @Query("select h from StudentApplicationHistory h join h.studentInfo s join h.unit where s.userName = :userName")
+    List<StudentApplicationHistory> loadHistoryByUserName(@Param("userName") String userName);
 }
