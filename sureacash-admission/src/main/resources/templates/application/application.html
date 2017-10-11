@@ -38,7 +38,7 @@
                   </tbody>
                 </table>
               </div>
-              <button type="button" class="btn btn-success" onclick="btnApplyClicked()">Apply</button>
+              <button type="button" class="btn btn-success" onclick="applyClicked()">Apply</button>
             </div>
             <div class="col-sm-6">
               <p>If you want to cancel application, you can press <span class="glyphicon glyphicon-trash"></span> in the below section</p>
@@ -83,6 +83,10 @@
 
     function deleteApplicationClicked(unitId, historyId) {
         deleteUnit(base, unitId, historyId);
+    }
+
+    function applyClicked() {
+        applyUnit(base);
     }
 </script>
 

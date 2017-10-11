@@ -14,4 +14,7 @@ public interface UnitRepository extends JpaRepository<Unit, Integer> {
 
     @Query("select a from AdmissionSession a join a.unit u join u.university un where a.session = :session and un.id = :universityId")
     List<AdmissionSession> loadUnitsByUniversityAndSession(@Param("session") String session, @Param("universityId") int universityId);
+
+    @Query("select a from AdmissionSession a join a.unit u join u.university un where a.session = :session and u.id in :unitIds")
+    List<AdmissionSession> loadUnitsByUnitIds(@Param("session") String session, @Param("unitIds") List<Integer> unitIds);
 }

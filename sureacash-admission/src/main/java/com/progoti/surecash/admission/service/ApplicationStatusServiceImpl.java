@@ -3,11 +3,14 @@ package com.progoti.surecash.admission.service;
 import com.progoti.surecash.admission.converter.UnitConverter;
 import com.progoti.surecash.admission.domain.AdmissionSession;
 import com.progoti.surecash.admission.domain.StudentApplicationHistory;
+import com.progoti.surecash.admission.domain.StudentInfo;
 import com.progoti.surecash.admission.repository.StudentApplicationHistoryRepository;
 import com.progoti.surecash.admission.repository.UnitRepository;
+import com.progoti.surecash.admission.utility.Constants;
 import com.progoti.surecash.admission.utility.SteamCollector;
 import com.progoti.surecash.dto.UnitDto;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +33,8 @@ public class ApplicationStatusServiceImpl implements ApplicationStatusService {
             String userName, String sessionYear, int universityId) {
         List<AdmissionSession> sessions = unitRepository
                 .loadUnitsByUniversityAndSession(sessionYear, universityId);
-        List<StudentApplicationHistory> histories = historyRepository.loadHistoryByUserName(userName);
+        List<StudentApplicationHistory> histories = historyRepository
+                .loadHistoryByUserName(userName);
 
         List<UnitDto> finalAvailableUnits = new ArrayList<>();
         List<UnitDto> finalAppliedUnits = new ArrayList<>();
@@ -48,6 +52,26 @@ public class ApplicationStatusServiceImpl implements ApplicationStatusService {
         });
         appliedUnits.addAll(finalAppliedUnits);
         availableUnits.addAll(finalAvailableUnits);
+    }
+
+    @Override
+    public void applyUnit(int studentInfoId, String sessionYear, List<Integer> unitIds) {
+        List<AdmissionSession> sessions = unitRepository.loadUnitsByUnitIds(sessionYear, unitIds);
+        List<StudentApplicationHistory> histories = new ArrayList<>();
+        for (AdmissionSession session : sessions) {
+            StudentApplicationHistory history = new StudentApplicationHistory();
+            int applicationId = Constants.applicationIdGenerator(session.getUnit().getId());
+            history.setApplicationId(String.valueOf(applicationId));
+            history.setPayableAmount(session.getFormPrice());
+            history.setActive(true);
+            history.setApplicationDate(new Date());
+            history.setUnit(session.getUnit());
+            history.setStudentInfo(new StudentInfo(studentInfoId));
+            history.setPaid(false);
+            history.setUniversity(session.getUnit().getUniversity());
+            histories.add(history);
+        }
+        historyRepository.save(histories);
     }
 
     @Override

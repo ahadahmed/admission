@@ -15,6 +15,12 @@ import java.util.Set;
 public class StudentInfo implements Serializable{
     private static final long serialVersionUID = 1L;
 
+    public StudentInfo() { }
+
+    public StudentInfo(int id) {
+        this.id = id;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
