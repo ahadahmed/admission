@@ -51,6 +51,7 @@ public class AdmissionServiceImpl implements AdmissionService {
         StudentInfo studentInfo = new StudentInfo();
         doStudentInfoReflection(studentInfo, request);
         studentInfo.setUserName(Constants.userNameGenerator(request.getUniversityId()));
+        studentInfo.setUniversity(universityRepository.getOne(request.getUniversityId()));
         StudentInfo student = studentInfoRepository.save(studentInfo);
 
         List<StudentApplicationHistory> studentApplicationHistoryList = new ArrayList<>();

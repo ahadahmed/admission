@@ -56,13 +56,13 @@
             <tr th:each="applicant, itr: ${applicantList}">
                 <td th:text="${itr.count}"></td>
                 <td th:text="${applicant.applicationId}"></td>
-                <td><a href="#" th:text="${applicant.studentInfo.name}"></a></td>
+                <td><a href="" th:href="@{/admin/applicant-details}" th:target="_blank" th:text="${applicant.studentInfo.name}"></a></td>
                 <td th:text="${applicant.studentInfo.sscGPA}"></td>
                 <td th:text="${applicant.studentInfo.hscGPA}"></td>
                 <td th:text="${applicant.studentInfo.group}"></td>
                 <td th:text="${applicant.applicationDate}"></td>
-                <td th:if="${applicant.paid == null}"><span class="badge alert-danger" th:text="'Due'"></span></td>
-                <td th:if="${applicant.paid != null}"><span class="badge alert-success" th:text="'Paid'"></span></td>
+                <td th:if="${applicant.paid == null}" class="text-center"><span class="badge alert-danger" th:text="'DUE'"></span></td>
+                <td th:if="${applicant.paid != null}" class="text-center"><span class="badge alert-success" th:text="'PAID'"></span></td>
                 <td th:text="''" th:if="${applicant.tranxId == null}"></td>
                 <td th:text="${applicant.tranxId}" th:if="${applicant.tranxId != null}"></td>
             </tr>
