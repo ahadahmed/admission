@@ -7,4 +7,6 @@ public interface ApplicationStatusService {
 
     void retrieveAvailableUnits(List<UnitDto> availableUnits, List<UnitDto> appliedUnits,
             String userName, String sessionYear, int universityId);
+
+    void deleteApplication(int historyId);
 }

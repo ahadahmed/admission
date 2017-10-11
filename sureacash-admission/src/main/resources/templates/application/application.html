@@ -59,7 +59,7 @@
                     <td th:text="${unit.name}"></td>
                     <td th:text="${unit.formattedFees}"></td>
                     <td><button class="glyphicon glyphicon-trash color-red text-btn"
-                                th:onclick="${'deleteUnit('+unit.unitId+', ' + unit.historyId + ')'}"></button>
+                                th:onclick="${'deleteApplicationClicked('+unit.unitId+', ' + unit.historyId + ')'}"></button>
                     </td>
                   </tr>
                   </tbody>
@@ -77,6 +77,14 @@
 
 <footer th:replace="layout::layout_footer">
 </footer>
+
+<script th:inline="javascript">
+    var base = [[@{/}]];
+
+    function deleteApplicationClicked(unitId, historyId) {
+        deleteUnit(base, unitId, historyId);
+    }
+</script>
 
 </body>
 </html>

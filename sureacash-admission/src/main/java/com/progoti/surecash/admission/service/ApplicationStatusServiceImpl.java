@@ -25,6 +25,7 @@ public class ApplicationStatusServiceImpl implements ApplicationStatusService {
         this.historyRepository = historyRepository;
     }
 
+    @Override
     public void retrieveAvailableUnits(List<UnitDto> availableUnits, List<UnitDto> appliedUnits,
             String userName, String sessionYear, int universityId) {
         List<AdmissionSession> sessions = unitRepository
@@ -47,5 +48,10 @@ public class ApplicationStatusServiceImpl implements ApplicationStatusService {
         });
         appliedUnits.addAll(finalAppliedUnits);
         availableUnits.addAll(finalAvailableUnits);
+    }
+
+    @Override
+    public void deleteApplication(int historyId) {
+        historyRepository.delete(historyId);
     }
 }
