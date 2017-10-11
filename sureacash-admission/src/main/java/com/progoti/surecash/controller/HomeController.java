@@ -78,19 +78,4 @@ public class HomeController {
 		System.out.println(greeting.getStringValue());
 		return "redirect:/greeting";
 	}
-
-	@GetMapping("/payment")
-	public String showPaymentPage(Model model) {
-		List<PaymentRequestDto> paymentRequests = new ArrayList<>();
-
-		paymentRequests.add(new PaymentRequestDto(1, "9307052", "F", "500.00", false));
-		paymentRequests.add(new PaymentRequestDto(2, "0904090", "F", "500.00", true));
-		paymentRequests.add(new PaymentRequestDto(3, "0904091", "F", "500.00", true));
-		paymentRequests.add(new PaymentRequestDto(4, "9307052", "F", "500.00", false));
-		paymentRequests.add(new PaymentRequestDto(5, "9307052", "F", "500.00", false));
-
-		model.addAttribute("paymentRequests", paymentRequests);
-
-		return "payment/payment.html";
-	}
 }
