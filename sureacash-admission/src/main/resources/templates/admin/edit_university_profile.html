@@ -3,8 +3,118 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout::layout_header(~{::title}, ~{}, ~{::script})">
     <title>University Profile</title>
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/additional-methods.js"></script>
     <script type="text/javascript" th:inline="javascript">
         /*<![CDATA[*/
+
+        $(document).ready(function () {
+            $('#profile-upload-form').validate({
+                rules: {
+                    emailInput: {
+                        required: true,
+                    },
+                    contact: {
+                        required: true
+                    },
+                    address: {
+                        required: true
+                    }
+                },
+                messages: {
+                    email: "Please enter a valid email address",
+                    contact: "Please enter a valid contact no"
+                },
+                submitHandler: function(form) {
+                    $('#universityConfirmationModal').modal('show');
+                }
+            });
+        });
+
+        var showMessageDiv = function(msg){
+            var divElement = $('#university-msg-div');
+            divElement.removeClass();
+            divElement.addClass('alert alert-danger');
+            divElement.empty().text(msg);
+            divElement.show();
+            divElement.delay(5000).fadeOut('slow');
+            $('#image').hide();
+            $('#default-image').show();
+            $('#image-file').val('');
+        };
+
+        var imageHandler = function(e2)
+        {
+            var img = new Image();
+            img.src = e2.target.result;
+            img.onload = function(){
+                if(img.height === 300 && img.width === 300){
+                    if(e2.loaded <= 64*1021){
+                        $('#default-image').attr('src', e2.target.result);
+                    } else{
+                        showMessageDiv('Image size must be not greater than 64KB')
+                    }
+                } else{
+                    showMessageDiv('Image dimension must be 300*300 and size not greater than 64KB');
+                }
+            };
+        };
+
+
+        var loadImage = function(evt){
+            var filename = evt.target.files[0];
+            var fr = new FileReader();
+            fr.onload = imageHandler;
+            fr.readAsDataURL(filename);
+        };
+
+        $(document).ready(function () {
+            var imageElement = document.getElementById("image-file");
+            if(document.body.contains(imageElement)){
+                imageElement.addEventListener("change", function (evt) {
+                    var imageFile = this.files[0];
+                    if (imageFile.type.match(/image.*/)) {
+                        loadImage(evt);
+                    } else{
+                        showMessageDiv('File type must be jpg,png')
+                    }
+                });
+            }
+        });
+
+        var update = function() {
+            var form = $('#image-upload-form')[0];
+            console.log(form);
+            var data = new FormData(form);
+            data.append("address", $('#addressId').val());
+            data.append("contactNo", $('#contactId').val());
+            data.append("email", $('#emailId').val());
+            $.ajax({
+                type: "POST",
+                enctype: 'multipart/form-data',
+                url: "/academic/admin/update/profile",
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
+                timeout: 600000,
+                success: function (data) {
+                    $('#image-upload-form').hide();
+                },
+                error: function (e) {
+                    console.log(e);
+                    $('#image-file').val('');
+                }
+            });
+        };
+
+        var showModal = function() {
+            $('#universityConfirmationModal').modal('show');
+        };
+
+        var closeModal = function() {
+            $('#universityConfirmationModal').modal('hide');
+        };
 
 
         /*]]>*/
@@ -16,7 +126,7 @@
 </nav>
 
 <div class="container">
-    <div class="" id="msg-div" style="display: none;">
+    <div class="" id="university-msg-div" style="display: none;">
 
     </div>
     <h1>Edit University Profile</h1>
@@ -25,8 +135,8 @@
         <!-- left column -->
         <div class="col-md-3">
             <div class="text-center">
-                <img id="default-image" src="../static/images/login-photo.png" th:src="@{/images/login-photo.png}"
-                     class="avatar img-thumbnail" alt="avatar" height="200" width="200"/>
+                <img id="default-image" src="../static/images/login-photo.png" th:src="@{/images/login-photo.png}" th:if="${university.logo == null}" class="avatar img-thumbnail" alt="avatar" height="200" width="200"/>
+                <img id="image" src="" th:src="@{${'data:image/jpeg;base64,' + T(com.progoti.surecash.admission.utility.Constants).getBase64ImageData(university.logo)}}" th:if="${university.logo != null}" class="avatar img-thumbnail" alt="avatar" height="200" width="200"/>
                 <br/>
                 <br/>
                 <form class="form-horizontal" role="form" id="image-upload-form" enctype="multipart/form-data">
@@ -37,74 +147,71 @@
 
         <!-- edit form column -->
         <div class="col-md-9 personal-info">
-            <h3>Uiversity Profile info</h3>
+            <h3>University Profile info</h3>
 
-            <form class="form-horizontal" role="form" id="profile-upload-form">
+            <form class="form-horizontal" role="form" id="profile-upload-form" action="#">
                 <div class="form-group">
                     <label class="col-lg-3 control-label">University Name</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="text" th:disabled="disabled"/>
+                        <input class="form-control" type="text" th:disabled="disabled" th:value="${university.name}"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-lg-3 control-label">University ShortCode</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="text" th:disabled="disabled"/>
+                        <input class="form-control" type="text" th:disabled="disabled" th:value="${university.billerCode}"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-lg-3 control-label">University Wallet</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="text" th:disabled="disabled"/>
+                        <input class="form-control" type="text" th:disabled="disabled" th:value="${university.wallet}"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Address</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="text" />
+                        <input class="form-control" name="address" id="addressId" type="text" required th:value="${university.address}"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Contact No</label>
-
                     <div class="col-lg-8">
-                        <input class="form-control" type="text" />
+                        <input class="form-control" name="contact" id="contactId" type="text" required th:value="${university.contactNo}"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Email</label>
-
                     <div class="col-lg-8">
-                        <input class="form-control" id="emailId" type="text" />
+                        <input class="form-control" name="emailInput" id="emailId" type="email" required th:value="${university.email}"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label"></label>
-
                     <div class="col-md-8">
-                        <input type="button" class="btn btn-primary" value="Save Changes" onclick=""/>
+                        <input type="submit" class="btn btn-primary" value="Save Changes"/>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel">
+    <div class="modal fade" id="universityConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="universityConfirmationModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title" id="confirmationModalLabel" style="text-align: center">Profile Update Confirmation</h4>
+                    <h4 class="modal-title" id="universityConfirmationModalLabel" style="text-align: center">University Profile Update Confirmation</h4>
                 </div>
                 <div class="modal-body">
                     <div class="" id="validation-body-div">
-                        <h2>Please click confirm to update profile information</h2>
+                        <h4>Please click confirm to update university profile</h4>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="submit-btn" data-dismiss="modal" onclick="">Confirm</button>
-                    <button type="button" class="btn btn-warning" data-dismiss="modal" onclick="">Cancel</button>
+                    <button type="button" class="btn btn-success" id="submit-btn" data-dismiss="modal" onclick="update()">Confirm</button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal" onclick="closeModal()">Cancel</button>
                 </div>
             </div>
         </div>

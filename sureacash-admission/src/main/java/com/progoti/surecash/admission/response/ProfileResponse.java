@@ -1,7 +1,6 @@
 package com.progoti.surecash.admission.response;
 
 import com.progoti.surecash.admission.utility.Constants;
-import org.apache.commons.codec.binary.Base64;
 
 import java.io.Serializable;
 
@@ -18,7 +17,6 @@ public class ProfileResponse implements Serializable {
     private String email;
     private String contactNo;
     private byte[] imageData;
-    private String base64Image;
 
     public ProfileResponse() {
     }
@@ -85,11 +83,4 @@ public class ProfileResponse implements Serializable {
         this.imageData = imageData;
     }
 
-    public String getBase64Image() {
-        return base64Image;
-    }
-
-    public void setBase64Image() {
-        this.base64Image = Base64.encodeBase64String(this.imageData);
-    }
 }

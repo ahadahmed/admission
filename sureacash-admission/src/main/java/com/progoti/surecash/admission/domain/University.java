@@ -37,6 +37,19 @@ public class University implements Serializable{
     @OneToMany(mappedBy = "university")
     private List<StudentApplicationHistory> studentApplicationHistoryList;
 
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "contact_no")
+    private String contactNo;
+
+    @Column(name = "address")
+    private String address;
+
+    @Lob
+    @Column(name = "logo", columnDefinition = "mediumblob")
+    private byte[] logo;
+
     public int getId() {
         return id;
     }
@@ -91,5 +104,37 @@ public class University implements Serializable{
 
     public void setStudentApplicationHistoryList(List<StudentApplicationHistory> studentApplicationHistoryList) {
         this.studentApplicationHistoryList = studentApplicationHistoryList;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getContactNo() {
+        return contactNo;
+    }
+
+    public void setContactNo(String contactNo) {
+        this.contactNo = contactNo;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public byte[] getLogo() {
+        return logo;
+    }
+
+    public void setLogo(byte[] logo) {
+        this.logo = logo;
     }
 }

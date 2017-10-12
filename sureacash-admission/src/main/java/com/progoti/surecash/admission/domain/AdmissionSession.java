@@ -7,6 +7,7 @@ import java.io.Serializable;
  * Created by Shaown on 10:32 AM.
  */
 @Entity
+@NamedEntityGraph(name = "AdmissionSession.detail", attributeNodes = {@NamedAttributeNode("unit")})
 @Table(name = "admission_session")
 public class AdmissionSession implements Serializable{
     private static final long serialVersionUID = 1L;

@@ -4,10 +4,7 @@ import com.progoti.surecash.admission.domain.StudentApplicationHistory;
 import com.progoti.surecash.admission.domain.StudentInfo;
 import com.progoti.surecash.admission.domain.Unit;
 import com.progoti.surecash.admission.domain.University;
-import com.progoti.surecash.admission.repository.StudentApplicationHistoryRepository;
-import com.progoti.surecash.admission.repository.StudentInfoRepository;
-import com.progoti.surecash.admission.repository.UnitRepository;
-import com.progoti.surecash.admission.repository.UniversityRepository;
+import com.progoti.surecash.admission.repository.*;
 import com.progoti.surecash.admission.service.AdmissionService;
 import com.progoti.surecash.dto.AdminDashboardDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,14 +32,16 @@ public class AdminController {
     private StudentInfoRepository studentInfoRepository;
     @Autowired
     private AdmissionService admissionService;
+    @Autowired
+    private AdmissionSessionRepository admissionSessionRepository;
 
     @GetMapping(value = "/dashboard")
     public String getAdminDashboard(Model model) {
         //TODO: need to change this static value
         University university = universityRepository.getOne(1);
-        List<AdminDashboardDto> universityStatus = studentApplicationHistoryRepository.findUniversityStatus(university);
+        List<AdminDashboardDto> universityStatusList = studentApplicationHistoryRepository.findUniversityStatus(university);
         int totalApplicant = 0, totalPaid = 0, totalQuotaApplicant = 0;
-        for (AdminDashboardDto dto : universityStatus) {
+        for (AdminDashboardDto dto : universityStatusList) {
             Unit unit = unitRepository.getOne(dto.getUnitId());
             dto.setBoardStatusList(studentApplicationHistoryRepository.findBoardStatusByUnit(university, unit));
             dto.setGroupStatusList(studentApplicationHistoryRepository.findGroupStatusByUnit(university, unit));
@@ -52,8 +51,8 @@ public class AdminController {
             totalQuotaApplicant += dto.getQuotaApplicant();
 
         }
-        model.addAttribute("statusList", universityStatus);
-        model.addAttribute("unit", universityStatus.size());
+        model.addAttribute("statusList", universityStatusList);
+        model.addAttribute("unit", universityStatusList.size());
         model.addAttribute("totalApplicant", totalApplicant);
         model.addAttribute("totalPaidApplicant", totalPaid);
         model.addAttribute("totalQuotaApplicant", totalQuotaApplicant);
@@ -81,11 +80,17 @@ public class AdminController {
 
     @GetMapping(value = "/university-details")
     public String getUniversityDetails(Model model){
+        //TODO: need to change in university static value
+        University university = universityRepository.findOne(1);
+        model.addAttribute("university", university);
+        model.addAttribute("admissionSessionList", admissionSessionRepository.findAllUnitByUniversity(university));
         return "admin/university_details";
     }
 
     @GetMapping(value = "/show-university-profile")
     public String showUniversityProfile(Model model){
+        //TODO: need to change in university static value
+        model.addAttribute("university", universityRepository.findOne(1));
         return "admin/edit_university_profile";
     }
 }

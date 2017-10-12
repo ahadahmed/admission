@@ -71,7 +71,6 @@ public class AdmissionServiceImpl implements AdmissionService {
 
         ProfileResponse profileResponse = new ProfileResponse(null, studentInfo.getEmail(), studentInfo.getMobile());
         profileResponse.setImageData(studentInfo.getImage());
-        profileResponse.setBase64Image();
         profileResponse.setName(studentInfoResponse.getName());
         profileResponse.setFatherName(studentInfoResponse.getFatherName());
         profileResponse.setMotherName(studentInfoResponse.getMotherName());

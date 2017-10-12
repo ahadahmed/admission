@@ -2,8 +2,10 @@ package com.progoti.surecash.admission.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.annotation.RegEx;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
@@ -42,6 +44,7 @@ public class AdmissionPaymentRequest implements Serializable{
 
     @Column(name = "from_wallet")
     @Size(max = 12)
+    @Pattern(regexp = "01[5-9][0-9]{9}")
     @NotNull
     private String fromWallet;
 

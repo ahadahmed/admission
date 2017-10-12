@@ -1,5 +1,7 @@
 package com.progoti.surecash.admission.utility;
 
+import org.apache.commons.codec.binary.Base64;
+
 import java.security.SecureRandom;
 import java.text.DecimalFormat;
 import java.util.UUID;
@@ -112,5 +114,9 @@ public class Constants {
             return String.valueOf(uniId) + UUID.randomUUID().toString().replaceAll("-", "")
                     .substring(0, maxDigit - counter);
         }
+    }
+
+    public static String getBase64ImageData(byte[] byteData){
+        return Base64.encodeBase64String(byteData);
     }
 }
