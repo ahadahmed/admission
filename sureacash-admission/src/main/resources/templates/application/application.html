@@ -58,7 +58,8 @@
                     <td th:text="${unit.code}"></td>
                     <td th:text="${unit.name}"></td>
                     <td th:text="${unit.formattedFees}"></td>
-                    <td><button class="glyphicon glyphicon-trash color-red text-btn"
+                    <td><button th:if="${unit.paid}==false"
+                                class="glyphicon glyphicon-trash color-red text-btn"
                                 th:onclick="${'deleteApplicationClicked('+unit.unitId+', ' + unit.historyId + ')'}"></button>
                     </td>
                   </tr>

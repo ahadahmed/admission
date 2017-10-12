@@ -11,11 +11,12 @@ public class UnitDto {
     private String description;
     private String universityName;
     private String formattedFees;
+    private boolean paid;
 
     public UnitDto() {}
 
     public UnitDto(int unitId, int historyId, String name, String code, String description,
-            String universityName, String formattedFees) {
+            String universityName, String formattedFees, boolean paid) {
         this.unitId = unitId;
         this.historyId = historyId;
         this.name = name;
@@ -23,6 +24,7 @@ public class UnitDto {
         this.description = description;
         this.universityName = universityName;
         this.formattedFees = formattedFees;
+        this.paid = paid;
     }
 
     public int getUnitId() {
@@ -79,6 +81,14 @@ public class UnitDto {
 
     public void setFormattedFees(String formattedFees) {
         this.formattedFees = formattedFees;
+    }
+
+    public boolean isPaid() {
+        return paid;
+    }
+
+    public void setPaid(boolean paid) {
+        this.paid = paid;
     }
 
     @Override
