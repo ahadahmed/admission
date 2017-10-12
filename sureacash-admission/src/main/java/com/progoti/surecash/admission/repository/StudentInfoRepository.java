@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 /**
  * Created by Shaown on 12:05 PM.
  */
-@Repository()
+@Repository
 public interface StudentInfoRepository extends JpaRepository<StudentInfo, Integer>{
 	StudentInfo findOneByUserNameAndUniversity(String userName, University university);
 }

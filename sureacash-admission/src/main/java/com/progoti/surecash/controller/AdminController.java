@@ -1,11 +1,14 @@
 package com.progoti.surecash.controller;
 
 import com.progoti.surecash.admission.domain.StudentApplicationHistory;
+import com.progoti.surecash.admission.domain.StudentInfo;
 import com.progoti.surecash.admission.domain.Unit;
 import com.progoti.surecash.admission.domain.University;
 import com.progoti.surecash.admission.repository.StudentApplicationHistoryRepository;
+import com.progoti.surecash.admission.repository.StudentInfoRepository;
 import com.progoti.surecash.admission.repository.UnitRepository;
 import com.progoti.surecash.admission.repository.UniversityRepository;
+import com.progoti.surecash.admission.service.AdmissionService;
 import com.progoti.surecash.dto.AdminDashboardDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +31,10 @@ public class AdminController {
     private UniversityRepository universityRepository;
     @Autowired
     private UnitRepository unitRepository;
+    @Autowired
+    private StudentInfoRepository studentInfoRepository;
+    @Autowired
+    private AdmissionService admissionService;
 
     @GetMapping(value = "/dashboard")
     public String getAdminDashboard(Model model) {
@@ -65,6 +72,10 @@ public class AdminController {
 
     @GetMapping(value = "/applicant-details")
     public String getApplicantDetails(Model model, @RequestParam(value = "studentId", required = true) Integer studentId){
+        StudentInfo studentInfo = studentInfoRepository.getOne(studentId);
+        model.addAttribute("student", studentInfo);
+        model.addAttribute("profile", admissionService.getStudentProfile(studentInfo));
+        model.addAttribute("applicationList", studentApplicationHistoryRepository.findAllByStudentInfo(studentInfo));
         return "admin/applicant_details";
     }
 

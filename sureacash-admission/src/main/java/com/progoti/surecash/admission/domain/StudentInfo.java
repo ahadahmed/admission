@@ -83,7 +83,11 @@ public class StudentInfo implements Serializable{
 
     @Column(name = "hsc_group")
     @Enumerated(EnumType.STRING)
-    private Constants.Group group;
+    private Constants.Group hscGroup;
+
+    @Column(name = "ssc_group")
+    @Enumerated(EnumType.STRING)
+    private Constants.Group sscGroup;
 
     /*@ManyToOne
 	@JoinColumn(name = "role_id")
@@ -262,14 +266,6 @@ public class StudentInfo implements Serializable{
         this.hscBoard = hscBoard;
     }
 
-    public Constants.Group getGroup() {
-        return group;
-    }
-
-    public void setGroup(Constants.Group group) {
-        this.group = group;
-    }
-
     public Date getInsertDate() {
         return insertDate;
     }
@@ -284,5 +280,21 @@ public class StudentInfo implements Serializable{
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public Constants.Group getHscGroup() {
+        return hscGroup;
+    }
+
+    public void setHscGroup(Constants.Group hscGroup) {
+        this.hscGroup = hscGroup;
+    }
+
+    public Constants.Group getSscGroup() {
+        return sscGroup;
+    }
+
+    public void setSscGroup(Constants.Group sscGroup) {
+        this.sscGroup = sscGroup;
     }
 }

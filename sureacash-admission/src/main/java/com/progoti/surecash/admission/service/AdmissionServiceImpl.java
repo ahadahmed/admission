@@ -246,6 +246,7 @@ public class AdmissionServiceImpl implements AdmissionService {
         studentInfo.setHscPassingYear(request.getHscInfo().getPassingYear());
         studentInfo.setSscBoard(request.getSscInfo().getBoard());
         studentInfo.setHscBoard(request.getHscInfo().getBoard());
-        studentInfo.setGroup(request.getHscInfo().getGroup());
+        studentInfo.setSscGroup(request.getSscInfo().getGroup());
+        studentInfo.setHscGroup(request.getHscInfo().getGroup());
     }
 }

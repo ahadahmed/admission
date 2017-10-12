@@ -1,6 +1,7 @@
 package com.progoti.surecash.admission.repository;
 
 import com.progoti.surecash.admission.domain.StudentApplicationHistory;
+import com.progoti.surecash.admission.domain.StudentInfo;
 import com.progoti.surecash.admission.domain.Unit;
 import com.progoti.surecash.admission.domain.University;
 import com.progoti.surecash.dto.AdminDashboardDto;
@@ -35,12 +36,12 @@ public interface StudentApplicationHistoryRepository extends JpaRepository<Stude
     @Query("select h from StudentApplicationHistory h join h.studentInfo s join h.unit where s.userName = :userName")
     List<StudentApplicationHistory> loadHistoryByUserName(@Param("userName") String userName);
 
-    @Query(value = "SELECT si.group, COUNT(si.group) " +
+    @Query(value = "SELECT si.hscGroup, COUNT(si.hscGroup) " +
             "FROM StudentApplicationHistory sah " +
             "INNER JOIN sah.studentInfo si " +
             "WHERE sah.university = :university AND sah.unit = :unit " +
-            "GROUP BY si.group " +
-            "ORDER BY si.group")
+            "GROUP BY si.hscGroup " +
+            "ORDER BY si.hscGroup")
     List<Object[]> findGroupStatusByUnit(@Param("university") University university, @Param("unit") Unit unit);
 
     @Query(value = "SELECT si.hscBoard, COUNT(si.hscBoard) " +
@@ -50,4 +51,6 @@ public interface StudentApplicationHistoryRepository extends JpaRepository<Stude
             "GROUP BY si.hscBoard " +
             "ORDER BY si.hscBoard ")
     List<Object[]> findBoardStatusByUnit(@Param("university") University university, @Param("unit") Unit unit);
+
+    List<StudentApplicationHistory> findAllByStudentInfo(StudentInfo studentInfo);
 }
