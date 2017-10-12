@@ -5,6 +5,7 @@ import com.progoti.surecash.admission.domain.UserDetailsImpl;
 import com.progoti.surecash.admission.repository.EnquiryRepository;
 import com.progoti.surecash.admission.repository.StudentInfoRepository;
 import com.progoti.surecash.admission.service.AdmissionService;
+import com.progoti.surecash.admission.utility.SecurityUtils;
 import com.progoti.surecash.dto.PaymentRequestDto;
 import com.progoti.surecash.dto.UnitDto;
 import com.progoti.surecash.dto.form.Greeting;
@@ -36,15 +37,7 @@ public class HomeController {
 
 	@GetMapping(value = "/general-enquiry")
 	public String enquiryForm(Model model, @ModelAttribute("enquiry") Enquiry enquiry) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		UserDetailsImpl user = null;
-		if (auth != null) {
-			Object principal = auth.getPrincipal();
-			if (principal instanceof UserDetailsImpl) {
-				user = (UserDetailsImpl) principal;
-				System.out.println(user.getUser().getUserName() + "-->" + user.getUser().getUniv().getId());
-			}
-		}
+		UserDetailsImpl user = SecurityUtils.getUserDetails();
 		System.out.println(user.getUser().getUserName() + "-->" + user.getUser().getUniv().getId());
 		model.addAttribute("submitted", false);
 		return "general_enquiry";
@@ -52,15 +45,7 @@ public class HomeController {
 
 	@GetMapping(value = "/edit-profile")
 	public String editProfile(Model model) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		UserDetailsImpl user = null;
-		if (auth != null) {
-			Object principal = auth.getPrincipal();
-			if (principal instanceof UserDetailsImpl) {
-				user = (UserDetailsImpl) principal;
-				System.out.println(user.getUser().getUserName() + "-->" + user.getUser().getUniv().getId());
-			}
-		}
+	    UserDetailsImpl user = SecurityUtils.getUserDetails();
 		model.addAttribute("profile", admissionService.getStudentProfile(studentInfoRepository.getOne(7)));
 		return "edit_profile";
 	}

@@ -1,6 +1,7 @@
 package com.progoti.surecash.controller;
 
 import com.progoti.surecash.admission.service.ApplicationStatusService;
+import com.progoti.surecash.admission.utility.SecurityUtils;
 import com.progoti.surecash.dto.UnitDto;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +34,10 @@ public class ApplicationStatusController {
         List<UnitDto> availableUnits = new ArrayList<>();
         List<UnitDto> appliedUnits = new ArrayList<>();
 
-        applicationStatusService
-                .retrieveAvailableUnits(availableUnits, appliedUnits, "testuser", "2017-2018", 1);
+        int universityId = SecurityUtils.getUniversityId();
+        String userName = SecurityUtils.getUserName();
+        applicationStatusService.retrieveAvailableUnits(availableUnits, appliedUnits, userName,
+                "2017-2018", universityId);
 
         model.addAttribute("availableUnits", availableUnits);
         model.addAttribute("appliedUnits", appliedUnits);
@@ -45,7 +48,8 @@ public class ApplicationStatusController {
     @PostMapping("/apply")
     @ResponseBody
     public ResponseEntity applyUnit(@RequestBody List<Integer> unitIds) {
-        applicationStatusService.applyUnit(1, "2017-2018", unitIds);
+        int studentId = SecurityUtils.getUserId();
+        applicationStatusService.applyUnit(studentId, "2017-2018", unitIds);
         return ResponseEntity.ok().build();
     }
 
