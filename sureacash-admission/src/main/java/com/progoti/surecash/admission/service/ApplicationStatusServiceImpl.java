@@ -34,19 +34,20 @@ public class ApplicationStatusServiceImpl implements ApplicationStatusService {
         List<AdmissionSession> sessions = unitRepository
                 .loadUnitsByUniversityAndSession(sessionYear, universityId);
         List<StudentApplicationHistory> histories = historyRepository
-                .loadHistoryByUserName(userName);
+                .loadActiveHistoryByUserName(userName);
 
         List<UnitDto> finalAvailableUnits = new ArrayList<>();
         List<UnitDto> finalAppliedUnits = new ArrayList<>();
         sessions.forEach(session -> {
             StudentApplicationHistory history = histories.stream()
-                    .filter(h -> h.getUnit().getId() == session.getUnit().getId())
+                    .filter(h -> h.getUnit().getId() == session.getUnit().getId() && h.getActive())
                     .collect(SteamCollector.firstOrDefault());
             if (history == null) {
                 finalAvailableUnits.add(UnitConverter.toDto(session));
             } else {
                 UnitDto unitDto = UnitConverter.toDto(session);
                 unitDto.setHistoryId(history.getId());
+                unitDto.setPaid(history.getPaid() == null ? false : history.getPaid());
                 finalAppliedUnits.add(unitDto);
             }
         });
@@ -76,6 +77,10 @@ public class ApplicationStatusServiceImpl implements ApplicationStatusService {
 
     @Override
     public void deleteApplication(int historyId) {
-        historyRepository.delete(historyId);
+        StudentApplicationHistory history = historyRepository.findOne(historyId);
+        if (history != null) {
+            history.setActive(false);
+        }
+        historyRepository.save(history);
     }
 }

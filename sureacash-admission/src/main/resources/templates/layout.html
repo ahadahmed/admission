@@ -44,8 +44,8 @@
         <li th:classappend="${item==1?'active':''}"><a class="nav-item" href="/home">Apply</a></li>
         <li th:classappend="${item==2?'active':''}"><a class="nav-item" href="/circular">Circular</a></li>
         <li th:classappend="${item==3?'active':''}"><a class="nav-item" href="/pdf-form">PDF Form(O and A Level)</a></li>
-        <li th:classappend="${item==4?'active':''}"><a class="nav-item" href="/applicationStatus/show">Application</a></li>
-        <li th:classappend="${item==5?'active':''}"><a class="nav-item" href="/payment/show">Payment</a></li>
+        <li th:classappend="${item==4?'active':''}"><a class="nav-item" th:href="@{/applicationStatus/show}">Application</a></li>
+        <li th:classappend="${item==5?'active':''}"><a class="nav-item" th:href="@{/payment/show}">Payment</a></li>
         <li th:classappend="${item==6?'active':''}"><a class="nav-item" href="/general-enquiry">Enquiry</a></li>
         <li th:classappend="${item==7?'active':''}"><a class="nav-item" href="/howtopay">How To Pay</a></li>
         <li th:classappend="${item==8?'active':''}"><a class="nav-item" href="/contact">Contact</a></li>
