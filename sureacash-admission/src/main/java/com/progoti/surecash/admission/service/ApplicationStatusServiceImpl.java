@@ -34,7 +34,7 @@ public class ApplicationStatusServiceImpl implements ApplicationStatusService {
         List<AdmissionSession> sessions = unitRepository
                 .loadUnitsByUniversityAndSession(sessionYear, universityId);
         List<StudentApplicationHistory> histories = historyRepository
-                .loadHistoryByUserName(userName);
+                .loadActiveHistoryByUserName(userName);
 
         List<UnitDto> finalAvailableUnits = new ArrayList<>();
         List<UnitDto> finalAppliedUnits = new ArrayList<>();

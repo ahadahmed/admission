@@ -36,6 +36,9 @@ public interface StudentApplicationHistoryRepository extends JpaRepository<Stude
     @Query("select h from StudentApplicationHistory h join h.studentInfo s join h.unit where s.userName = :userName")
     List<StudentApplicationHistory> loadHistoryByUserName(@Param("userName") String userName);
 
+    @Query("select h from StudentApplicationHistory h join h.studentInfo s join h.unit where s.userName = :userName and h.active = true")
+    List<StudentApplicationHistory> loadActiveHistoryByUserName(@Param("userName") String userName);
+
     @Query(value = "SELECT si.hscGroup, COUNT(si.hscGroup) " +
             "FROM StudentApplicationHistory sah " +
             "INNER JOIN sah.studentInfo si " +

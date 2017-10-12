@@ -1,3 +1,14 @@
+function startLoader() {
+    $(".loader").each(function () {
+        $(this).css("display", "block");
+    });
+}
+
+function stopLoader() {
+    $(".loader").each(function () {
+        $(this).css("display", "none");
+    });
+}
 
 function applyUnit(base) {
     if (confirm("Are you sure?")) {
@@ -13,6 +24,7 @@ function applyUnit(base) {
             console.log(ids);
 
             var url = base + "applicationStatus/apply";
+            startLoader();
             $.ajax({
                 url: url,
                 method: "POST",
@@ -23,6 +35,7 @@ function applyUnit(base) {
                     200: function (response) {
                         //TODO: Show success tooltip
                         location.reload();
+                        stopLoader();
                     }
                 },
                 success: function (result, status, xhr) {
@@ -32,6 +45,9 @@ function applyUnit(base) {
                 },
                 error: function (xhr) {
                     //TODO: Show error tooltip
+                },
+                complete: function () {
+                    stopLoader();
                 }
             });
         }
@@ -41,6 +57,7 @@ function applyUnit(base) {
 function deleteUnit(base, unitId, historyId) {
     if (confirm("Are you sure?")) {
         var url = base + "applicationStatus/delete/" + historyId;
+        startLoader();
         $.ajax({
             url: url,
             method: "DELETE",
@@ -57,6 +74,9 @@ function deleteUnit(base, unitId, historyId) {
             },
             error: function (xhr) {
                 //TODO: Show error tooltip
+            },
+            complete: function () {
+                stopLoader();
             }
         });
     }
