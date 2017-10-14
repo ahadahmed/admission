@@ -3,7 +3,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout::layout_header(~{::title}, ~{::link}, ~{::script})">
     <title>Unit Details</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css"/>
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
@@ -24,7 +23,7 @@
 </head>
 
 <body>
-<nav th:replace="layout::admin_layout_nav(6)">
+<nav th:replace="layout::admin_layout_nav(${university})">
 </nav>
 
 <div class="container">

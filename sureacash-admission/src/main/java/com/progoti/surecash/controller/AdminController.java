@@ -51,6 +51,7 @@ public class AdminController {
             totalQuotaApplicant += dto.getQuotaApplicant();
 
         }
+        model.addAttribute("university", university);
         model.addAttribute("statusList", universityStatusList);
         model.addAttribute("unit", universityStatusList.size());
         model.addAttribute("totalApplicant", totalApplicant);
@@ -63,6 +64,8 @@ public class AdminController {
 
     @GetMapping(value = "/unit-details")
     public String getAdminSearch(Model model, @RequestParam(value = "unitId", required = true) Integer unitId) {
+        //TODO: need to change this static value
+        model.addAttribute("university", universityRepository.getOne(1));
         List<StudentApplicationHistory> applicantList = studentApplicationHistoryRepository.findAllByUniversityAndUnit(universityRepository.getOne(1), unitRepository.getOne(unitId));
         model.addAttribute("applicantList", applicantList);
         return "admin/unit_details";
@@ -71,6 +74,8 @@ public class AdminController {
 
     @GetMapping(value = "/applicant-details")
     public String getApplicantDetails(Model model, @RequestParam(value = "studentId", required = true) Integer studentId){
+        //TODO: need to change this static value
+        model.addAttribute("university", universityRepository.getOne(1));
         StudentInfo studentInfo = studentInfoRepository.getOne(studentId);
         model.addAttribute("student", studentInfo);
         model.addAttribute("profile", admissionService.getStudentProfile(studentInfo));
