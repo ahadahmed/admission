@@ -1,26 +1,21 @@
 package com.progoti.surecash.admission.service;
 
 import com.progoti.surecash.admission.dao.AcademicDao;
-import com.progoti.surecash.admission.domain.*;
+import com.progoti.surecash.admission.domain.StudentApplicationHistory;
+import com.progoti.surecash.admission.domain.StudentInfo;
 import com.progoti.surecash.admission.repository.*;
 import com.progoti.surecash.admission.request.AcademicInformationRequest;
 import com.progoti.surecash.admission.request.ApplicationFormRequest;
-import com.progoti.surecash.admission.request.ReconcileRequest;
 import com.progoti.surecash.admission.response.CredentialResponse;
-import com.progoti.surecash.admission.response.PaymentResponse;
 import com.progoti.surecash.admission.response.ProfileResponse;
 import com.progoti.surecash.admission.response.StudentInfoResponse;
 import com.progoti.surecash.admission.utility.Constants;
-import com.progoti.surecash.admission.utility.RestClient;
-import com.progoti.surecash.dto.SwitchPaymentRequestDto;
-import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Shaown on 3:14 PM.
@@ -38,11 +33,8 @@ public class AdmissionServiceImpl implements AdmissionService {
     @Autowired
     private AcademicDao academicDao;
     @Autowired
-    private AdmissionPaymentRequestRepository admissionPaymentRequestRepository;
-    @Autowired
     private UniversityRepository universityRepository;
-    @Autowired
-    private TransactionHistoryRepository transactionHistoryRepository;
+
 
 
     @Override
@@ -76,143 +68,6 @@ public class AdmissionServiceImpl implements AdmissionService {
         profileResponse.setMotherName(studentInfoResponse.getMotherName());
 
         return profileResponse;
-    }
-
-    @Override
-    public PaymentResponse doPayment(AdmissionPaymentRequest paymentRequest) throws IOException, URISyntaxException {
-        PaymentResponse paymentResponse = new PaymentResponse();
-        University university = universityRepository.findOneByBillerCode(paymentRequest.getBillerCode());
-
-        // if institution not found
-
-        if(university == null){
-            paymentResponse.setStatus(Constants.Transaction_Status.ERROR.name());
-            paymentResponse.setDescription(Constants.ErrorMessage.INSTITUTION_NOT_FOUND.value);
-            System.out.println(Constants.ErrorMessage.INSTITUTION_NOT_FOUND.value);
-            return paymentResponse;
-        }
-
-        StudentApplicationHistory applicationHistory = studentApplicationHistoryRepository.findOneByApplicationIdAndUniversity(paymentRequest.getApplicantId(), university);
-
-        // if applicant already paid
-
-        if(applicationHistory.getPaid() != null && applicationHistory.getTranxId() != null){
-            paymentResponse.setStatus(Constants.Transaction_Status.ERROR.name());
-            paymentResponse.setDescription(Constants.ErrorMessage.NO_DUE.value);
-            System.out.println(Constants.ErrorMessage.NO_DUE.value);
-            return paymentResponse;
-        }
-
-        // if applicant amount is equal to due amount
-
-        if(paymentRequest.getAmount().equals(applicationHistory.getPayableAmount())){
-            paymentRequest.setToWallet(university.getWallet());
-            AdmissionPaymentRequest request = admissionPaymentRequestRepository.saveAndFlush(paymentRequest);
-
-            // switch doPayment calling
-            Map<String, String> responseMap = doSwitchCallForPayment(request, applicationHistory);
-
-            paymentResponse = new PaymentResponse(responseMap);
-        } else {
-            paymentResponse.setStatus(Constants.Transaction_Status.ERROR.name());
-            String errorDescription = Constants.ErrorMessage.INVALID_AMOUNT.value.replace("?", String.valueOf(applicationHistory.getPayableAmount()));
-            System.out.println(errorDescription);
-            paymentResponse.setDescription(errorDescription);
-        }
-        return paymentResponse;
-    }
-
-    @Override
-    public PaymentResponse reconcilePayment(ReconcileRequest reconcileRequest) {
-        PaymentResponse paymentResponse = new PaymentResponse();
-        University university = universityRepository.findOneByBillerCode(reconcileRequest.getBillerCode());
-
-        // if institution not found
-
-        if(university == null){
-            paymentResponse.setStatus(Constants.Transaction_Status.ERROR.name());
-            paymentResponse.setDescription(Constants.ErrorMessage.INSTITUTION_NOT_FOUND.value);
-            System.out.println(Constants.ErrorMessage.INSTITUTION_NOT_FOUND.value);
-            return paymentResponse;
-        }
-
-        StudentApplicationHistory applicationHistory = studentApplicationHistoryRepository.findOneByApplicationIdAndUniversity(reconcileRequest.getApplicantId(), university);
-
-        // if applicant already paid
-
-        if(applicationHistory.getPaid() != null && applicationHistory.getTranxId() != null){
-            paymentResponse.setStatus(Constants.Transaction_Status.ERROR.name());
-            paymentResponse.setDescription(Constants.ErrorMessage.NO_DUE.value);
-            System.out.println(Constants.ErrorMessage.NO_DUE.value);
-            return paymentResponse;
-        }
-
-        // if applicant amount is equal to due amount
-
-        if(reconcileRequest.getAmount().equals(applicationHistory.getPayableAmount())){
-            reconcileRequest.setToWallet(university.getWallet());
-            // must set remark to identify it's a reconcile request
-            reconcileRequest.setRemark(Constants.Transaction_Status.RECONCILE.name());
-            admissionPaymentRequestRepository.saveAndFlush(reconcileRequest);
-
-            Map<String, String> responseMap = doReconcileForPayment(reconcileRequest, applicationHistory);
-            paymentResponse = new PaymentResponse(responseMap);
-        } else {
-            paymentResponse.setStatus(Constants.Transaction_Status.ERROR.name());
-            String errorDescription = Constants.ErrorMessage.INVALID_AMOUNT.value.replace("?", String.valueOf(applicationHistory.getPayableAmount()));
-            System.out.println(errorDescription);
-            paymentResponse.setDescription(errorDescription);
-        }
-        return paymentResponse;
-    }
-
-    @Transactional
-    private Map<String, String> doReconcileForPayment(ReconcileRequest request, StudentApplicationHistory applicationHistory){
-        TransactionHistory transactionHistory = transactionHistoryRepository.findOneByAdmissionPaymentRequest(request);
-
-        Map<String, String> responseMap = new HashMap<>();
-        responseMap.put("status", Constants.Transaction_Status.PROCESSED.name());
-        responseMap.put("description", "Transaction Successful");
-        responseMap.put("trnxId", request.getProfinoTransactionId());
-
-        // update in transaction history table
-        transactionHistory.setStatus(responseMap.get("status"));
-        transactionHistory.setTrnxId(responseMap.get("trnxId"));
-        transactionHistory.setUpdateDate(new Date());
-        transactionHistoryRepository.save(transactionHistory);
-
-        // update in student application history table
-        applicationHistory.setPaid(Boolean.TRUE);
-        applicationHistory.setTranxId(transactionHistory.getTrnxId());
-        applicationHistory.setUpdateDate(new Date());
-        studentApplicationHistoryRepository.saveAndFlush(applicationHistory);
-
-        return responseMap;
-    }
-
-    @Transactional
-    private Map<String, String> doSwitchCallForPayment(AdmissionPaymentRequest request, StudentApplicationHistory applicationHistory) throws IOException, URISyntaxException {
-        TransactionHistory transactionHistory = transactionHistoryRepository.findOneByAdmissionPaymentRequest(request);
-
-        SwitchPaymentRequestDto switchPaymentRequestDto = new SwitchPaymentRequestDto();
-        switchPaymentRequestDto.doReflectionUsingAdmissionPaymentRequest(request);
-
-        HttpResponse response = RestClient.doSwitchPaymentRequest(switchPaymentRequestDto);
-        Map<String, String> responseMap = RestClient.parseResponseText(response);
-
-        // update in transaction history table
-        transactionHistory.setStatus(responseMap.get("status"));
-        transactionHistory.setTrnxId(responseMap.get("trnxId"));
-        transactionHistory.setUpdateDate(new Date());
-        transactionHistoryRepository.save(transactionHistory);
-
-        // update in student application history table
-        applicationHistory.setPaid(Boolean.TRUE);
-        applicationHistory.setTranxId(transactionHistory.getTrnxId());
-        applicationHistory.setUpdateDate(new Date());
-        studentApplicationHistoryRepository.saveAndFlush(applicationHistory);
-
-        return responseMap;
     }
 
     @Transactional

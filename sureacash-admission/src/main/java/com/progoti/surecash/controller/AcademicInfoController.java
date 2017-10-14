@@ -69,36 +69,7 @@ public class AcademicInfoController {
         return "SUCCESS";
     }
 
-    @RequestMapping(value = "doPayment", method = RequestMethod.POST)
-    public PaymentResponse doPayment(@RequestBody @Valid AdmissionPaymentRequest paymentRequest) throws IOException, URISyntaxException {
-        /* request body should have these attributes
-        {
-            "amount": "",
-            "schoolName": "",
-            "pin": "",
-            "studentId": "",
-            "fromWallet": "",
-            "externalCustomer": "",
-            "channel": ""
-        }
-         */
-        return admissionService.doPayment(paymentRequest);
-    }
 
-    @RequestMapping(value = "reconcilePayment", method = RequestMethod.POST)
-    public PaymentResponse reconcilePayment(@RequestBody @Valid ReconcileRequest reconcileRequest) {
-        /* request body must has these attributes
-        {
-          "fromWallet": "",
-          "amount": "",
-          "pin":"",
-          "schoolName": "",
-          "studentId": "",
-          "profinoTransactionId": ""
-        }
-         */
-        return admissionService.reconcilePayment(reconcileRequest);
-    }
 
     @RequestMapping(value = "admin/update/profile", method = RequestMethod.POST)
     public String updateProfile(@RequestParam(value = "image-file", required = false) MultipartFile imageFile,

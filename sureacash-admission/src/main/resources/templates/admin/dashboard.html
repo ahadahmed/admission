@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout::layout_header(~{::title}, ~{}, ~{::script})">
+<head th:replace="layout::layout_header(~{::title}, ~{::link}, ~{::script})">
     <title>Admin Dashboard</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin-tab.css}"/>
     <script type="text/javascript" th:inline="javascript">
         /*<![CDATA[*/
 
