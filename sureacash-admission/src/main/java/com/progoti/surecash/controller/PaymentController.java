@@ -22,8 +22,13 @@ import java.util.List;
 @Controller
 @RequestMapping("/payment")
 public class PaymentController {
-    @Autowired
+
     private PaymentService paymentService;
+
+    @Autowired
+    public PaymentController(PaymentService paymentService) {
+        this.paymentService = paymentService;
+    }
 
     @GetMapping("/show")
     public String showPaymentPage(Model model) {

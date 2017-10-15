@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" strict="true">
+  <Properties>
+    <Property name="filename">${sys:user.home}/logs/sc-admission/sc-admission.log
+    </Property>
+  </Properties>
+  <Appenders>
+    <Console name="STDOUT" target="SYSTEM_OUT">
+      <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss} %c{1.}] [%tn - %tid] [%level{lowerCase=false}]: %m%n"/>
+    </Console>
+    <RollingFile name="RollingFile" fileName="${filename}"
+      filePattern="${sys:user.home}/logs/sc-admission/archive/sc-admission-%d{yyyy-MM-dd_HH-mm-ss}.log_%i">
+      <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss} %c{1.}] [%tn - %tid] [%level{lowerCase=false}]: %m%n"/>
+      <Policies>
+        <OnStartupTriggeringPolicy />
+        <SizeBasedTriggeringPolicy size="100 MB" />
+      </Policies>
+      <DefaultRolloverStrategy max="50"/>
+    </RollingFile>
+  </Appenders>
+  <Loggers>
+    <Logger name="com.progoti.nobopay.nobopayandroidapi" level="info" additivity="true">
+      <AppenderRef ref="RollingFile"/>
+    </Logger>
+    <Root level="info">
+      <AppenderRef ref="STDOUT"/>
+    </Root>
+  </Loggers>
+</Configuration>
