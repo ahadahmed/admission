@@ -43,7 +43,7 @@ public class UserLoginService implements UserDetailsService {
         user.setEmail(student.getEmail());
         user.setUniv(university);
         
-        if(user.getUserName().equalsIgnoreCase("testuser")) {
+        if(user.getUserName().equalsIgnoreCase("admin")) {
         	user.setRole("ADMIN");
         }
         return new UserDetailsImpl(user);
