@@ -55,7 +55,7 @@
   </div>
 </nav>
 
-<nav th:fragment="admin_layout_nav(university)" id="admin-layout-nav-bar" class="navbar navbar-default navbar-fixed-top bg-color-primary" role="navigation">
+<nav th:fragment="admin_layout_nav(university, item)" id="admin-layout-nav-bar" class="navbar navbar-default navbar-fixed-top bg-color-primary" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
@@ -78,8 +78,8 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/admin/university-details" class="nav-item">University Details</a></li>
-                <li><a href="/admin/show-university-profile" class="nav-item">Edit Profile</a></li>
+                <li th:classappend="${item == 2 ? 'active' : ''}"><a href="/admin/university-details" class="nav-item">University Details</a></li>
+                <li th:classappend="${item == 3 ? 'active' : ''}"><a href="/admin/show-university-profile" class="nav-item">Edit Profile</a></li>
                 <li><a href="#" class="nav-item"><span class="glyphicon glyphicon-off"></span>Logout</a></li>
             </ul>
         </div>
