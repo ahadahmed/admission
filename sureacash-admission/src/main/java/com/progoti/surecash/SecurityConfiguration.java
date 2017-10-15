@@ -40,7 +40,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http
 			.addFilterBefore(customAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
 			.authorizeRequests()
-			.antMatchers("/","/resources/**","/home","/academic/**", "/general-enquiry", "/submit-enquiry", "/edit-profile", "/admin/**").permitAll()
+			.antMatchers("/","/resources/**","/home","/academic/**", "/submit-enquiry", "/edit-profile").permitAll()
+			.antMatchers("/admin/**").hasAuthority("ADMIN")
 			.antMatchers("/login").permitAll()
 			.antMatchers("/registration").permitAll()
 			.anyRequest()
@@ -50,7 +51,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.formLogin()
 			.loginPage("/login")
 			.failureUrl("/login?error=true")
-			.defaultSuccessUrl("/general-enquiry")
+			.defaultSuccessUrl("/general-enquiry",true)
 			.usernameParameter("applicantId")
 			.passwordParameter("password")
 			.permitAll()

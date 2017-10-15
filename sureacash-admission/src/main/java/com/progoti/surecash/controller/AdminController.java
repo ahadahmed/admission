@@ -20,7 +20,7 @@ import java.util.List;
  * Created by Shaown on 5:36 PM.
  */
 @Controller
-@RequestMapping("admin")
+@RequestMapping("/admin")
 public class AdminController {
     @Autowired
     private StudentApplicationHistoryRepository studentApplicationHistoryRepository;

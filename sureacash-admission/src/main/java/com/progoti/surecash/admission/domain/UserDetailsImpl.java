@@ -2,6 +2,7 @@ package com.progoti.surecash.admission.domain;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,7 +20,9 @@ public class UserDetailsImpl implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return new HashSet<SimpleGrantedAuthority>();
+		Set<SimpleGrantedAuthority> authorities = new HashSet<SimpleGrantedAuthority>();
+		authorities.add(new SimpleGrantedAuthority(user.getRole()));
+		return authorities;
 	}
 
 	@Override

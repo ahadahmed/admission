@@ -39,6 +39,9 @@ public class HomeController {
 	public String enquiryForm(Model model, @ModelAttribute("enquiry") Enquiry enquiry) {
 		UserDetailsImpl user = SecurityUtils.getUserDetails();
 		System.out.println(user.getUser().getUserName() + "-->" + user.getUser().getUniv().getId());
+		if(user.getUser().getRole().equalsIgnoreCase("ADMIN")) {
+			return "redirect:/admin/dashboard";
+		}
 		model.addAttribute("submitted", false);
 		return "general_enquiry";
 	}

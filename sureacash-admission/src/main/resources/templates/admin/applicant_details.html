@@ -13,9 +13,12 @@
 </head>
 
 <body th:with="totalPaid=${0}">
-<nav th:replace="layout::admin_layout_nav(${university}, null)">
+<!-- <nav th:replace="layout::admin_layout_nav(${university}, null)">
 </nav>
-
+ -->
+ 
+<nav th:replace="layout::layout_nav(1)">
+</nav>
 <div class="container">
     <div class="row">
         <h4>Applicant Details</h4>
