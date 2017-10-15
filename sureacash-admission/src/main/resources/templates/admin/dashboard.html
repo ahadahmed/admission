@@ -23,7 +23,22 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h3>Unit Details</h3>
+            <div class="col-md-12">
+                <div class="col-md-3">
+                    <h3>Unit Details</h3>
+                </div>
+                <div class="col-md-9-right" style="padding-top: 30px;">
+                    <div class="col-md-3">
+                        <b>All Applicant </b><span class="badge badge-default badge-pill alert-info" th:text="${totalApplicant}">1000</span>
+                    </div>
+                    <div class="col-md-3">
+                        <b>All Paid Applicant </b><span class="badge badge-default badge-pill alert-success" th:text="${totalPaidApplicant}"></span>
+                    </div>
+                    <div class="col-md-3">
+                        <b>All Quota Applicant </b><span class="badge badge-default badge-pill alert-warning" th:text="${totalQuotaApplicant}"></span>
+                    </div>
+                </div>
+            </div>
 
             <div class="tabbable-panel col-md-12">
                 <div class="tabbable-line">
@@ -54,11 +69,11 @@
                                     </li>
                                     <li class="list-group-item justify-content-between">
                                         Quota Applicant
-                                        <span class="badge badge-default badge-pill" th:text="${unitStatus.quotaApplicant}"></span>
+                                        <span class="badge badge-default badge-pill alert-warning" th:text="${unitStatus.quotaApplicant}"></span>
                                     </li>
                                     <li class="list-group-item justify-content-between">
                                         Total Paid
-                                        <span class="badge badge-default badge-pill" th:text="${unitStatus.paidApplicant}"></span>
+                                        <span class="badge badge-default badge-pill alert-success" th:text="${unitStatus.paidApplicant}"></span>
                                     </li>
                                 </ul>
                             </div>
