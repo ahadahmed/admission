@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<div th:fragment="academic_info" class="container-fluid" id="div-academic-info">
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+      <div class="row">
+        <div class="col-sm-12">
+          <h2>Step 1 of 4</h2>
+          <h4>Academic Information</h4>
+        </div>
+      </div>
+      <hr />
+
+      <div class="row">
+        <div class="col-sm-12">
+
+          <form class="form-horizontal" accept-charset="utf-8" id="form-academic-info">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="panel panel-default">
+                  <div class="panel-heading">SSC or Equivalent</div>
+                  <div class="panel-body">
+                    <div class="form-group">
+                      <label class="col-md-4 control-label" for="ssc_board">Board</label>
+                      <div class="col-md-8">
+                        <select name="ssc_board" id="ssc_board" class="form-control" required>
+                          <option value="">Select Board</option>
+                          <option value="Barisal">Barisal</option>
+                          <option value="Chittagong">Chittagong</option>
+                          <option value="Comilla">Comilla</option>
+                          <option value="Dhaka">Dhaka</option>
+                          <option value="Dinajpur">Dinajpur</option>
+                          <option value="Jessore">Jessore</option>
+                          <option value="Rajshahi">Rajshahi</option>
+                          <option value="Sylhet">Sylhet</option>
+                          <option value="Madrasah">Madrasah</option>
+                          <option value="Technical">Technical</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-md-4 control-label" for="ssc_rollno">Roll No</label>
+                      <div class="col-md-8">
+                        <input type="number" pattern="\d*" id="ssc_rollno" name="ssc_rollno"
+                               class="form-control" value="" required />
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-md-4 control-label" for="ssc_registration_no">Registration No.</label>
+                      <div class="col-md-8">
+                        <input type="number" pattern="\d*" id="ssc_registration_no"
+                               name="ssc_registration_no"
+                               class="form-control" value="" required />
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-md-4 control-label" for="ssc_passing_year">Passing Year</label>
+                      <div class="col-md-8">
+                        <select name="ssc_passing_year" id="ssc_passing_year" class="form-control" required>
+                          <option value="">Select Year</option>
+                          <option value="2013">2013</option>
+                          <option value="2014">2014</option>
+                          <option value="2015">2015</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <div class="panel panel-default">
+                  <div class="panel-heading">HSC or Equivalent</div>
+                  <div class="panel-body">
+                    <div class="form-group">
+                      <label class="col-md-4 control-label" for="hsc_board">Board</label>
+                      <div class="col-md-8">
+                        <select name="hsc_board" id="hsc_board" class="form-control" required>
+                          <option value="">Select Board</option>
+                          <option value="Barisal">Barisal</option>
+                          <option value="Chittagong">Chittagong</option>
+                          <option value="Comilla">Comilla</option>
+                          <option value="Dhaka">Dhaka</option>
+                          <option value="Dinajpur">Dinajpur</option>
+                          <option value="Jessore">Jessore</option>
+                          <option value="Rajshahi">Rajshahi</option>
+                          <option value="Sylhet">Sylhet</option>
+                          <option value="Madrasah">Madrasah</option>
+                          <option value="Technical">Technical</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-md-4 control-label" for="hsc_rollno">Roll No</label>
+                      <div class="col-md-8">
+                        <input type="number" pattern="\d*" id="hsc_rollno" name="hsc_rollno"
+                               class="form-control" value="" required />
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-md-4 control-label" for="hsc_registration_no">Registration No</label>
+                      <div class="col-md-8">
+                        <input type="number" pattern="\d*" id="hsc_registration_no"
+                               name="hsc_registration_no"
+                               class="form-control" value="" required />
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-md-4 control-label" for="hsc_passing_year">Passing Year</label>
+                      <div class="col-md-8">
+                        <select id="hsc_passing_year" name="hsc_passing_year" class="form-control" required>
+                          <option value="">Select Year</option>
+                          <option value="2015">2015</option>
+                          <option value="2016">2016</option>
+                          <option value="2017">2017</option>
+                        </select>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label class="col-md-2 control-label">Quota (if any)</label>
+                  <div class="col-md-10">
+                    <div class="radio-inline">
+                      <label><input name="quota" type="radio" value="FREEDOM_FIGHTER" autocomplete="off"/>Freedom Fighter</label>
+                    </div>
+                    <div class="radio-inline">
+                      <label><input name="quota" type="radio" value="TRIBAL" autocomplete="off"/>Tribal(SEQ)</label>
+                    </div>
+                    <div class="radio-inline">
+                      <label><input name="quota" type="radio" value="DISABLED" autocomplete="off"/>Disabled</label>
+                    </div>
+                    <div class="radio-inline">
+                      <label><input name="quota" type="radio" value="POSSHO" autocomplete="off"/>WQ(POSSHO)</label>
+                    </div>
+                    <div class="radio-inline">
+                      <label><input name="quota" type="radio" value="NONE" autocomplete="off" checked/>None</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-10">
+          <p>If you have applied previously, enter your profile for the application to a new unit.
+            Improvement candidates will choose Passing Year of their Improvement Result. If all
+            the information required by an applicant is not available in the database provided by
+            the education board, or if the information does not comply, please submit enquiry any
+            time or call us 8801727220169 / 09611444451 (09:00 AM to 08:00 PM).
+          </p>
+        </div>
+        <div class="col-sm-2">
+          <input type="button" value="Next" class="btn btn-primary pull-right" onclick="validateAcademicData()"/>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

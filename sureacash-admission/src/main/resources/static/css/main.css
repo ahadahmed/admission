@@ -99,6 +99,10 @@ body {
     font-weight: bold;
 }
 
+.sc-hidden {
+    display: none;
+}
+
 .color-red {
     color: #f00;
 }

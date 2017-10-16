@@ -18,7 +18,7 @@ public class ApplicationHistoryConverter {
             }
             String fees = Constants.DECIMAL_FORMAT.format(history.getPayableAmount());
             dto.setFormattedFees(fees);
-            dto.setShouldPaid(!history.getPaid());
+            dto.setShouldPaid(history.getPaid() == null || !history.getPaid());
         }
         return dto;
     }

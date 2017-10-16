@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<div th:fragment="personal_info" class="container-fluid sc-hidden" id="div-personal-info">
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+
+      <div class="row">
+        <div class="col-sm-12">
+          <h2>Step 3 of 4</h2>
+          <h4>Personal Information</h4>
+        </div>
+      </div>
+      <hr />
+
+      <div class="row">
+        <div class="col-sm-12">
+          <form class="form-horizontal" accept-charset="utf-8" id="form-personal-info">
+
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="mobile_no">Mobile Number</label>
+              <div class="col-md-9">
+                <input type="number" pattern="^01[56789]\d{8}$" id="mobile_no" name="mobile_no"
+                       class="form-control" value="" required/>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="retype_mobile_no">Retype Mobile Number</label>
+              <div class="col-md-9">
+                <input type="number" pattern="^01[56789]\d{8}$" id="retype_mobile_no" name="retype_mobile_no"
+                       class="form-control" value="" required/>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="email_id">Email</label>
+              <div class="col-md-9">
+                <input type="email" id="email_id" name="email_id" class="form-control" value="" required/>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="password_id">Password</label>
+              <div class="col-md-9">
+                <input type="password" id="password_id" name="password_id" class="form-control" value=""
+                       autocomplete="off" required/>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="retype_passwprd_id">Retype Password</label>
+              <div class="col-md-9">
+                <input type="password" id="retype_passwprd_id" name="retype_passwprd_id"
+                       class="form-control" value="" autocomplete="off" required/>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <input type="button" value="Back" class="btn btn-primary pull-left" onclick="backToUnitSelection()"/>
+          <input type="button" value="Next" class="btn btn-primary pull-right" onclick="showPreview()"/>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

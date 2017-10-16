@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<div th:fragment="application_preview" class="container-fluid sc-hidden" id="div-application-preview">
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+
+      <div class="row">
+        <div class="col-sm-12">
+          <h2>Step 4 of 4</h2>
+          <h4>Application Preview</h4>
+        </div>
+      </div>
+      <hr />
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <tbody>
+              <tr>
+                <th>Applicant Name</th>
+                <td id="trow_applicant_name_id"></td>
+              </tr>
+              <tr>
+                <th>Father's Name</th>
+                <td id="trow_father_name_id"></td>
+              </tr>
+              <tr>
+                <th>Mother's Name</th>
+                <td id="trow_mother_name_id"></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <tbody>
+              <tr>
+                <th>Quota</th>
+                <td id="trow_quota_id"></td>
+              </tr>
+              <tr>
+                <th>Email</th>
+                <td id="trow_email_id"></td>
+              </tr>
+              <tr>
+                <th>Contact Number</th>
+                <td id="trow_number_id"></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="table-responsive">
+            <table id="tbl-academic-preview" class="table table-bordered">
+              <thead>
+              <tr>
+                <th class="col-xs-2">Exam</th>
+                <th class="col-xs-2">Board</th>
+                <th class="col-xs-2">Roll</th>
+                <th class="col-xs-2">Year</th>
+                <th class="col-xs-2">Group</th>
+                <th class="col-xs-2">GPA</th>
+              </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="table-responsive">
+            <table id="tbl-unit-preview" class="table table-bordered">
+              <thead>
+              <tr>
+                <th class="col-xs-2">Unit</th>
+                <th class="col-xs-10">Description</th>
+                <th class="col-xs-2">Fees(BDT)</th>
+              </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <input type="button" value="Back" class="btn btn-primary pull-left" onclick="backToPersonalInfo()"/>
+          <input type="button" value="Submit Application" class="btn btn-primary pull-right" onclick="submitApplication()"/>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
