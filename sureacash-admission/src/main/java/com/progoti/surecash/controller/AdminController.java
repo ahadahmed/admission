@@ -66,7 +66,7 @@ public class AdminController {
     public String getAdminSearch(Model model, @RequestParam(value = "unitId", required = true) Integer unitId) {
         //TODO: need to change this static value
         model.addAttribute("university", universityRepository.getOne(1));
-        List<StudentApplicationHistory> applicantList = studentApplicationHistoryRepository.findAllByUniversityAndUnit(universityRepository.getOne(1), unitRepository.getOne(unitId));
+        List<StudentApplicationHistory> applicantList = studentApplicationHistoryRepository.findAllByUniversityAndUnitAndActive(universityRepository.getOne(1), unitRepository.getOne(unitId), Boolean.TRUE);
         model.addAttribute("applicantList", applicantList);
         return "admin/unit_details";
 
@@ -79,7 +79,7 @@ public class AdminController {
         StudentInfo studentInfo = studentInfoRepository.getOne(studentId);
         model.addAttribute("student", studentInfo);
         model.addAttribute("profile", admissionService.getStudentProfile(studentInfo));
-        model.addAttribute("applicationList", studentApplicationHistoryRepository.findAllByStudentInfo(studentInfo));
+        model.addAttribute("applicationList", studentApplicationHistoryRepository.findAllByStudentInfoAndActive(studentInfo, Boolean.TRUE));
         return "admin/applicant_details";
     }
 

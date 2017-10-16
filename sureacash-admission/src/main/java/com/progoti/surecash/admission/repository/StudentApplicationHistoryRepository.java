@@ -26,12 +26,12 @@ public interface StudentApplicationHistoryRepository extends JpaRepository<Stude
             "COUNT(CASE WHEN (sah.quota IS NOT NULL OR sah.quota <> 'NONE') THEN TRUE END)) " +
             "FROM StudentApplicationHistory sah " +
             "INNER JOIN sah.unit u " +
-            "WHERE sah.university = :university " +
+            "WHERE sah.university = :university AND sah.active = TRUE " +
             "GROUP BY u.id")
     List<AdminDashboardDto> findUniversityStatus(@Param("university") University university);
 
     @EntityGraph(value = "StudentApplicationHistory.detail", type = EntityGraph.EntityGraphType.LOAD)
-    List<StudentApplicationHistory> findAllByUniversityAndUnit(University university, Unit unit);
+    List<StudentApplicationHistory> findAllByUniversityAndUnitAndActive(University university, Unit unit, Boolean isActive);
 
     @Query("select h from StudentApplicationHistory h join h.studentInfo s join h.unit where s.userName = :userName")
     List<StudentApplicationHistory> loadHistoryByUserName(@Param("userName") String userName);
@@ -42,7 +42,7 @@ public interface StudentApplicationHistoryRepository extends JpaRepository<Stude
     @Query(value = "SELECT si.hscGroup, COUNT(si.hscGroup) " +
             "FROM StudentApplicationHistory sah " +
             "INNER JOIN sah.studentInfo si " +
-            "WHERE sah.university = :university AND sah.unit = :unit " +
+            "WHERE sah.university = :university AND sah.unit = :unit AND sah.active = TRUE " +
             "GROUP BY si.hscGroup " +
             "ORDER BY si.hscGroup")
     List<Object[]> findGroupStatusByUnit(@Param("university") University university, @Param("unit") Unit unit);
@@ -50,10 +50,10 @@ public interface StudentApplicationHistoryRepository extends JpaRepository<Stude
     @Query(value = "SELECT si.hscBoard, COUNT(si.hscBoard) " +
             "FROM StudentApplicationHistory sah " +
             "INNER JOIN sah.studentInfo si " +
-            "WHERE sah.university = :university AND sah.unit = :unit " +
+            "WHERE sah.university = :university AND sah.unit = :unit AND sah.active = TRUE " +
             "GROUP BY si.hscBoard " +
             "ORDER BY si.hscBoard ")
     List<Object[]> findBoardStatusByUnit(@Param("university") University university, @Param("unit") Unit unit);
 
-    List<StudentApplicationHistory> findAllByStudentInfo(StudentInfo studentInfo);
+    List<StudentApplicationHistory> findAllByStudentInfoAndActive(StudentInfo studentInfo, Boolean isActive);
 }

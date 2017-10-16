@@ -4,6 +4,7 @@ import com.progoti.surecash.admission.dao.AcademicDao;
 import com.progoti.surecash.admission.domain.AdmissionPaymentRequest;
 import com.progoti.surecash.admission.domain.StudentInfo;
 import com.progoti.surecash.admission.domain.University;
+import com.progoti.surecash.admission.domain.UserDetailsImpl;
 import com.progoti.surecash.admission.repository.StudentInfoRepository;
 import com.progoti.surecash.admission.repository.UniversityRepository;
 import com.progoti.surecash.admission.request.AcademicInformationRequest;
@@ -16,6 +17,7 @@ import com.progoti.surecash.admission.response.PaymentResponse;
 import com.progoti.surecash.admission.response.StudentInfoResponse;
 import com.progoti.surecash.admission.service.AdmissionService;
 import com.progoti.surecash.admission.utility.Constants;
+import com.progoti.surecash.admission.utility.SecurityUtils;
 import org.hibernate.validator.constraints.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -58,8 +60,8 @@ public class AcademicInfoController {
     @RequestMapping(value = "profile-update", method = RequestMethod.POST)
     public String uploadImageFile(@RequestParam(value = "image-file", required = false) MultipartFile imageFile,
                                   @RequestParam(value = "email", required = false) String email ) throws IOException {
-        //TODO: need to change the static student id
-        StudentInfo studentInfo = studentInfoRepository.getOne(7);
+        UserDetailsImpl user = SecurityUtils.getUserDetails();
+        StudentInfo studentInfo = studentInfoRepository.findOneByUserNameAndUniversity(user.getUser().getUserName(), user.getUser().getUniv());
         studentInfo.setEmail(email);
         if(imageFile != null && imageFile.getSize() > 0){
             studentInfo.setImage(imageFile.getBytes());

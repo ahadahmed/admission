@@ -80,6 +80,7 @@ public class AdmissionServiceImpl implements AdmissionService {
             applicationHistory.setApplicationId(String.valueOf(Constants.applicationIdGenerator(unitId)));
             applicationHistory.setUniversity(universityRepository.getOne(request.getUniversityId()));
             applicationHistory.setQuota(request.getQuota());
+            applicationHistory.setActive(Boolean.TRUE);
             studentApplicationHistoryList.add(applicationHistory);
         }
     }

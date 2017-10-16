@@ -40,7 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http
 			.addFilterBefore(customAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
 			.authorizeRequests()
-			.antMatchers("/","/resources/**","/home","/academic/**", "/submit-enquiry", "/edit-profile").permitAll()
+			.antMatchers("/","/resources/**","/home","/academic/**", "/submit-enquiry").permitAll()
 			.antMatchers("/admin/**").hasAuthority("ADMIN")
 			.antMatchers("/login").permitAll()
 			.antMatchers("/registration").permitAll()

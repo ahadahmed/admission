@@ -49,7 +49,7 @@ public class HomeController {
 	@GetMapping(value = "/edit-profile")
 	public String editProfile(Model model) {
 	    UserDetailsImpl user = SecurityUtils.getUserDetails();
-		model.addAttribute("profile", admissionService.getStudentProfile(studentInfoRepository.getOne(7)));
+		model.addAttribute("profile", admissionService.getStudentProfile(studentInfoRepository.findOneByUserNameAndUniversity(user.getUser().getUserName(), user.getUser().getUniv())));
 		return "edit_profile";
 	}
 

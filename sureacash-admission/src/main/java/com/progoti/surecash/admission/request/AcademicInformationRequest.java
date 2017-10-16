@@ -115,14 +115,14 @@ public class AcademicInformationRequest {
         sscInfo.setRoll(Integer.valueOf(studentInfo.getSscRoll()));
         sscInfo.setRegNo(Integer.valueOf(studentInfo.getSscReg()));
         sscInfo.setPassingYear(studentInfo.getSscPassingYear());
-        sscInfo.setBoard(Constants.Board.Dhaka);
+        sscInfo.setBoard(studentInfo.getSscBoard());
         this.setSscInformation(sscInfo);
 
         AcademicInfo hscInfo = new AcademicInfo();
         hscInfo.setRoll(Integer.valueOf(studentInfo.getHscRoll()));
         hscInfo.setRegNo(Integer.valueOf(studentInfo.getHscReg()));
         hscInfo.setPassingYear(studentInfo.getHscPassingYear());
-        hscInfo.setBoard(Constants.Board.Dhaka);
+        hscInfo.setBoard(studentInfo.getHscBoard());
         this.setHscInformation(hscInfo);
     }
 

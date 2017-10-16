@@ -6,7 +6,7 @@
         /*<![CDATA[*/
 
         var studentInfo;
-
+        var base = [[@{/}]];
         var setConfirmationPanel=function(response_obj){
             $('#user_name_id').html(response_obj.userName);
             $('#confirmation_password_id').html(response_obj.password);
@@ -36,13 +36,13 @@
                     "group": studentInfo.hscInfo.group
                 },
                 "quota": $('input[name=quota]:checked').val(),
-                "email": studentInfo.personal_info.emial,
+                "email": studentInfo.personal_info.email,
                 "mobile": studentInfo.personal_info.mobile,
                 "unitList": unit_list,
                 "password": studentInfo.personal_info.password
             };
             $.ajax({
-                url: '/academic/registration',
+                url: base + 'academic/registration',
                 type: "POST",
                 contentType: "application/json",
                 dataType: "json",
@@ -63,7 +63,7 @@
         };
 
         var appendTOApplicationDiv = function () {
-            $('#application_email_id').html(studentInfo.personal_info.emial);
+            $('#application_email_id').html(studentInfo.personal_info.email);
             $('#application_contact_id').html(studentInfo.personal_info.mobile);
             $('#applicant_name_id').html(studentInfo.name);
             $('#father_name_id').html(studentInfo.fatherName);
@@ -109,7 +109,7 @@
         var showDetails = function () {
             var personal_info = {
                 "mobile": $("#mobile_no").val(),
-                "emial": $("#email_id").val(),
+                "email": $("#email_id").val(),
                 "password": $("#password_id").val()
             };
             studentInfo["personal_info"] = personal_info;
@@ -169,7 +169,7 @@
             };
 
             $.ajax({
-                url: '/academic/validate-info',
+                url: base + 'academic/validate-info',
                 type: "POST",
                 contentType: "application/json",
                 dataType: "json",

@@ -65,10 +65,11 @@
                 <td th:text="${applicant.studentInfo.hscGPA}"></td>
                 <td th:text="${applicant.studentInfo.hscGroup}"></td>
                 <td th:text="${applicant.applicationDate}"></td>
-                <td th:if="${applicant.paid == null}" class="text-center"><span class="badge alert-danger" th:text="'DUE'"></span></td>
-                <td th:if="${applicant.paid != null}" class="text-center"><span class="badge alert-success" th:text="'PAID'"></span></td>
-                <td th:text="''" th:if="${applicant.tranxId == null}"></td>
-                <td th:text="${applicant.tranxId}" th:if="${applicant.tranxId != null}"></td>
+                <td class="text-center">
+                    <span class="badge alert-danger" th:text="'DUE'" th:if="${applicant.paid == null}" ></span>
+                    <span class="badge alert-success" th:text="'PAID'"th:if="${applicant.paid != null}" ></span>
+                </td>
+                <td th:text="${applicant.tranxId ?: ''}"></td>
             </tr>
             </tbody>
         </table>

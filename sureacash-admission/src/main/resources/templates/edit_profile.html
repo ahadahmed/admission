@@ -6,6 +6,7 @@
     <script type="text/javascript" th:inline="javascript">
         /*<![CDATA[*/
 
+        var base = [[@{/}]];
         var showMessageDiv = function(msg){
             var divElement = $('#msg-div');
             divElement.removeClass();
@@ -65,7 +66,7 @@
             $.ajax({
                 type: "POST",
                 enctype: 'multipart/form-data',
-                url: "/academic/profile-update",
+                url: base + "academic/profile-update",
                 data: data,
                 processData: false,
                 contentType: false,
@@ -95,7 +96,7 @@
 </head>
 <body>
 
-<nav th:replace="layout::layout_nav(9)">
+<nav th:replace="layout::layout_nav(13)">
 </nav>
 
 <div class="container">
