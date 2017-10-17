@@ -34,7 +34,7 @@
               <label class="col-md-3 control-label" for="retype_mobile_no">Retype Mobile Number</label>
               <div class="col-md-9">
                 <input type="number" pattern="^01[56789]\d{8}$" id="retype_mobile_no" name="retype_mobile_no"
-                       class="form-control" value="" required/>
+                       class="form-control" value="" equalTo="#mobile_no" required/>
               </div>
             </div>
 
@@ -49,15 +49,15 @@
               <label class="col-md-3 control-label" for="password_id">Password</label>
               <div class="col-md-9">
                 <input type="password" id="password_id" name="password_id" class="form-control" value=""
-                       autocomplete="off" required/>
+                       autocomplete="off" minlength="6" required/>
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-md-3 control-label" for="retype_passwprd_id">Retype Password</label>
               <div class="col-md-9">
-                <input type="password" id="retype_passwprd_id" name="retype_passwprd_id"
-                       class="form-control" value="" autocomplete="off" required/>
+                <input type="password" id="retype_passwprd_id" name="retype_passwprd_id" minlength="6"
+                       class="form-control" value="" autocomplete="off" equalTo="#password_id" required/>
               </div>
             </div>
           </form>
