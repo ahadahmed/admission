@@ -18,6 +18,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 
+import com.progoti.surecash.admission.domain.University;
+
 @Component
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	
@@ -42,7 +44,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
 		String username = super.obtainUsername(request);
 		String password = super.obtainPassword(request);
-		String universityId = obtainUniversityId(request).trim();
+		int universityId = obtainUniversityId(request);
 
 		if (username == null) {
 			username = "";
@@ -87,8 +89,9 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
 
 
-	private String obtainUniversityId(HttpServletRequest request) {
-		return request.getParameter("universityId");
+	private int obtainUniversityId(HttpServletRequest request) {
+		University univ = (University) request.getServletContext().getAttribute(request.getServerName());
+		return univ.getId();
 	}
 	
 	
