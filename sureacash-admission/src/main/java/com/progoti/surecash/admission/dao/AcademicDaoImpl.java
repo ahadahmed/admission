@@ -73,21 +73,23 @@ public class AcademicDaoImpl implements AcademicDao {
     }
 
     @Override
-    public List<UnitInfo> getUnitInfoListFromUniversityAndSession(University university, Constants.AdmissionSession session) {
+    public List<UnitInfo> getUnitInfoListFromUniversityAndSession(University university,
+            Constants.AdmissionSession session) {
         List<Unit> unitList = unitRepository.findAllByUniversity(university);
 
-        List<AdmissionSession> admissionSessionList = admissionSessionRepository.findAllBySessionAndUnitIn(session.value, unitList);
+        List<AdmissionSession> admissionSessionList = admissionSessionRepository
+                .findAllBySessionAndUnitIn(session.value, unitList);
         Map<Integer, Double> unitPrice = new HashMap<>();
-        for(AdmissionSession admissionSession : admissionSessionList){
+        for (AdmissionSession admissionSession : admissionSessionList) {
             unitPrice.put(admissionSession.getUnit().getId(), admissionSession.getFormPrice());
         }
 
         List<UnitInfo> unitInfoList = new ArrayList<>();
 
-        for(Unit unit : unitList){
-            unitInfoList.add(new UnitInfo(unit.getId(), unit.getCode(), unit.getName(), String.valueOf(unitPrice.get(unit.getId()))));
+        for (Unit unit : unitList) {
+            String fees = Constants.DECIMAL_FORMAT.format(unitPrice.get(unit.getId()));
+            unitInfoList.add(new UnitInfo(unit.getId(), unit.getCode(), unit.getName(), fees));
         }
         return unitInfoList;
     }
-
 }

@@ -57,12 +57,6 @@ function fillUnitTable (unitInfos) {
     }
 }
 
-function backToAcademicInfo() {
-    hideAlert();
-    $("#div-academic-info").show();
-    $("#div-unit-selection").hide();
-}
-
 function showPersonalInfo() {
     hideAlert();
     var selectedUnitList = $('input[type=checkbox][class=unit]:checked').map(function(_, el) {
@@ -145,9 +139,10 @@ function appendTOApplicationDiv() {
             totalFees = totalFees + parseInt(studentInfo.unitInfo[itr].fees);
         }
     }
+    var formattedFees = $.number(totalFees, 2);
     tblUnitPreview.append($("<tr>").addClass("bold")
             .append($("<td>").attr("colspan", 2).addClass("text-center").text("Total Payment Amount"))
-            .append($("<td>").text(totalFees))
+            .append($("<td>").text(formattedFees))
     );
 }
 
