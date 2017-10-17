@@ -25,13 +25,21 @@ body {
 }
 
 @-webkit-keyframes spin {
-    0% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .loader {
@@ -43,8 +51,19 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,0.3);
+    background-color: rgba(0, 0, 0, 0.3);
     z-index: 2;
+}
+
+.sc-alert {
+    width: 100%;
+    position: fixed;
+    top: 51px;
+    right: 0px;
+    left: 0px;
+    z-index: 10;
+    border: 0;
+    padding: 20px;
 }
 
 .page-footer {
@@ -72,7 +91,7 @@ body {
     color: #fff !important;
 }
 
-.nav-item:hover, .active>a:hover {
+.nav-item:hover, .active > a:hover {
     color: #cdcec7 !important;
 }
 
@@ -117,7 +136,15 @@ body {
     border: none;
 }
 
-.custab{
+input:invalid {
+    border-color: red;
+}
+
+select:invalid {
+    border-color: red;
+}
+
+.custab {
     border: 1px solid #ccc;
     padding: 5px;
     margin: 5% 0;
@@ -125,7 +152,7 @@ body {
     transition: 0.5s;
 }
 
-.custab:hover{
+.custab:hover {
     box-shadow: 3px 3px 0px transparent;
     transition: 0.5s;
 }

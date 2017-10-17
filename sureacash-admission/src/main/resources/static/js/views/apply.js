@@ -3,6 +3,7 @@ var studentInfo;
 var academicInfo;
 
 function validateAcademicData() {
+    hideAlert();
     var form = $("#form-academic-info");
     if (form.valid()) {
         academicInfo = {
@@ -35,7 +36,7 @@ function validateAcademicData() {
                 $("#div-unit-selection").show();
             },
             error: function (response) {
-                console.log('error');
+                showErrorMessage("Error loading data");
             },
             complete: function () {
                 stopLoader();
@@ -57,11 +58,13 @@ function fillUnitTable (unitInfos) {
 }
 
 function backToAcademicInfo() {
+    hideAlert();
     $("#div-academic-info").show();
     $("#div-unit-selection").hide();
 }
 
 function showPersonalInfo() {
+    hideAlert();
     var selectedUnitList = $('input[type=checkbox][class=unit]:checked').map(function(_, el) {
         return $(el).val();
     }).get();
@@ -74,23 +77,28 @@ function showPersonalInfo() {
 }
 
 function backToUnitSelection() {
+    hideAlert();
     $("#div-personal-info").hide();
     $("#div-unit-selection").show();
 }
 
 function showPreview() {
-    var personal_info = {
-        "mobile": $("#mobile_no").val(),
-        "emial": $("#email_id").val(),
-        "password": $("#password_id").val()
-    };
-    studentInfo["personal_info"] = personal_info;
-    appendTOApplicationDiv();
-    $("#div-personal-info").hide();
-    $('#div-application-preview').show();
+    hideAlert();
+    if ($("#form-personal-info").valid()) {
+        var personal_info = {
+            "mobile": $("#mobile_no").val(),
+            "emial": $("#email_id").val(),
+            "password": $("#password_id").val()
+        };
+        studentInfo["personal_info"] = personal_info;
+        appendTOApplicationDiv();
+        $("#div-personal-info").hide();
+        $('#div-application-preview').show();
+    }
 }
 
 function backToPersonalInfo() {
+    hideAlert();
     $('#div-application-preview').hide();
     $("#div-personal-info").show();
 }
@@ -144,6 +152,7 @@ function appendTOApplicationDiv() {
 }
 
 function submitApplication() {
+    hideAlert();
     var unit_list = [];
     unit_list = $('input[type=checkbox][class=unit]:checked').map(function(_, el) {
         return $(el).val();
@@ -190,12 +199,21 @@ function submitApplication() {
             $('#div-application-confirmation').show();
         },
         error: function (response) {
-            console.log('error');
+            showErrorMessage("Error submitting application");
         },
         complete: function () {
             stopLoader();
         }
     });
+}
+
+function showErrorMessage(message) {
+    $('#error-message-id').html(message);
+    $('#alert-id').show();
+}
+
+function hideAlert() {
+    $('#alert-id').hide();
 }
 
 function startLoader() {
