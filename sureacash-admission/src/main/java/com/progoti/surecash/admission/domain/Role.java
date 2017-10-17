@@ -11,11 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "role", uniqueConstraints = @UniqueConstraint(columnNames = { "role" }))
+@Table(name = "role", uniqueConstraints = @UniqueConstraint(columnNames = { "role"}))
 public class Role implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -28,8 +29,8 @@ public class Role implements Serializable {
 	@Column(name = "role")
 	private String roleName;
 
-	/*@OneToMany(mappedBy = "id")
-	private Set<StudentInfo> userRole;*/
+	@OneToOne(mappedBy = "role")
+	private User userRole;
 
 	public Integer getId() {
 		return id;
