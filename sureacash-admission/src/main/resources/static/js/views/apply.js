@@ -147,59 +147,62 @@ function appendTOApplicationDiv() {
 }
 
 function submitApplication() {
-    hideAlert();
-    var unit_list = [];
-    unit_list = $('input[type=checkbox][class=unit]:checked').map(function(_, el) {
-        return $(el).val();
-    }).get();
+    if (confirm("Are you sure?")) {
+        hideAlert();
+        var unit_list = [];
+        unit_list = $('input[type=checkbox][class=unit]:checked').map(
+                function (_, el) {
+                    return $(el).val();
+                }).get();
 
-    var request = {
-        "name": studentInfo.name,
-        "fatherName": studentInfo.fatherName,
-        "motherName": studentInfo.motherName,
-        "sscInfo": {
-            "board": studentInfo.sscInfo.board,
-            "roll": studentInfo.sscInfo.roll,
-            "regNo": studentInfo.sscInfo.regNo,
-            "passingYear": studentInfo.sscInfo.passingYear,
-            "gpa": studentInfo.sscInfo.gpa,
-            "group": studentInfo.sscInfo.group
-        },
-        "hscInfo": {
-            "board": studentInfo.hscInfo.board,
-            "roll": studentInfo.hscInfo.roll,
-            "regNo": studentInfo.hscInfo.regNo,
-            "passingYear": studentInfo.hscInfo.passingYear,
-            "gpa": studentInfo.hscInfo.gpa,
-            "group": studentInfo.hscInfo.group
-        },
-        "quota": $('input[name=quota]:checked').val(),
-        "email": studentInfo.personal_info.email,
-        "mobile": studentInfo.personal_info.mobile,
-        "unitList": unit_list,
-        "password": studentInfo.personal_info.password
-    };
+        var request = {
+            "name": studentInfo.name,
+            "fatherName": studentInfo.fatherName,
+            "motherName": studentInfo.motherName,
+            "sscInfo": {
+                "board": studentInfo.sscInfo.board,
+                "roll": studentInfo.sscInfo.roll,
+                "regNo": studentInfo.sscInfo.regNo,
+                "passingYear": studentInfo.sscInfo.passingYear,
+                "gpa": studentInfo.sscInfo.gpa,
+                "group": studentInfo.sscInfo.group
+            },
+            "hscInfo": {
+                "board": studentInfo.hscInfo.board,
+                "roll": studentInfo.hscInfo.roll,
+                "regNo": studentInfo.hscInfo.regNo,
+                "passingYear": studentInfo.hscInfo.passingYear,
+                "gpa": studentInfo.hscInfo.gpa,
+                "group": studentInfo.hscInfo.group
+            },
+            "quota": $('input[name=quota]:checked').val(),
+            "email": studentInfo.personal_info.email,
+            "mobile": studentInfo.personal_info.mobile,
+            "unitList": unit_list,
+            "password": studentInfo.personal_info.password
+        };
 
-    startLoader();
-    $.ajax({
-        url: base + 'academic/registration',
-        type: "POST",
-        contentType: "application/json",
-        dataType: "json",
-        data: JSON.stringify(request),
-        success: function (response) {
-            $('#confirm-username-id').html(response.userName);
-            $('#confirm-password-id').html(response.password);
-            $('#div-application-preview').hide();
-            $('#div-application-confirmation').show();
-        },
-        error: function (response) {
-            showErrorMessage("Error submitting application");
-        },
-        complete: function () {
-            stopLoader();
-        }
-    });
+        startLoader();
+        $.ajax({
+            url: base + 'academic/registration',
+            type: "POST",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(request),
+            success: function (response) {
+                $('#confirm-username-id').html(response.userName);
+                $('#confirm-password-id').html(response.password);
+                $('#div-application-preview').hide();
+                $('#div-application-confirmation').show();
+            },
+            error: function (response) {
+                showErrorMessage("Error submitting application");
+            },
+            complete: function () {
+                stopLoader();
+            }
+        });
+    }
 }
 
 function showErrorMessage(message) {
