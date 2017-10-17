@@ -104,6 +104,9 @@ public class StudentInfo implements Serializable{
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "update_date")
     private Date updateDate;
+    
+    @OneToOne(mappedBy = "studentId")
+    private User user;
 
 
     public int getId() {
