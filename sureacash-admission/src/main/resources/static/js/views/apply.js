@@ -105,7 +105,7 @@ function appendTOApplicationDiv() {
     $('#trow_email_id').html(studentInfo.personal_info.emial);
     $('#trow_number_id').html(studentInfo.personal_info.mobile);
 
-    $("#tbl-academic-preview").find("tbody")
+    $("#tbl-academic-preview").find("tbody").empty()
     .append($("<tr>")
             .append($("<td>").text("SSC/Equivalent"))
             .append($("<td>").text(studentInfo.sscInfo.board))
@@ -123,6 +123,7 @@ function appendTOApplicationDiv() {
     );
 
     var totalFees = 0;
+    var rowInserted = false
     var selectedUnitIdList = $('input[type=checkbox][class=unit]:checked').map(
             function (_, el) {
                 return $(el).val();
@@ -131,23 +132,37 @@ function appendTOApplicationDiv() {
     for (var itr = 0; itr < studentInfo.unitInfo.length; itr++) {
         var id = studentInfo.unitInfo[itr].id.toString();
         if (selectedUnitIdList.includes(id)) {
-            tblUnitPreview.append($("<tr>")
-                .append($("<td>").text(studentInfo.unitInfo[itr].unitName))
-                .append($("<td>").text(studentInfo.unitInfo[itr].unitDescription))
-                .append($("<td>").text(studentInfo.unitInfo[itr].fees))
-            );
+            if (rowInserted) {
+                tblUnitPreview.find("tbody").append($("<tr>")
+                        .append($("<td>").text(studentInfo.unitInfo[itr].unitName))
+                        .append($("<td>").text(
+                                studentInfo.unitInfo[itr].unitDescription))
+                        .append($("<td>").text(studentInfo.unitInfo[itr].fees))
+                );
+            } else {
+                rowInserted = true;
+                tblUnitPreview.find("tbody").empty().append($("<tr>")
+                        .append($("<td>").text(studentInfo.unitInfo[itr].unitName))
+                        .append($("<td>").text(
+                                studentInfo.unitInfo[itr].unitDescription))
+                        .append($("<td>").text(studentInfo.unitInfo[itr].fees))
+                );
+            }
             totalFees = totalFees + parseInt(studentInfo.unitInfo[itr].fees);
         }
     }
-    var formattedFees = $.number(totalFees, 2);
-    tblUnitPreview.append($("<tr>").addClass("bold")
-            .append($("<td>").attr("colspan", 2).addClass("text-center").text("Total Payment Amount"))
-            .append($("<td>").text(formattedFees))
-    );
+    if (rowInserted) {
+        var formattedFees = $.number(totalFees, 2);
+        tblUnitPreview.append($("<tr>").addClass("bold")
+                .append($("<td>").attr("colspan", 2).addClass("text-center").text(
+                        "Total Payment Amount"))
+                .append($("<td>").text(formattedFees))
+        );
+    }
 }
 
 function submitApplication() {
-    if (confirm("Are you sure?")) {
+    showConfirmModal(function () {
         hideAlert();
         var unit_list = [];
         unit_list = $('input[type=checkbox][class=unit]:checked').map(
@@ -202,7 +217,7 @@ function submitApplication() {
                 stopLoader();
             }
         });
-    }
+    });
 }
 
 function showErrorMessage(message) {
@@ -223,5 +238,20 @@ function startLoader() {
 function stopLoader() {
     $(".loader").each(function () {
         $(this).css("display", "none");
+    });
+}
+
+function showConfirmModal(confirmAction) {
+    $.confirm({
+        title: 'Confirmation',
+        content: 'Are you sure to continue?',
+        draggable: false,
+        buttons: {
+            confirm: confirmAction,
+            cancel: function () {
+                //$.alert('Canceled!');
+                console.log("Closing confirm");
+            }
+        }
     });
 }
