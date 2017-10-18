@@ -28,17 +28,21 @@ public class User {
 	@Column(name = "email")
 	private String email;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "role_id")
 	private Role role;
+
 	@ManyToOne
 	@JoinColumn(name = "university_id")
 	private University univ;
-	@Column(name = "mobile_no", length = 11)
+
+    @Column(name = "mobile_no", length = 11)
 	private String mobile;
-	@Column(name = "is_student", length = 11)
+
+    @Column(name = "is_student", length = 11)
 	private boolean isStudent;
-	@OneToOne
+
+    @OneToOne
 	@JoinColumn(name = "student_id")
 	private StudentInfo studentId;
 

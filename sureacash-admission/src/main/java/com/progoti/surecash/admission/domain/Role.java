@@ -29,8 +29,8 @@ public class Role implements Serializable {
 	@Column(name = "role")
 	private String roleName;
 
-	@OneToOne(mappedBy = "role")
-	private User userRole;
+	@OneToMany(mappedBy = "role")
+	private Set<User> userRole;
 
 	public Integer getId() {
 		return id;
@@ -48,6 +48,11 @@ public class Role implements Serializable {
 		this.roleName = roleName;
 	}
 
-	
+	public Set<User> getUserRole() {
+		return userRole;
+	}
 
+	public void setUserRole(Set<User> userRole) {
+		this.userRole = userRole;
+	}
 }
