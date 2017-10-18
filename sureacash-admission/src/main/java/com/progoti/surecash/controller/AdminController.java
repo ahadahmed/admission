@@ -6,6 +6,7 @@ import com.progoti.surecash.admission.domain.Unit;
 import com.progoti.surecash.admission.domain.University;
 import com.progoti.surecash.admission.repository.*;
 import com.progoti.surecash.admission.service.AdmissionService;
+import com.progoti.surecash.admission.utility.SecurityUtils;
 import com.progoti.surecash.dto.AdminDashboardDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,8 +26,6 @@ public class AdminController {
     @Autowired
     private StudentApplicationHistoryRepository studentApplicationHistoryRepository;
     @Autowired
-    private UniversityRepository universityRepository;
-    @Autowired
     private UnitRepository unitRepository;
     @Autowired
     private StudentInfoRepository studentInfoRepository;
@@ -37,8 +36,7 @@ public class AdminController {
 
     @GetMapping(value = "/dashboard")
     public String getAdminDashboard(Model model) {
-        //TODO: need to change this static value
-        University university = universityRepository.getOne(1);
+        University university = SecurityUtils.getUserDetails().getUser().getUniv();
         List<AdminDashboardDto> universityStatusList = studentApplicationHistoryRepository.findUniversityStatus(university);
         int totalApplicant = 0, totalPaid = 0, totalQuotaApplicant = 0;
         for (AdminDashboardDto dto : universityStatusList) {
@@ -64,9 +62,9 @@ public class AdminController {
 
     @GetMapping(value = "/unit-details")
     public String getAdminSearch(Model model, @RequestParam(value = "unitId", required = true) Integer unitId) {
-        //TODO: need to change this static value
-        model.addAttribute("university", universityRepository.getOne(1));
-        List<StudentApplicationHistory> applicantList = studentApplicationHistoryRepository.findAllByUniversityAndUnitAndActive(universityRepository.getOne(1), unitRepository.getOne(unitId), Boolean.TRUE);
+        University university = SecurityUtils.getUserDetails().getUser().getUniv();
+        model.addAttribute("university", university);
+        List<StudentApplicationHistory> applicantList = studentApplicationHistoryRepository.findAllByUniversityAndUnitAndActive(university, unitRepository.getOne(unitId), Boolean.TRUE);
         model.addAttribute("applicantList", applicantList);
         return "admin/unit_details";
 
@@ -74,8 +72,7 @@ public class AdminController {
 
     @GetMapping(value = "/applicant-details")
     public String getApplicantDetails(Model model, @RequestParam(value = "studentId", required = true) Integer studentId){
-        //TODO: need to change this static value
-        model.addAttribute("university", universityRepository.getOne(1));
+        model.addAttribute("university", SecurityUtils.getUserDetails().getUser().getUniv());
         StudentInfo studentInfo = studentInfoRepository.getOne(studentId);
         model.addAttribute("student", studentInfo);
         model.addAttribute("profile", admissionService.getStudentProfile(studentInfo));
@@ -85,8 +82,7 @@ public class AdminController {
 
     @GetMapping(value = "/university-details")
     public String getUniversityDetails(Model model){
-        //TODO: need to change in university static value
-        University university = universityRepository.findOne(1);
+        University university = SecurityUtils.getUserDetails().getUser().getUniv();
         model.addAttribute("university", university);
         model.addAttribute("admissionSessionList", admissionSessionRepository.findAllUnitByUniversity(university));
         return "admin/university_details";
@@ -94,8 +90,7 @@ public class AdminController {
 
     @GetMapping(value = "/show-university-profile")
     public String showUniversityProfile(Model model){
-        //TODO: need to change in university static value
-        model.addAttribute("university", universityRepository.findOne(1));
+        model.addAttribute("university", SecurityUtils.getUserDetails().getUser().getUniv());
         return "admin/edit_university_profile";
     }
 }

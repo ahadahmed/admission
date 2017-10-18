@@ -1,7 +1,6 @@
 package com.progoti.surecash.controller;
 
 import com.progoti.surecash.admission.dao.AcademicDao;
-import com.progoti.surecash.admission.domain.AdmissionPaymentRequest;
 import com.progoti.surecash.admission.domain.StudentInfo;
 import com.progoti.surecash.admission.domain.University;
 import com.progoti.surecash.admission.domain.UserDetailsImpl;
@@ -10,10 +9,8 @@ import com.progoti.surecash.admission.repository.UniversityRepository;
 import com.progoti.surecash.admission.request.AcademicInformationRequest;
 import com.progoti.surecash.admission.request.ApplicationFormRequest;
 import com.progoti.surecash.admission.request.ProfileUpdateRequest;
-import com.progoti.surecash.admission.request.ReconcileRequest;
 import com.progoti.surecash.admission.response.CredentialResponse;
 import com.progoti.surecash.admission.response.ErrorResponse;
-import com.progoti.surecash.admission.response.PaymentResponse;
 import com.progoti.surecash.admission.response.StudentInfoResponse;
 import com.progoti.surecash.admission.service.AdmissionService;
 import com.progoti.surecash.admission.utility.Constants;
@@ -26,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Date;
 
 /**
@@ -52,8 +48,8 @@ public class AcademicInfoController {
 
     @RequestMapping(value = "registration", method = RequestMethod.POST)
     public CredentialResponse submitApplicationForm(@RequestBody @Valid ApplicationFormRequest request){
-        //TODO: need to set university id
-        request.setUniversityId(1);
+        University university = SecurityUtils.getUserDetails().getUser().getUniv();
+        request.setUniversityId(university.getId());
         return admissionService.submitForm(request);
     }
 
@@ -78,8 +74,7 @@ public class AcademicInfoController {
                                 @RequestParam(value = "email", required = true)@Valid @Email String email,
                                 @RequestParam(value = "contactNo", required = true) String contact,
                                 @RequestParam(value = "address", required = true) String address) throws IOException {
-        //TODO: need to change in university static value
-        University university = universityRepository.findOne(1);
+        University university = SecurityUtils.getUserDetails().getUser().getUniv();
         ProfileUpdateRequest updateRequest = new ProfileUpdateRequest(imageFile, email, address, contact);
         updateRequest.setNonNullValueForUniversityUpdate(university);
         universityRepository.saveAndFlush(university);
