@@ -19,6 +19,10 @@ public class Constants {
         FREEDOM_FIGHTER, TRIBAL, DISABLED, POSSHO, NONE
     }
 
+    public enum RoleName {
+        USER, ADMIN, SC_ADMIN, SUPER_ADMIN
+    }
+
     public enum Board {
         Barisal,
         Chittagong,

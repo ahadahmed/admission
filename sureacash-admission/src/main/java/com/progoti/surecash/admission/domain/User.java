@@ -1,18 +1,8 @@
 package com.progoti.surecash.admission.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-
 import com.google.common.base.MoreObjects;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "user_info", uniqueConstraints = @UniqueConstraint(columnNames = { "university_id", "user_name" }))
@@ -21,11 +11,14 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private int userId;
-	@Column(name = "user_name", length = 100)
+
+    @Column(name = "user_name", length = 100)
 	private String userName;
-	@Column(name = "password", length = 100)
+
+    @Column(name = "password", length = 100)
 	private String password;
-	@Column(name = "email")
+
+    @Column(name = "email")
 	private String email;
 	
 	@ManyToOne

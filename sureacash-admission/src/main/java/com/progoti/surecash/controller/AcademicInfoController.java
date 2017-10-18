@@ -3,9 +3,11 @@ package com.progoti.surecash.controller;
 import com.progoti.surecash.admission.dao.AcademicDao;
 import com.progoti.surecash.admission.domain.StudentInfo;
 import com.progoti.surecash.admission.domain.University;
+import com.progoti.surecash.admission.domain.User;
 import com.progoti.surecash.admission.domain.UserDetailsImpl;
 import com.progoti.surecash.admission.repository.StudentInfoRepository;
 import com.progoti.surecash.admission.repository.UniversityRepository;
+import com.progoti.surecash.admission.repository.UserRepository;
 import com.progoti.surecash.admission.request.AcademicInformationRequest;
 import com.progoti.surecash.admission.request.ApplicationFormRequest;
 import com.progoti.surecash.admission.request.ProfileUpdateRequest;
@@ -39,6 +41,8 @@ public class AcademicInfoController {
     private StudentInfoRepository studentInfoRepository;
     @Autowired
     private UniversityRepository universityRepository;
+    @Autowired
+    private UserRepository userRepository;
 
 
     @RequestMapping(value = "validate-info", method = RequestMethod.POST)
@@ -56,14 +60,16 @@ public class AcademicInfoController {
     @RequestMapping(value = "profile-update", method = RequestMethod.POST)
     public String uploadImageFile(@RequestParam(value = "image-file", required = false) MultipartFile imageFile,
                                   @RequestParam(value = "email", required = false) String email ) throws IOException {
-        UserDetailsImpl user = SecurityUtils.getUserDetails();
-        StudentInfo studentInfo = studentInfoRepository.findOneByUserNameAndUniversity(user.getUser().getUserName(), user.getUser().getUniv());
-        studentInfo.setEmail(email);
+        UserDetailsImpl userDetails = SecurityUtils.getUserDetails();
+        User user = userRepository.findOneByUserNameAndUniv(userDetails.getUser().getUserName(), userDetails.getUser().getUniv());
+        user.setEmail(email);
         if(imageFile != null && imageFile.getSize() > 0){
+            StudentInfo studentInfo = user.getStudentId();
             studentInfo.setImage(imageFile.getBytes());
+            studentInfo.setUpdateDate(new Date());
+            studentInfoRepository.saveAndFlush(studentInfo);
         }
-        studentInfo.setUpdateDate(new Date());
-        studentInfoRepository.saveAndFlush(studentInfo);
+        userRepository.saveAndFlush(user);
         return "SUCCESS";
     }
 

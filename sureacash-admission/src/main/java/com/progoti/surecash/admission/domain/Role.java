@@ -1,19 +1,11 @@
 package com.progoti.surecash.admission.domain;
 
+import com.progoti.surecash.admission.utility.Constants;
+
 import java.io.Serializable;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "role", uniqueConstraints = @UniqueConstraint(columnNames = { "role"}))
@@ -27,7 +19,8 @@ public class Role implements Serializable {
 	private Integer id;
 
 	@Column(name = "role")
-	private String roleName;
+    @Enumerated(EnumType.STRING)
+	private Constants.RoleName roleName;
 
 	@OneToMany(mappedBy = "role")
 	private Set<User> userRole;
@@ -40,11 +33,11 @@ public class Role implements Serializable {
 		this.id = id;
 	}
 
-	public String getRoleName() {
+	public Constants.RoleName getRoleName() {
 		return roleName;
 	}
 
-	public void setRoleName(String roleName) {
+	public void setRoleName(Constants.RoleName roleName) {
 		this.roleName = roleName;
 	}
 

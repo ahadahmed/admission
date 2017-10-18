@@ -1,10 +1,7 @@
 package com.progoti.surecash.admission.service;
 
 import com.progoti.surecash.admission.converter.ApplicationHistoryConverter;
-import com.progoti.surecash.admission.domain.AdmissionPaymentRequest;
-import com.progoti.surecash.admission.domain.StudentApplicationHistory;
-import com.progoti.surecash.admission.domain.TransactionHistory;
-import com.progoti.surecash.admission.domain.University;
+import com.progoti.surecash.admission.domain.*;
 import com.progoti.surecash.admission.repository.AdmissionPaymentRequestRepository;
 import com.progoti.surecash.admission.repository.StudentApplicationHistoryRepository;
 import com.progoti.surecash.admission.repository.TransactionHistoryRepository;
@@ -13,6 +10,7 @@ import com.progoti.surecash.admission.request.ReconcileRequest;
 import com.progoti.surecash.admission.response.PaymentResponse;
 import com.progoti.surecash.admission.utility.Constants;
 import com.progoti.surecash.admission.utility.RestClient;
+import com.progoti.surecash.admission.utility.SecurityUtils;
 import com.progoti.surecash.dto.PaymentRequestDto;
 import com.progoti.surecash.dto.SwitchPaymentRequestDto;
 import org.apache.http.HttpResponse;
@@ -43,7 +41,9 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public List<PaymentRequestDto> listPaymentRequests(String userName) {
-        List<StudentApplicationHistory> histories = historyRepository.loadActiveHistoryByUserName(userName);
+        UserDetailsImpl userDetails = SecurityUtils.getUserDetails();
+//        List<StudentApplicationHistory> histories = historyRepository.loadActiveHistoryByUserName(userName);
+        List<StudentApplicationHistory> histories = historyRepository.findAllByStudentInfo(userDetails.getUser().getStudentId());
         return ApplicationHistoryConverter.toPaymentRequestDtos(histories);
     }
 

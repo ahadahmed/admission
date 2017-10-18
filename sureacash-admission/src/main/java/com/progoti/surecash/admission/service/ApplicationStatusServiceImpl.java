@@ -4,9 +4,11 @@ import com.progoti.surecash.admission.converter.UnitConverter;
 import com.progoti.surecash.admission.domain.AdmissionSession;
 import com.progoti.surecash.admission.domain.StudentApplicationHistory;
 import com.progoti.surecash.admission.domain.StudentInfo;
+import com.progoti.surecash.admission.domain.UserDetailsImpl;
 import com.progoti.surecash.admission.repository.StudentApplicationHistoryRepository;
 import com.progoti.surecash.admission.repository.UnitRepository;
 import com.progoti.surecash.admission.utility.Constants;
+import com.progoti.surecash.admission.utility.SecurityUtils;
 import com.progoti.surecash.admission.utility.SteamCollector;
 import com.progoti.surecash.dto.UnitDto;
 import java.util.ArrayList;
@@ -31,10 +33,15 @@ public class ApplicationStatusServiceImpl implements ApplicationStatusService {
     @Override
     public void retrieveAvailableUnits(List<UnitDto> availableUnits, List<UnitDto> appliedUnits,
             String userName, String sessionYear, int universityId) {
+        UserDetailsImpl userDetails = SecurityUtils.getUserDetails();
         List<AdmissionSession> sessions = unitRepository
                 .loadUnitsByUniversityAndSession(sessionYear, universityId);
+
+//        List<StudentApplicationHistory> histories = historyRepository
+//                .loadActiveHistoryByUserName(userName);
+
         List<StudentApplicationHistory> histories = historyRepository
-                .loadActiveHistoryByUserName(userName);
+                .findAllByStudentInfo(userDetails.getUser().getStudentId());
 
         List<UnitDto> finalAvailableUnits = new ArrayList<>();
         List<UnitDto> finalAppliedUnits = new ArrayList<>();

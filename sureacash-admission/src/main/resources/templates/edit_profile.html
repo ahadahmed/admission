@@ -111,7 +111,7 @@
             <div class="text-center">
                 <img id="default-image" th:if="${profile.imageData == null}" src="../static/images/login-photo.png" th:src="@{/images/login-photo.png}"
                      class="avatar img-thumbnail" alt="avatar" height="200" width="200"/>
-                <img id="image" src="" th:src="@{${'data:image/jpeg;base64,' + profile.base64Image}}" th:if="${profile.imageData != null}"
+                <img id="image" src="" th:src="@{${'data:image/jpeg;base64,' + T(com.progoti.surecash.admission.utility.Constants).getBase64ImageData(profile.imageData)}}" th:if="${profile.imageData != null}"
                      class="avatar img-thumbnail" alt="avatar" height="200" width="200" />
 
                 <form class="form-horizontal" role="form" id="image-upload-form" enctype="multipart/form-data">

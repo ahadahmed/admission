@@ -47,10 +47,10 @@
                 <div class="tabbable-line">
                     <ul class="nav nav-tabs">
                         <li class="active" th:each="unitStatus, itr: ${statusList}" th:if="${itr.index == 0}" >
-                            <a href="" th:href="'#tab_default_' + ${itr.count}" data-toggle="tab" th:text="${unitStatus.unit}"></a>
+                            <a href="" th:href="'#tab_default_' + ${itr.count}" data-toggle="tab" th:text="${unitStatus.unitCode}"></a>
                         </li>
                         <li th:each="unitStatus, itr: ${statusList}" th:if="${itr.index != 0}" >
-                            <a href="" th:href="'#tab_default_' + ${itr.count}" data-toggle="tab" th:text="${unitStatus.unit}"></a>
+                            <a href="" th:href="'#tab_default_' + ${itr.count}" data-toggle="tab" th:text="${unitStatus.unitCode}"></a>
                         </li>
                     </ul>
                     <div class="tab-content">
