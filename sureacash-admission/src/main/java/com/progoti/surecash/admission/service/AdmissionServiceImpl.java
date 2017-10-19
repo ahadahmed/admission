@@ -6,11 +6,9 @@ import com.progoti.surecash.admission.domain.StudentInfo;
 import com.progoti.surecash.admission.domain.University;
 import com.progoti.surecash.admission.domain.User;
 import com.progoti.surecash.admission.repository.*;
-import com.progoti.surecash.admission.request.AcademicInformationRequest;
 import com.progoti.surecash.admission.request.ApplicationFormRequest;
 import com.progoti.surecash.admission.response.CredentialResponse;
 import com.progoti.surecash.admission.response.ProfileResponse;
-import com.progoti.surecash.admission.response.StudentInfoResponse;
 import com.progoti.surecash.admission.utility.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,8 +30,6 @@ public class AdmissionServiceImpl implements AdmissionService {
     private UnitRepository unitRepository;
     @Autowired
     private AdmissionSessionRepository admissionSessionRepository;
-    @Autowired
-    private AcademicDao academicDao;
     @Autowired
     private UniversityRepository universityRepository;
     @Autowired
@@ -78,18 +74,13 @@ public class AdmissionServiceImpl implements AdmissionService {
 
     @Override
     public ProfileResponse getStudentProfile(StudentInfo studentInfo) {
-
-        AcademicInformationRequest request = new AcademicInformationRequest();
-        request.doReflectionFromStudentInfo(studentInfo);
-
-        StudentInfoResponse studentInfoResponse = academicDao.getStudentInfo(request);
         User user = userRepository.findOneByStudentId(studentInfo);
 
         ProfileResponse profileResponse = new ProfileResponse(null, user.getEmail(), user.getMobile());
         profileResponse.setImageData(studentInfo.getImage());
-        profileResponse.setName(studentInfoResponse.getName());
-        profileResponse.setFatherName(studentInfoResponse.getFatherName());
-        profileResponse.setMotherName(studentInfoResponse.getMotherName());
+        profileResponse.setName(studentInfo.getName());
+        profileResponse.setFatherName(studentInfo.getFatherName());
+        profileResponse.setMotherName(studentInfo.getMotherName());
 
         return profileResponse;
     }
@@ -124,5 +115,7 @@ public class AdmissionServiceImpl implements AdmissionService {
         studentInfo.setHscBoard(request.getHscInfo().getBoard());
         studentInfo.setSscGroup(request.getSscInfo().getGroup());
         studentInfo.setHscGroup(request.getHscInfo().getGroup());
+        studentInfo.setFatherName(request.getFatherName());
+        studentInfo.setMotherName(request.getMotherName());
     }
 }

@@ -113,7 +113,8 @@
                      class="avatar img-thumbnail" alt="avatar" height="200" width="200"/>
                 <img id="image" src="" th:src="@{${'data:image/jpeg;base64,' + T(com.progoti.surecash.admission.utility.Constants).getBase64ImageData(profile.imageData)}}" th:if="${profile.imageData != null}"
                      class="avatar img-thumbnail" alt="avatar" height="200" width="200" />
-
+                <br/>
+                <br/>
                 <form class="form-horizontal" role="form" id="image-upload-form" enctype="multipart/form-data">
                     <input id="image-file" name="image-file" type="file" class="form-control"  th:if="${profile.imageData == null}" />
                 </form>

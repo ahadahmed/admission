@@ -37,8 +37,6 @@ public class AcademicInfoController {
     @Autowired
     private StudentInfoRepository studentInfoRepository;
     @Autowired
-    private UniversityRepository universityRepository;
-    @Autowired
     private UserRepository userRepository;
 
 

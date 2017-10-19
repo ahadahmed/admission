@@ -92,6 +92,12 @@ public class StudentInfo implements Serializable{
     @OneToOne(mappedBy = "studentId")
     private User user;
 
+    @Column(name = "father_name")
+    private String fatherName;
+
+    @Column(name = "mother_name")
+    private String motherName;
+
 
     public int getId() {
         return id;
@@ -251,5 +257,21 @@ public class StudentInfo implements Serializable{
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getFatherName() {
+        return fatherName;
+    }
+
+    public void setFatherName(String fatherName) {
+        this.fatherName = fatherName;
+    }
+
+    public String getMotherName() {
+        return motherName;
+    }
+
+    public void setMotherName(String motherName) {
+        this.motherName = motherName;
     }
 }
