@@ -60,9 +60,10 @@ public class AcademicInfoController {
 
     @RequestMapping(value = "profile-update", method = RequestMethod.POST)
     public String uploadImageFile(@RequestParam(value = "image-file", required = false) MultipartFile imageFile,
-                                  @RequestParam(value = "email", required = false) String email ) throws IOException {
-        UserDetailsImpl userDetails = SecurityUtils.getUserDetails();
-        User user = userRepository.findOneByUserNameAndUniv(userDetails.getUser().getUserName(), userDetails.getUser().getUniv());
+                                  @RequestParam(value = "email", required = false) String email, HttpServletRequest servletRequest) throws IOException {
+        University university = (University) servletRequest.getServletContext().getAttribute(servletRequest.getServerName());
+        String userName = servletRequest.getUserPrincipal().getName();
+        User user = userRepository.findOneByUserNameAndUniv(userName, university);
         user.setEmail(email);
         if(imageFile != null && imageFile.getSize() > 0){
             StudentInfo studentInfo = user.getStudentId();
@@ -73,21 +74,6 @@ public class AcademicInfoController {
         userRepository.saveAndFlush(user);
         return "SUCCESS";
     }
-
-
-
-    @RequestMapping(value = "admin/update/profile", method = RequestMethod.POST)
-    public String updateProfile(@RequestParam(value = "image-file", required = false) MultipartFile imageFile,
-                                @RequestParam(value = "email", required = true)@Valid @Email String email,
-                                @RequestParam(value = "contactNo", required = true) String contact,
-                                @RequestParam(value = "address", required = true) String address) throws IOException {
-        University university = SecurityUtils.getUserDetails().getUser().getUniv();
-        ProfileUpdateRequest updateRequest = new ProfileUpdateRequest(imageFile, email, address, contact);
-        updateRequest.setNonNullValueForUniversityUpdate(university);
-        universityRepository.saveAndFlush(university);
-        return "SUCCESS";
-    }
-
 
     @ExceptionHandler(IndexOutOfBoundsException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)

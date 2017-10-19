@@ -4,10 +4,10 @@ import com.progoti.surecash.admission.domain.Enquiry;
 import com.progoti.surecash.admission.domain.University;
 import com.progoti.surecash.admission.domain.UserDetailsImpl;
 import com.progoti.surecash.admission.repository.EnquiryRepository;
+import com.progoti.surecash.admission.repository.StudentInfoRepository;
 import com.progoti.surecash.admission.response.ProfileResponse;
 import com.progoti.surecash.admission.service.AdmissionService;
 import com.progoti.surecash.admission.utility.Constants;
-import com.progoti.surecash.admission.utility.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,12 +22,14 @@ public class HomeController {
 
 	private EnquiryRepository enquiryRepository;
 	private AdmissionService admissionService;
+    private StudentInfoRepository studentInfoRepository;
 
 	@Autowired
     public HomeController(EnquiryRepository enquiryRepository,
-            AdmissionService admissionService) {
+            AdmissionService admissionService, StudentInfoRepository studentInfoRepository) {
         this.enquiryRepository = enquiryRepository;
         this.admissionService = admissionService;
+        this.studentInfoRepository = studentInfoRepository;
     }
 
     @GetMapping(value = { "/", "/home" })
@@ -36,8 +38,9 @@ public class HomeController {
 	}
 
 	@GetMapping(value = "/general-enquiry")
-	public String enquiryForm(Model model, @ModelAttribute("enquiry") Enquiry enquiry) {
-		UserDetailsImpl userDetails = SecurityUtils.getUserDetails();
+	public String enquiryForm(Model model, @ModelAttribute("enquiry") Enquiry enquiry, HttpServletRequest servletRequest) {
+//		UserDetailsImpl userDetails = SecurityUtils.getUserDetails();
+		UserDetailsImpl userDetails = (UserDetailsImpl)servletRequest.getUserPrincipal();
 		if(userDetails != null && userDetails.getUser().getRole().getRoleName() == Constants.RoleName.ADMIN) {
 			return "redirect:/admin/dashboard";
 		}
@@ -46,9 +49,10 @@ public class HomeController {
 	}
 
     @GetMapping(value = "/edit-profile")
-    public String editProfile(Model model) {
-        UserDetailsImpl userDetails = SecurityUtils.getUserDetails();
-        ProfileResponse profile = admissionService.getStudentProfile(userDetails.getUser().getStudentId());
+    public String editProfile(Model model, HttpServletRequest servletRequest) {
+//        UserDetailsImpl userDetails = SecurityUtils.getUserDetails();
+        UserDetailsImpl userDetails = (UserDetailsImpl)servletRequest.getUserPrincipal();
+        ProfileResponse profile = admissionService.getStudentProfile(studentInfoRepository.findOne(userDetails.getUser().getStudentId().getId()));
         model.addAttribute("profile", profile);
         return "edit_profile";
     }
@@ -57,7 +61,8 @@ public class HomeController {
 	public String submitEnquiry(Model model, @ModelAttribute("enquiry") Enquiry enquiry, HttpServletRequest servletRequest) {
         University university = (University) servletRequest.getServletContext().getAttribute(servletRequest.getServerName());
         enquiry.setUniversityId(university.getId());
-        UserDetailsImpl userDetails = SecurityUtils.getUserDetails();
+//        UserDetailsImpl userDetails = SecurityUtils.getUserDetails();
+        UserDetailsImpl userDetails = (UserDetailsImpl)servletRequest.getUserPrincipal();
         if(userDetails != null){
             Long studentId = (long) userDetails.getUser().getStudentId().getId();
             enquiry.setStudentId(studentId);
