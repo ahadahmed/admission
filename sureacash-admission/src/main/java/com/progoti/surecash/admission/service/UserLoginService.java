@@ -32,7 +32,7 @@ public class UserLoginService implements UserDetailsService {
         User user = userRepository.findOneByUserNameAndUniv(usernameAndUnivid[0], university);
                 
         if (user == null) {
-            throw new UsernameNotFoundException(String.format("username: %s not found" ,usernameAndUnivid[0]));
+            throw new UsernameNotFoundException(String.format("username: %s not found", usernameAndUnivid[0]));
         }
 
         /*User user = new User();

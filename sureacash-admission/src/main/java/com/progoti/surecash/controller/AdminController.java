@@ -7,7 +7,6 @@ import com.progoti.surecash.admission.domain.University;
 import com.progoti.surecash.admission.repository.*;
 import com.progoti.surecash.admission.request.ProfileUpdateRequest;
 import com.progoti.surecash.admission.service.AdmissionService;
-import com.progoti.surecash.admission.utility.SecurityUtils;
 import com.progoti.surecash.dto.AdminDashboardDto;
 import org.hibernate.validator.constraints.Email;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,12 +98,13 @@ public class AdminController {
     }
 
     @GetMapping(value = "/show-university-profile")
-    public String showUniversityProfile(Model model){
-        model.addAttribute("university", SecurityUtils.getUserDetails().getUser().getUniv());
+    public String showUniversityProfile(Model model, HttpServletRequest servletRequest){
+        University university = (University) servletRequest.getServletContext().getAttribute(servletRequest.getServerName());
+        model.addAttribute("university", university);
         return "admin/edit_university_profile";
     }
 
-    @RequestMapping(value = "/update/profile", method = RequestMethod.POST)
+    @RequestMapping(value = "/update/university-profile", method = RequestMethod.POST)
     public String updateProfile(@RequestParam(value = "image-file", required = false) MultipartFile imageFile,
                                 @RequestParam(value = "email", required = true)@Valid @Email String email,
                                 @RequestParam(value = "contactNo", required = true) String contact,
