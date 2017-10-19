@@ -1,19 +1,21 @@
 package com.progoti.surecash.controller;
 
 import com.progoti.surecash.admission.domain.Enquiry;
+import com.progoti.surecash.admission.domain.University;
 import com.progoti.surecash.admission.domain.UserDetailsImpl;
 import com.progoti.surecash.admission.repository.EnquiryRepository;
 import com.progoti.surecash.admission.response.ProfileResponse;
 import com.progoti.surecash.admission.service.AdmissionService;
 import com.progoti.surecash.admission.utility.Constants;
 import com.progoti.surecash.admission.utility.SecurityUtils;
-import com.progoti.surecash.dto.form.Greeting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class HomeController {
@@ -29,14 +31,13 @@ public class HomeController {
     }
 
     @GetMapping(value = { "/", "/home" })
-	public String greetingForm(Model model) {
+	public String getHomePage(Model model) {
 		return "application/apply";
 	}
 
 	@GetMapping(value = "/general-enquiry")
 	public String enquiryForm(Model model, @ModelAttribute("enquiry") Enquiry enquiry) {
 		UserDetailsImpl userDetails = SecurityUtils.getUserDetails();
-//		System.out.println(userDetails.getUser().getUserName() + "-->" + userDetails.getUser().getUniv().getId());
 		if(userDetails != null && userDetails.getUser().getRole().getRoleName() == Constants.RoleName.ADMIN) {
 			return "redirect:/admin/dashboard";
 		}
@@ -53,17 +54,17 @@ public class HomeController {
     }
 
 	@PostMapping(value = "/submit-enquiry")
-	public String submitEnquiry(Model model, @ModelAttribute("enquiry") Enquiry enquiry) {
-        // TODO: need to change in insert column (university_id, student_id)
+	public String submitEnquiry(Model model, @ModelAttribute("enquiry") Enquiry enquiry, HttpServletRequest servletRequest) {
+        University university = (University) servletRequest.getAttribute("university");
+        enquiry.setUniversityId(university.getId());
+        UserDetailsImpl userDetails = SecurityUtils.getUserDetails();
+        if(userDetails != null){
+            Long studentId = (long) userDetails.getUser().getStudentId().getId();
+            enquiry.setStudentId(studentId);
+        }
 		enquiryRepository.save(enquiry);
 		model.addAttribute("submitted", true);
 		return "general_enquiry";
 	}
 
-	@PostMapping("/processgreeting")
-	public String processGreetingForm(@ModelAttribute("newForm") Greeting greeting) {
-		System.out.println(greeting.getId());
-		System.out.println(greeting.getStringValue());
-		return "redirect:/greeting";
-	}
 }
