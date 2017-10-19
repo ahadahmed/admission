@@ -113,6 +113,10 @@ body {
     padding-bottom: 14px;
 }
 
+footer a {
+    color: #fff;
+}
+
 #nav-brand-image {
     height: 1.5em;
     width: 1.5em;

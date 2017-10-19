@@ -32,7 +32,7 @@
       <a class="navbar-brand" href="#" style="padding: 11px;">
         <img id="nav-brand-image" class="img-responsive" src="http://my-smashing.smashingapps.netdna-cdn.com/wp-content/uploads/2010/01/circular-logo/circularlogo_6.jpg"/>
       </a>
-      <a id="nav-brand-text" class="navbar-brand nav-item" href="#">ABC University </a>
+      <a id="nav-brand-text" class="navbar-brand nav-item" th:href="@{/home}" th:text="${#request.getServletContext().getAttribute(#request.getServerName()).getName()}">ABC University </a>
     </div>
 
     <div class="collapse navbar-collapse" id="navbar-collapse">
@@ -94,12 +94,11 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-xs-12 page-footer-body">
-        <i class="fa fa-calendar-check-o" aria-hidden="true"></i> Online Application Duration: <span
-          style="#color:greenyellow;">20-09-2017 12:00 PM</span> to <span style="#color:rgb(249, 255, 0);">19-10-2017 12:00 AM</span>
-        <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
-        <h6>All Rights © Reserved | <a href="/" style="color:#FFF;" target="_blank">ABC University </a> Admission
-          Committee 2017-2018</h6>
-        <h6> Technical Partner - SureCash</h6>
+        <h5><strong>Online Application Duration:</strong> <span>20-09-2017 12:00 PM</span> to <span>19-10-2017 12:00 AM</span></h5>
+        <h6>All Rights © Reserved | <a th:href="@{/}" target="_blank"
+                                       th:text="${#request.getServletContext().getAttribute(#request.getServerName()).getName()}">
+          ABC University </a> Admission Committee <span th:text="${@environment.getProperty('sc.admission.properties.activeSession', '2018-2019')}">2018-2019</span></h6>
+        <h6> Technical Partner - <a href="http://surecash.net/" target="_blank">SureCash</a></h6>
       </div>
     </div>
   </div>
