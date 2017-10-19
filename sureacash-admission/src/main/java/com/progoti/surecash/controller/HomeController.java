@@ -9,6 +9,7 @@ import com.progoti.surecash.admission.response.ProfileResponse;
 import com.progoti.surecash.admission.service.AdmissionService;
 import com.progoti.surecash.admission.utility.Constants;
 import com.progoti.surecash.admission.utility.SecurityUtils;
+import com.progoti.surecash.dto.ContactDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -70,4 +71,12 @@ public class HomeController {
 		return "general_enquiry";
 	}
 
+    @GetMapping("/contact")
+    public String contactUs(Model model) {
+        ContactDto contact = new ContactDto("Digital University",
+                "Navana Tower (7th floor), 45 Gulshan South C/A,Circle 1, Dhaka 1212, Bangladesh",
+                "0269854", "01698745698", "university@email.com", null);
+        model.addAttribute("contact", contact);
+        return "contact";
+    }
 }
