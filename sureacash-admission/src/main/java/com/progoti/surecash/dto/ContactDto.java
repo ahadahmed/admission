@@ -7,18 +7,16 @@ public class ContactDto {
     private String universityName;
     private String universityAddress;
     private String contactNo;
-    private String contactMobile;
     private String contactEmail;
     private byte[] universityLogo;
 
     public ContactDto() { }
 
     public ContactDto(String universityName, String universityAddress, String contactNo,
-            String contactMobile, String contactEmail, byte[] universityLogo) {
+            String contactEmail, byte[] universityLogo) {
         this.universityName = universityName;
         this.universityAddress = universityAddress;
         this.contactNo = contactNo;
-        this.contactMobile = contactMobile;
         this.contactEmail = contactEmail;
         this.universityLogo = universityLogo;
     }
@@ -47,14 +45,6 @@ public class ContactDto {
         this.contactNo = contactNo;
     }
 
-    public String getContactMobile() {
-        return contactMobile;
-    }
-
-    public void setContactMobile(String contactMobile) {
-        this.contactMobile = contactMobile;
-    }
-
     public String getContactEmail() {
         return contactEmail;
     }
@@ -77,7 +67,6 @@ public class ContactDto {
                 .add("universityName", universityName)
                 .add("universityAddress", universityAddress)
                 .add("contactNo", contactNo)
-                .add("contactMobile", contactMobile)
                 .add("contactEmail", contactEmail)
                 .toString();
     }

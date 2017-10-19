@@ -1,5 +1,6 @@
 package com.progoti.surecash.controller;
 
+import com.progoti.surecash.admission.converter.UniversityConverter;
 import com.progoti.surecash.admission.domain.Enquiry;
 import com.progoti.surecash.admission.domain.University;
 import com.progoti.surecash.admission.domain.UserDetailsImpl;
@@ -72,11 +73,9 @@ public class HomeController {
 	}
 
     @GetMapping("/contact")
-    public String contactUs(Model model) {
-        ContactDto contact = new ContactDto("Digital University",
-                "Navana Tower (7th floor), 45 Gulshan South C/A,Circle 1, Dhaka 1212, Bangladesh",
-                "0269854", "01698745698", "university@email.com", null);
-        model.addAttribute("contact", contact);
+    public String contactUs(Model model, HttpServletRequest request) {
+        University university = (University) request.getServletContext().getAttribute(request.getServerName());
+        model.addAttribute("contact", UniversityConverter.toContactDto(university));
         return "contact";
     }
 }
