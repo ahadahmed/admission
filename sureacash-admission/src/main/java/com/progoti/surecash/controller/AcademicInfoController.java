@@ -53,7 +53,7 @@ public class AcademicInfoController {
 
     @RequestMapping(value = "registration", method = RequestMethod.POST)
     public CredentialResponse submitApplicationForm(@RequestBody @Valid ApplicationFormRequest request, HttpServletRequest servletRequest){
-        University university = (University) servletRequest.getAttribute("university");
+        University university = (University) servletRequest.getServletContext().getAttribute(servletRequest.getServerName());
         request.setUniversityId(university.getId());
         return admissionService.submitForm(request);
     }

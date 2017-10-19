@@ -3,6 +3,7 @@ package com.progoti.surecash.admission.domain;
 import com.google.common.base.MoreObjects;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "user_info", uniqueConstraints = @UniqueConstraint(columnNames = { "university_id", "user_name" }))
@@ -38,6 +39,10 @@ public class User {
     @OneToOne
 	@JoinColumn(name = "student_id")
 	private StudentInfo studentId;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_time", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date createDate;
 
 	public int getUserId() {
 		return userId;
@@ -111,7 +116,15 @@ public class User {
 		this.studentId = studentId;
 	}
 
-	@Override
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    @Override
 	public String toString() {
 		return MoreObjects.toStringHelper(this).add("userId", userId).add("userName", userName).add("email", email)
 				.add("role", role).add("univ", univ).toString();

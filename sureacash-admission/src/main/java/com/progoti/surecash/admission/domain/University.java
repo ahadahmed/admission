@@ -3,6 +3,7 @@ package com.progoti.surecash.admission.domain;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -52,8 +53,13 @@ public class University implements Serializable{
     
     @Column(name = "domain")
     private String domainName;
+
     @Column(name = "ip")
     private String ipAddress;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_time", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date createDate;
 
     public int getId() {
         return id;
@@ -158,6 +164,12 @@ public class University implements Serializable{
 	public void setIpAddress(String ipAddress) {
 		this.ipAddress = ipAddress;
 	}
-    
-    
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
 }

@@ -55,7 +55,7 @@ public class HomeController {
 
 	@PostMapping(value = "/submit-enquiry")
 	public String submitEnquiry(Model model, @ModelAttribute("enquiry") Enquiry enquiry, HttpServletRequest servletRequest) {
-        University university = (University) servletRequest.getAttribute("university");
+        University university = (University) servletRequest.getServletContext().getAttribute(servletRequest.getServerName());
         enquiry.setUniversityId(university.getId());
         UserDetailsImpl userDetails = SecurityUtils.getUserDetails();
         if(userDetails != null){

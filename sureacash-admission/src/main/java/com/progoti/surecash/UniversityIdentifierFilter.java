@@ -1,23 +1,14 @@
 package com.progoti.surecash;
 
-import java.io.IOException;
-import java.util.Arrays;
-
-import javax.servlet.FilterChain;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.progoti.surecash.admission.domain.University;
+import com.progoti.surecash.admission.repository.UniversityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
-import com.progoti.surecash.admission.domain.University;
-import com.progoti.surecash.admission.repository.UniversityRepository;
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 @Component
 public class UniversityIdentifierFilter extends GenericFilterBean{
@@ -42,7 +33,6 @@ public class UniversityIdentifierFilter extends GenericFilterBean{
         if(univ == null) {
             return;
         }
-        request.setAttribute("university", univ);
         chain.doFilter(request, response);
 	}
 	

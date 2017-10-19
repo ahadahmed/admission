@@ -81,7 +81,7 @@ function showPreview() {
     if ($("#form-personal-info").valid()) {
         var personal_info = {
             "mobile": $("#mobile_no").val(),
-            "emial": $("#email_id").val(),
+            "email": $("#email_id").val(),
             "password": $("#password_id").val()
         };
         studentInfo["personal_info"] = personal_info;
@@ -102,7 +102,7 @@ function appendTOApplicationDiv() {
     $('#trow_father_name_id').html(studentInfo.fatherName);
     $('#trow_mother_name_id').html(studentInfo.motherName);
     $('#trow_quota_id').html($('input[name=quota]:checked').val());
-    $('#trow_email_id').html(studentInfo.personal_info.emial);
+    $('#trow_email_id').html(studentInfo.personal_info.email);
     $('#trow_number_id').html(studentInfo.personal_info.mobile);
 
     $("#tbl-academic-preview").find("tbody").empty()
@@ -123,7 +123,7 @@ function appendTOApplicationDiv() {
     );
 
     var totalFees = 0;
-    var rowInserted = false
+    var rowInserted = false;
     var selectedUnitIdList = $('input[type=checkbox][class=unit]:checked').map(
             function (_, el) {
                 return $(el).val();
