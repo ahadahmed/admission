@@ -23,6 +23,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Date;
@@ -51,8 +52,8 @@ public class AcademicInfoController {
     }
 
     @RequestMapping(value = "registration", method = RequestMethod.POST)
-    public CredentialResponse submitApplicationForm(@RequestBody @Valid ApplicationFormRequest request){
-        University university = SecurityUtils.getUserDetails().getUser().getUniv();
+    public CredentialResponse submitApplicationForm(@RequestBody @Valid ApplicationFormRequest request, HttpServletRequest servletRequest){
+        University university = (University) servletRequest.getAttribute("university");
         request.setUniversityId(university.getId());
         return admissionService.submitForm(request);
     }

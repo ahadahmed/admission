@@ -31,17 +31,19 @@ public class UniversityIdentifierFilter extends GenericFilterBean{
 		HttpServletRequest httpRequest= (HttpServletRequest) request;
 		University univ = null;
 		ServletContext servletContext = httpRequest.getServletContext();
-		if(servletContext.getAttribute(httpRequest.getServerName()) == null ){
+
+        if(servletContext.getAttribute(httpRequest.getServerName()) == null ){
 			univ = universityRepository.findOneByDomainName(httpRequest.getServerName());
 			servletContext.setAttribute(httpRequest.getServerName(), univ);
-			
+
 		}else {
-			univ = (University) servletContext.getAttribute(request.getServerName());
-		}
-		if(univ == null) {
-			return;
-		}
-		chain.doFilter(request, response);
+            univ = (University) servletContext.getAttribute(request.getServerName());
+        }
+        if(univ == null) {
+            return;
+        }
+        request.setAttribute("university", univ);
+        chain.doFilter(request, response);
 	}
 	
 

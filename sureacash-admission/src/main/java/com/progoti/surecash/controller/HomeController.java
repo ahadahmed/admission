@@ -35,9 +35,9 @@ public class HomeController {
 
 	@GetMapping(value = "/general-enquiry")
 	public String enquiryForm(Model model, @ModelAttribute("enquiry") Enquiry enquiry) {
-		UserDetailsImpl user = SecurityUtils.getUserDetails();
-		System.out.println(user.getUser().getUserName() + "-->" + user.getUser().getUniv().getId());
-		if(user.getUser().getRole().getRoleName() == Constants.RoleName.ADMIN) {
+		UserDetailsImpl userDetails = SecurityUtils.getUserDetails();
+//		System.out.println(userDetails.getUser().getUserName() + "-->" + userDetails.getUser().getUniv().getId());
+		if(userDetails != null && userDetails.getUser().getRole().getRoleName() == Constants.RoleName.ADMIN) {
 			return "redirect:/admin/dashboard";
 		}
 		model.addAttribute("submitted", false);
@@ -54,6 +54,7 @@ public class HomeController {
 
 	@PostMapping(value = "/submit-enquiry")
 	public String submitEnquiry(Model model, @ModelAttribute("enquiry") Enquiry enquiry) {
+        // TODO: need to change in insert column (university_id, student_id)
 		enquiryRepository.save(enquiry);
 		model.addAttribute("submitted", true);
 		return "general_enquiry";
