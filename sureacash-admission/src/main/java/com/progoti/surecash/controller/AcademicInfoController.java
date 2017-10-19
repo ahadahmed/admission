@@ -5,7 +5,6 @@ import com.progoti.surecash.admission.domain.StudentInfo;
 import com.progoti.surecash.admission.domain.University;
 import com.progoti.surecash.admission.domain.User;
 import com.progoti.surecash.admission.repository.StudentInfoRepository;
-import com.progoti.surecash.admission.repository.UniversityRepository;
 import com.progoti.surecash.admission.repository.UserRepository;
 import com.progoti.surecash.admission.request.AcademicInformationRequest;
 import com.progoti.surecash.admission.request.ApplicationFormRequest;

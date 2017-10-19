@@ -1,5 +1,6 @@
 package com.progoti.surecash.admission.service;
 
+import com.google.gson.Gson;
 import com.progoti.surecash.admission.converter.ApplicationHistoryConverter;
 import com.progoti.surecash.admission.domain.*;
 import com.progoti.surecash.admission.repository.AdmissionPaymentRequestRepository;
@@ -38,6 +39,7 @@ public class PaymentServiceImpl implements PaymentService {
     private AdmissionPaymentRequestRepository admissionPaymentRequestRepository;
     @Autowired
     private UniversityRepository universityRepository;
+    private final Gson GSON = new Gson();
 
     @Override
     public List<PaymentRequestDto> listPaymentRequests(String userName) {
@@ -172,6 +174,7 @@ public class PaymentServiceImpl implements PaymentService {
         // update in transaction history table
         transactionHistory.setStatus(responseMap.get("status"));
         transactionHistory.setTrnxId(responseMap.get("trnxId"));
+        transactionHistory.setSwitchResponse(GSON.toJson(responseMap));
         transactionHistory.setUpdateDate(new Date());
         transactionHistoryRepository.save(transactionHistory);
 
