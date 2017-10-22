@@ -17,11 +17,11 @@
 </nav>
  -->
  
-<nav th:replace="layout::layout_nav(1)">
+<nav th:replace="layout::layout_nav(10)">
 </nav>
 <div class="container">
     <div class="row">
-        <h4>Applicant Details</h4>
+        <h5 class="bold">Applicant information</h5>
         <div class="row">
             <div class="col-sm-2 col-md-2 col-lg-2" style="text-align: center;">
                 <img src="../static/images/login-photo.png" th:src="@{/images/login-photo.png}" th:if="${profile.imageData == null}"
@@ -71,6 +71,7 @@
         </div>
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12">
+                <h5 class="bold">Academic information</h5>
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -105,6 +106,7 @@
         </div>
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12">
+                <h5 class="bold">Unit information</h5>
                 <table class="table table-bordered">
                     <thead>
                         <tr>

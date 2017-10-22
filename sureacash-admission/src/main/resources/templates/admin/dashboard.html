@@ -32,13 +32,13 @@
                 </div>
                 <div class="col-md-9-right" style="padding-top: 30px;">
                     <div class="col-md-3">
-                        <b>All Applicant </b><span class="badge badge-default badge-pill alert-info" th:text="${totalApplicant}">1000</span>
+                        <b>All Applicant </b><span class="badge badge-default badge-pill alert-info" th:text="${#numbers.formatDecimal(totalApplicant, 1, 'COMMA', 0, 'POINT')}"></span>
                     </div>
                     <div class="col-md-3">
-                        <b>All Paid Applicant </b><span class="badge badge-default badge-pill alert-success" th:text="${totalPaidApplicant}"></span>
+                        <b>All Paid Applicant </b><span class="badge badge-default badge-pill alert-success" th:text="${#numbers.formatDecimal(totalPaidApplicant, 0, 'COMMA', 2, 'POINT')}"></span>
                     </div>
                     <div class="col-md-3">
-                        <b>All Quota Applicant </b><span class="badge badge-default badge-pill alert-warning" th:text="${totalQuotaApplicant}"></span>
+                        <b>All Quota Applicant </b><span class="badge badge-default badge-pill alert-warning" th:text="${#numbers.formatDecimal(totalQuotaApplicant, 1, 'COMMA', 0, 'POINT')}"></span>
                     </div>
                 </div>
             </div>
@@ -68,15 +68,15 @@
                                     </li>
                                     <li class="list-group-item justify-content-between">
                                         Total Applicant
-                                        <span class="badge badge-default badge-pill" th:text="${unitStatus.applicantCount}"></span>
+                                        <span class="badge badge-default badge-pill" th:text="${#numbers.formatDecimal(unitStatus.applicantCount, 1, 'COMMA', 0, 'POINT')}"></span>
                                     </li>
                                     <li class="list-group-item justify-content-between">
                                         Quota Applicant
-                                        <span class="badge badge-default badge-pill alert-warning" th:text="${unitStatus.quotaApplicant}"></span>
+                                        <span class="badge badge-default badge-pill alert-warning" th:text="${#numbers.formatDecimal(unitStatus.quotaApplicant, 1, 'COMMA', 0, 'POINT')}"></span>
                                     </li>
                                     <li class="list-group-item justify-content-between">
                                         Total Paid
-                                        <span class="badge badge-default badge-pill alert-success" th:text="${unitStatus.paidApplicant}"></span>
+                                        <span class="badge badge-default badge-pill alert-success" th:text="${#numbers.formatDecimal(unitStatus.paidApplicant, 1, 'COMMA', 0, 'POINT')}"></span>
                                     </li>
                                 </ul>
                             </div>
@@ -86,7 +86,7 @@
                                     <th:block th:each="group: ${unitStatus.groupStatusList}">
                                         <li class="list-group-item justify-content-between">
                                             <span th:text="${group[0]}"></span>
-                                            <span class="badge badge-default badge-pill" th:text="${group[1]}"></span>
+                                            <span class="badge badge-default badge-pill" th:text="${#numbers.formatDecimal(group[1], 1, 'COMMA', 0, 'POINT')}"></span>
                                         </li>
                                     </th:block>
                                 </ul>
@@ -97,7 +97,7 @@
                                     <th:block th:each="board: ${unitStatus.boardStatusList}">
                                         <li class="list-group-item justify-content-between">
                                             <span th:text="${board[0]}"></span>
-                                            <span class="badge badge-default badge-pill" th:text="${board[1]}"></span>
+                                            <span class="badge badge-default badge-pill" th:text="${#numbers.formatDecimal(board[1], 1, 'COMMA', 0, 'POINT')}"></span>
                                         </li>
                                     </th:block>
                                 </ul>
