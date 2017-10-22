@@ -78,4 +78,9 @@ public class HomeController {
         model.addAttribute("contact", UniversityConverter.toContactDto(university));
         return "contact";
     }
+
+    @GetMapping("/howtopay")
+    public String howToPay() {
+	    return "how-to-pay";
+    }
 }
