@@ -43,7 +43,7 @@ public class AcademicDaoImpl implements AcademicDao {
     private UniversityRepository universityRepository;
 
     @Override
-    public StudentInfoResponse getStudentInfo(AcademicInformationRequest request) {
+    public StudentInfoResponse getStudentInfo(AcademicInformationRequest request, University university) {
         String query = "SELECT hsc.name, hsc.fname, hsc.mname, hsc.hsc_group, hsc.gpa AS hsc_gpa, ssc.ssc_group, ssc.gpa AS ssc_gpa " +
                 "FROM " + hscTable + " AS hsc " +
                 "INNER JOIN " + sscTable + " AS ssc " +
@@ -68,7 +68,7 @@ public class AcademicDaoImpl implements AcademicDao {
                 studentInfoResponse.setSscInfo(request.getSscInformation());
                 studentInfoResponse.getSscInfo().setGroup(Constants.Group.valueOf(rs.getString("ssc_group")));
                 studentInfoResponse.getSscInfo().setGpa(rs.getDouble("ssc_gpa"));
-                studentInfoResponse.setUnitInfo(getUnitInfoListFromUniversityAndSession(universityRepository.findOne(1), Constants.AdmissionSession.SESSION_2017_2018));
+                studentInfoResponse.setUnitInfo(getUnitInfoListFromUniversityAndSession(university, Constants.AdmissionSession.SESSION_2017_2018));
 
                 return studentInfoResponse;
             }

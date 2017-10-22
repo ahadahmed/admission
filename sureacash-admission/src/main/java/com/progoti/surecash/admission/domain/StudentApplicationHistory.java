@@ -10,7 +10,7 @@ import java.util.Date;
  * Created by Shaown on 10:39 AM.
  */
 @Entity
-@NamedEntityGraph(name = "StudentApplicationHistory.detail", attributeNodes = {@NamedAttributeNode("studentInfo"), @NamedAttributeNode("unit")}, includeAllAttributes = true)
+@NamedEntityGraph(name = "StudentApplicationHistory.detail", attributeNodes = {@NamedAttributeNode("studentInfo")}, includeAllAttributes = true)
 @Table(name = "student_application_history", uniqueConstraints = @UniqueConstraint(columnNames = {"application_id", "unit_id"}))
 public class StudentApplicationHistory implements Serializable{
     private static final long serialVersionUID = 1L;

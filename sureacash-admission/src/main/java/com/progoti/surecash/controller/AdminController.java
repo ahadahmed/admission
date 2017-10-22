@@ -10,12 +10,10 @@ import com.progoti.surecash.admission.service.AdmissionService;
 import com.progoti.surecash.dto.AdminDashboardDto;
 import org.hibernate.validator.constraints.Email;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -105,7 +103,8 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/update/university-profile", method = RequestMethod.POST)
-    public String updateProfile(@RequestParam(value = "image-file", required = false) MultipartFile imageFile,
+    @ResponseBody
+    public ResponseEntity updateProfile(@RequestParam(value = "image-file", required = false) MultipartFile imageFile,
                                 @RequestParam(value = "email", required = true)@Valid @Email String email,
                                 @RequestParam(value = "contactNo", required = true) String contact,
                                 @RequestParam(value = "address", required = true) String address, HttpServletRequest servletRequest) throws IOException {
@@ -113,6 +112,6 @@ public class AdminController {
         ProfileUpdateRequest updateRequest = new ProfileUpdateRequest(imageFile, email, address, contact);
         updateRequest.setNonNullValueForUniversityUpdate(university);
         universityRepository.saveAndFlush(university);
-        return "SUCCESS";
+        return ResponseEntity.ok().build();
     }
 }

@@ -27,10 +27,6 @@ public class StudentInfo implements Serializable{
     @Column(name = "id")
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "university_id")
-    private University university;
-
     @Column(name = "name", length = 100)
     private String name;
 
@@ -161,14 +157,6 @@ public class StudentInfo implements Serializable{
 
     public void setHscGPA(Double hscGPA) {
         this.hscGPA = hscGPA;
-    }
-
-    public University getUniversity() {
-        return university;
-    }
-
-    public void setUniversity(University university) {
-        this.university = university;
     }
 
     public Integer getSscPassingYear() {

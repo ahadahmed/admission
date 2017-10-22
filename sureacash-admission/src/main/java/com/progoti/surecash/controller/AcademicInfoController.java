@@ -40,8 +40,9 @@ public class AcademicInfoController {
 
 
     @RequestMapping(value = "validate-info", method = RequestMethod.POST)
-    public StudentInfoResponse validateAcademicInfo(@RequestBody @Valid AcademicInformationRequest request){
-        return academicDao.getStudentInfo(request);
+    public StudentInfoResponse validateAcademicInfo(@RequestBody @Valid AcademicInformationRequest request, HttpServletRequest servletRequest){
+        University university = (University) servletRequest.getServletContext().getAttribute(servletRequest.getServerName());
+        return academicDao.getStudentInfo(request, university);
     }
 
     @RequestMapping(value = "registration", method = RequestMethod.POST)

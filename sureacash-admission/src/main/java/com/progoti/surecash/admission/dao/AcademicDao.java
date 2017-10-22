@@ -12,6 +12,6 @@ import java.util.List;
  * Created by Shaown on 12:56 PM.
  */
 public interface AcademicDao {
-    StudentInfoResponse getStudentInfo(AcademicInformationRequest request);
+    StudentInfoResponse getStudentInfo(AcademicInformationRequest request, University university);
     List<UnitInfo> getUnitInfoListFromUniversityAndSession(University university, Constants.AdmissionSession admissionSession);
 }

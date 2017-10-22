@@ -30,7 +30,7 @@ public interface StudentApplicationHistoryRepository extends JpaRepository<Stude
             "GROUP BY u.id")
     List<AdminDashboardDto> findUniversityStatus(@Param("university") University university);
 
-    @EntityGraph(value = "StudentApplicationHistory.detail", type = EntityGraph.EntityGraphType.LOAD)
+    @EntityGraph(value = "StudentApplicationHistory.detail", type = EntityGraph.EntityGraphType.FETCH)
     List<StudentApplicationHistory> findAllByUniversityAndUnitAndActive(University university, Unit unit, Boolean isActive);
 
 //    @Query("select h from StudentApplicationHistory h join h.studentInfo s join h.unit where s.userName = :userName")
