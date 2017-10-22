@@ -7,6 +7,7 @@ import com.progoti.surecash.admission.domain.StudentInfo;
 import com.progoti.surecash.admission.domain.UserDetailsImpl;
 import com.progoti.surecash.admission.repository.StudentApplicationHistoryRepository;
 import com.progoti.surecash.admission.repository.UnitRepository;
+import com.progoti.surecash.admission.repository.UniversityRepository;
 import com.progoti.surecash.admission.utility.Constants;
 import com.progoti.surecash.admission.utility.SecurityUtils;
 import com.progoti.surecash.admission.utility.SteamCollector;
@@ -22,12 +23,14 @@ public class ApplicationStatusServiceImpl implements ApplicationStatusService {
 
     private UnitRepository unitRepository;
     private StudentApplicationHistoryRepository historyRepository;
+    private UniversityRepository universityRepository;
 
     @Autowired
     public ApplicationStatusServiceImpl(UnitRepository unitRepository,
-            StudentApplicationHistoryRepository historyRepository) {
+            StudentApplicationHistoryRepository historyRepository, UniversityRepository universityRepository) {
         this.unitRepository = unitRepository;
         this.historyRepository = historyRepository;
+        this.universityRepository = universityRepository;
     }
 
     @Override
@@ -41,7 +44,7 @@ public class ApplicationStatusServiceImpl implements ApplicationStatusService {
 //                .loadActiveHistoryByUserName(userName);
 
         List<StudentApplicationHistory> histories = historyRepository
-                .findAllByStudentInfo(userDetails.getUser().getStudentId());
+                .findAllByStudentInfoAndUniversity(userDetails.getUser().getStudentId(), universityRepository.getOne(universityId));
 
         List<UnitDto> finalAvailableUnits = new ArrayList<>();
         List<UnitDto> finalAppliedUnits = new ArrayList<>();

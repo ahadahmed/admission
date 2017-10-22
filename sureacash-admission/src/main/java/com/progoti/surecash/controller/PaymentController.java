@@ -1,6 +1,7 @@
 package com.progoti.surecash.controller;
 
 import com.progoti.surecash.admission.domain.AdmissionPaymentRequest;
+import com.progoti.surecash.admission.domain.University;
 import com.progoti.surecash.admission.request.ReconcileRequest;
 import com.progoti.surecash.admission.response.PaymentResponse;
 import com.progoti.surecash.admission.service.PaymentService;
@@ -33,7 +34,8 @@ public class PaymentController {
     @GetMapping("/show")
     public String showPaymentPage(Model model, HttpServletRequest servletRequest) {
         String userName = servletRequest.getUserPrincipal().getName();
-        List<PaymentRequestDto> paymentRequests = paymentService.listPaymentRequests(userName);
+        University university = (University) servletRequest.getServletContext().getAttribute(servletRequest.getServerName());
+        List<PaymentRequestDto> paymentRequests = paymentService.listPaymentRequests(userName, university);
         model.addAttribute("paymentRequests", paymentRequests);
         return "payment/payment.html";
     }

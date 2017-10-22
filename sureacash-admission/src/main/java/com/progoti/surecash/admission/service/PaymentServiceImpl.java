@@ -42,10 +42,10 @@ public class PaymentServiceImpl implements PaymentService {
     private final Gson GSON = new Gson();
 
     @Override
-    public List<PaymentRequestDto> listPaymentRequests(String userName) {
+    public List<PaymentRequestDto> listPaymentRequests(String userName, University university) {
         UserDetailsImpl userDetails = SecurityUtils.getUserDetails();
 //        List<StudentApplicationHistory> histories = historyRepository.loadActiveHistoryByUserName(userName);
-        List<StudentApplicationHistory> histories = historyRepository.findAllByStudentInfo(userDetails.getUser().getStudentId());
+        List<StudentApplicationHistory> histories = historyRepository.findAllByStudentInfoAndUniversity(userDetails.getUser().getStudentId(), university);
         return ApplicationHistoryConverter.toPaymentRequestDtos(histories);
     }
 
