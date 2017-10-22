@@ -109,11 +109,12 @@
         <!-- left column -->
         <div class="col-md-3">
             <div class="text-center">
-                <img id="default-image" th:if="${profile.imageData == null}" src="../static/images/login-photo.png" th:src="@{/images/login-photo.png}"
+                <img id="default-image" th:if="${profile.imageData == null}" src="../../static/images/login-photo.png" th:src="@{/images/login-photo.png}"
                      class="avatar img-thumbnail" alt="avatar" height="200" width="200"/>
-                <img id="image" src="" th:src="@{${'data:image/jpeg;base64,' + profile.base64Image}}" th:if="${profile.imageData != null}"
+                <img id="image" src="" th:src="@{${'data:image/jpeg;base64,' + T(com.progoti.surecash.admission.utility.Constants).getBase64ImageData(profile.imageData)}}" th:if="${profile.imageData != null}"
                      class="avatar img-thumbnail" alt="avatar" height="200" width="200" />
-
+                <br/>
+                <br/>
                 <form class="form-horizontal" role="form" id="image-upload-form" enctype="multipart/form-data">
                     <input id="image-file" name="image-file" type="file" class="form-control"  th:if="${profile.imageData == null}" />
                 </form>
@@ -121,62 +122,58 @@
         </div>
 
         <!-- edit form column -->
-        <div class="col-md-9 personal-info">
-            <h3>Personal info</h3>
-
-            <form class="form-horizontal" role="form" id="profile-upload-form">
-                <div class="form-group">
-                    <label class="col-lg-3 control-label">Applicant Name</label>
-
-                    <div class="col-lg-8">
-                        <input class="form-control" type="text" th:value="${profile.name}" th:disabled="disabled"/>
+        <div class="col-md-9 personal-info" style="padding-right: 10%;">
+            <div class="panel panel-default">
+                <div class="panel-heading"><b>Personal Information</b></div>
+                <div class="panel-body">
+                    <div class="row" style="padding-left: 8%;">
+                        <form class="form-horizontal" role="form" id="profile-upload-form">
+                            <div class="form-group col-md-11">
+                                <label class="col-md-3 control-label">Applicant Name</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="text" th:value="${profile.name}" th:disabled="disabled"/>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-11">
+                                <label class="col-md-3 control-label">Father's Name</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="text" th:value="${profile.fatherName}" th:disabled="disabled"/>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-11">
+                                <label class="col-md-3 control-label">Mother's Name</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="text" th:value="${profile.motherName}" th:disabled="disabled"/>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-11">
+                                <label class="col-md-3 control-label">Quota(if any)</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="text" th:value="${profile.quota}" th:disabled="disabled"/>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-11">
+                                <label class="col-md-3 control-label">Contact No</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="text" th:value="${profile.contactNo}" th:disabled="disabled"/>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-11">
+                                <label class="col-md-3 control-label">Email</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" id="emailId" type="email" th:value="${profile.email}"/>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-11">
+                                <label class="col-md-3 control-label"></label>
+                                <div class="col-md-8">
+                                    <input type="button" class="btn btn-success" value="Save Changes" onclick="showModal()"/>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-lg-3 control-label">Father's Name</label>
-
-                    <div class="col-lg-8">
-                        <input class="form-control" type="text" th:value="${profile.fatherName}"
-                               th:disabled="disabled"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-3 control-label">Mother's Name</label>
-
-                    <div class="col-lg-8">
-                        <input class="form-control" type="text" th:value="${profile.motherName}"
-                               th:disabled="disabled"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-3 control-label">Quota(if any)</label>
-
-                    <div class="col-lg-8">
-                        <input class="form-control" type="text" th:value="${profile.quota}" th:disabled="disabled"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-3 control-label">Contact No</label>
-
-                    <div class="col-lg-8">
-                        <input class="form-control" type="text" th:value="${profile.contactNo}" th:disabled="disabled"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-3 control-label">Email</label>
-
-                    <div class="col-lg-8">
-                        <input class="form-control" id="emailId" type="email" th:value="${profile.email}"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-3 control-label"></label>
-
-                    <div class="col-md-8">
-                        <input type="button" class="btn btn-primary" value="Save Changes" onclick="showModal()"/>
-                    </div>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
     <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel">

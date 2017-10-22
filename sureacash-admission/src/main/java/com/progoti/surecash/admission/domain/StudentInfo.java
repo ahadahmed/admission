@@ -12,7 +12,7 @@ import java.util.Set;
  * Created by Shaown on 10:55 AM.
  */
 @Entity
-@Table(name = "student_info", uniqueConstraints = @UniqueConstraint(columnNames = {"university_id", "user_name"}))
+@Table(name = "student_info")
 public class StudentInfo implements Serializable{
     private static final long serialVersionUID = 1L;
 
@@ -30,12 +30,6 @@ public class StudentInfo implements Serializable{
     @ManyToOne
     @JoinColumn(name = "university_id")
     private University university;
-
-    @Column(name = "password", length = 100)
-    private String password;
-
-    @Column(name = "user_name", length = 100)
-    private String userName;
 
     @Column(name = "name", length = 100)
     private String name;
@@ -66,12 +60,6 @@ public class StudentInfo implements Serializable{
     @Enumerated(EnumType.STRING)
     private Constants.Board hscBoard;
 
-    @Column(name = "mobile_no", length = 11)
-    private String mobile;
-
-    @Column(name = "email")
-    private String email;
-
     @Column(name = "ssc_passing_year", length = 4)
     private Integer sscPassingYear;
 
@@ -89,10 +77,6 @@ public class StudentInfo implements Serializable{
     @Enumerated(EnumType.STRING)
     private Constants.Group sscGroup;
 
-    /*@ManyToOne
-	@JoinColumn(name = "role_id")
-	StudentInfo studentInfo;*/
-
     @Lob
     @Column(name = "image_data", columnDefinition = "mediumblob")
     private byte[] image;
@@ -104,6 +88,15 @@ public class StudentInfo implements Serializable{
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "update_date")
     private Date updateDate;
+    
+    @OneToOne(mappedBy = "studentId")
+    private User user;
+
+    @Column(name = "father_name")
+    private String fatherName;
+
+    @Column(name = "mother_name")
+    private String motherName;
 
 
     public int getId() {
@@ -112,14 +105,6 @@ public class StudentInfo implements Serializable{
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getName() {
@@ -178,30 +163,6 @@ public class StudentInfo implements Serializable{
         this.hscGPA = hscGPA;
     }
 
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public University getUniversity() {
         return university;
     }
@@ -233,14 +194,6 @@ public class StudentInfo implements Serializable{
     public void setStudentApplicationHistory(List<StudentApplicationHistory> studentApplicationHistory) {
         this.studentApplicationHistory = studentApplicationHistory;
     }
-
-	/*public Set<Role> getUserRole() {
-		return userRole;
-	}
-
-	public void setUserRole(Set<Role> userRole) {
-		this.userRole = userRole;
-	}*/
 
     public byte[] getImage() {
         return image;
@@ -296,5 +249,29 @@ public class StudentInfo implements Serializable{
 
     public void setSscGroup(Constants.Group sscGroup) {
         this.sscGroup = sscGroup;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getFatherName() {
+        return fatherName;
+    }
+
+    public void setFatherName(String fatherName) {
+        this.fatherName = fatherName;
+    }
+
+    public String getMotherName() {
+        return motherName;
+    }
+
+    public void setMotherName(String motherName) {
+        this.motherName = motherName;
     }
 }

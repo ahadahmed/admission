@@ -13,7 +13,6 @@ public class SecurityUtils {
             Object principal = auth.getPrincipal();
             if (principal instanceof UserDetailsImpl) {
                 user = (UserDetailsImpl) principal;
-                System.out.println(user.getUser().getUserName() + "-->" + user.getUser().getUniv().getId());
             }
         }
         return user;

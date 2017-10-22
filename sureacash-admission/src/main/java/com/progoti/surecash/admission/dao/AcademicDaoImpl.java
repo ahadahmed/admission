@@ -11,6 +11,7 @@ import com.progoti.surecash.admission.response.UnitInfo;
 import com.progoti.surecash.admission.response.StudentInfoResponse;
 import com.progoti.surecash.admission.utility.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -28,6 +29,10 @@ import java.util.Map;
  */
 @Repository
 public class AcademicDaoImpl implements AcademicDao {
+    @Value("${hsc.table.name}")
+    String hscTable;
+    @Value("${ssc.table.name}")
+    String sscTable;
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
@@ -40,8 +45,8 @@ public class AcademicDaoImpl implements AcademicDao {
     @Override
     public StudentInfoResponse getStudentInfo(AcademicInformationRequest request) {
         String query = "SELECT hsc.name, hsc.fname, hsc.mname, hsc.hsc_group, hsc.gpa AS hsc_gpa, ssc.ssc_group, ssc.gpa AS ssc_gpa " +
-                "FROM result_hsc_dhk_2015 AS hsc " +
-                "INNER JOIN result_ssc_dhk_2013 AS ssc " +
+                "FROM " + hscTable + " AS hsc " +
+                "INNER JOIN " + sscTable + " AS ssc " +
                 "ON hsc.ssc_board = ssc.board_name AND hsc.ssc_passyr = ssc.pass_year AND hsc.ssc_rollno = ssc.roll_no " +
                 "WHERE hsc.board_name = ? AND hsc.roll_no = ? AND hsc.regno = ? AND hsc.pass_year = ? " +
                 "AND ssc.regno = ? AND ssc.roll_no = ? AND ssc.pass_year = ? AND ssc.board_name = ?";
@@ -73,21 +78,23 @@ public class AcademicDaoImpl implements AcademicDao {
     }
 
     @Override
-    public List<UnitInfo> getUnitInfoListFromUniversityAndSession(University university, Constants.AdmissionSession session) {
+    public List<UnitInfo> getUnitInfoListFromUniversityAndSession(University university,
+            Constants.AdmissionSession session) {
         List<Unit> unitList = unitRepository.findAllByUniversity(university);
 
-        List<AdmissionSession> admissionSessionList = admissionSessionRepository.findAllBySessionAndUnitIn(session.value, unitList);
+        List<AdmissionSession> admissionSessionList = admissionSessionRepository
+                .findAllBySessionAndUnitIn(session.value, unitList);
         Map<Integer, Double> unitPrice = new HashMap<>();
-        for(AdmissionSession admissionSession : admissionSessionList){
+        for (AdmissionSession admissionSession : admissionSessionList) {
             unitPrice.put(admissionSession.getUnit().getId(), admissionSession.getFormPrice());
         }
 
         List<UnitInfo> unitInfoList = new ArrayList<>();
 
-        for(Unit unit : unitList){
-            unitInfoList.add(new UnitInfo(unit.getId(), unit.getCode(), unit.getName(), String.valueOf(unitPrice.get(unit.getId()))));
+        for (Unit unit : unitList) {
+            String fees = Constants.DECIMAL_FORMAT.format(unitPrice.get(unit.getId()));
+            unitInfoList.add(new UnitInfo(unit.getId(), unit.getCode(), unit.getName(), fees));
         }
         return unitInfoList;
     }
-
 }

@@ -1,5 +1,7 @@
 package com.progoti.surecash.admission.domain;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -34,6 +36,10 @@ public class TransactionHistory implements Serializable{
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "update_time")
     private Date updateDate;
+
+    @Column(name = "switch_response", columnDefinition = "TEXT")
+    @Type(type = "text")
+    private String switchResponse;
 
     public int getId() {
         return id;
@@ -81,5 +87,13 @@ public class TransactionHistory implements Serializable{
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public String getSwitchResponse() {
+        return switchResponse;
+    }
+
+    public void setSwitchResponse(String switchResponse) {
+        this.switchResponse = switchResponse;
     }
 }

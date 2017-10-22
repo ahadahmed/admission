@@ -33,11 +33,13 @@ public interface StudentApplicationHistoryRepository extends JpaRepository<Stude
     @EntityGraph(value = "StudentApplicationHistory.detail", type = EntityGraph.EntityGraphType.LOAD)
     List<StudentApplicationHistory> findAllByUniversityAndUnitAndActive(University university, Unit unit, Boolean isActive);
 
-    @Query("select h from StudentApplicationHistory h join h.studentInfo s join h.unit where s.userName = :userName")
-    List<StudentApplicationHistory> loadHistoryByUserName(@Param("userName") String userName);
+//    @Query("select h from StudentApplicationHistory h join h.studentInfo s join h.unit where s.userName = :userName")
+//    List<StudentApplicationHistory> loadHistoryByUserName(@Param("userName") String userName);
+//
+//    @Query("select h from StudentApplicationHistory h join h.studentInfo s join h.unit where s.userName = :userName and h.active = true")
+//    List<StudentApplicationHistory> loadActiveHistoryByUserName(@Param("userName") String userName);
 
-    @Query("select h from StudentApplicationHistory h join h.studentInfo s join h.unit where s.userName = :userName and h.active = true")
-    List<StudentApplicationHistory> loadActiveHistoryByUserName(@Param("userName") String userName);
+    List<StudentApplicationHistory> findAllByStudentInfo(StudentInfo studentInfo);
 
     @Query(value = "SELECT si.hscGroup, COUNT(si.hscGroup) " +
             "FROM StudentApplicationHistory sah " +

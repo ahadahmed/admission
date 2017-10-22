@@ -5,15 +5,22 @@ import com.progoti.surecash.admission.domain.StudentInfo;
 import com.progoti.surecash.admission.domain.Unit;
 import com.progoti.surecash.admission.domain.University;
 import com.progoti.surecash.admission.repository.*;
+import com.progoti.surecash.admission.request.ProfileUpdateRequest;
 import com.progoti.surecash.admission.service.AdmissionService;
 import com.progoti.surecash.dto.AdminDashboardDto;
+import org.hibernate.validator.constraints.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -25,8 +32,6 @@ public class AdminController {
     @Autowired
     private StudentApplicationHistoryRepository studentApplicationHistoryRepository;
     @Autowired
-    private UniversityRepository universityRepository;
-    @Autowired
     private UnitRepository unitRepository;
     @Autowired
     private StudentInfoRepository studentInfoRepository;
@@ -34,11 +39,12 @@ public class AdminController {
     private AdmissionService admissionService;
     @Autowired
     private AdmissionSessionRepository admissionSessionRepository;
+    @Autowired
+    private UniversityRepository universityRepository;
 
     @GetMapping(value = "/dashboard")
-    public String getAdminDashboard(Model model) {
-        //TODO: need to change this static value
-        University university = universityRepository.getOne(1);
+    public String getAdminDashboard(Model model, HttpServletRequest servletRequest) {
+        University university = (University) servletRequest.getServletContext().getAttribute(servletRequest.getServerName());
         List<AdminDashboardDto> universityStatusList = studentApplicationHistoryRepository.findUniversityStatus(university);
         int totalApplicant = 0, totalPaid = 0, totalQuotaApplicant = 0;
         for (AdminDashboardDto dto : universityStatusList) {
@@ -63,19 +69,19 @@ public class AdminController {
     }
 
     @GetMapping(value = "/unit-details")
-    public String getAdminSearch(Model model, @RequestParam(value = "unitId", required = true) Integer unitId) {
-        //TODO: need to change this static value
-        model.addAttribute("university", universityRepository.getOne(1));
-        List<StudentApplicationHistory> applicantList = studentApplicationHistoryRepository.findAllByUniversityAndUnitAndActive(universityRepository.getOne(1), unitRepository.getOne(unitId), Boolean.TRUE);
+    public String getAdminSearch(Model model, @RequestParam(value = "unitId", required = true) Integer unitId, HttpServletRequest servletRequest) {
+        University university = (University) servletRequest.getServletContext().getAttribute(servletRequest.getServerName());
+        model.addAttribute("university", university);
+        List<StudentApplicationHistory> applicantList = studentApplicationHistoryRepository.findAllByUniversityAndUnitAndActive(university, unitRepository.getOne(unitId), Boolean.TRUE);
         model.addAttribute("applicantList", applicantList);
         return "admin/unit_details";
 
     }
 
     @GetMapping(value = "/applicant-details")
-    public String getApplicantDetails(Model model, @RequestParam(value = "studentId", required = true) Integer studentId){
-        //TODO: need to change this static value
-        model.addAttribute("university", universityRepository.getOne(1));
+    public String getApplicantDetails(Model model, @RequestParam(value = "studentId", required = true) Integer studentId, HttpServletRequest servletRequest){
+        University university = (University) servletRequest.getServletContext().getAttribute(servletRequest.getServerName());
+        model.addAttribute("university", university);
         StudentInfo studentInfo = studentInfoRepository.getOne(studentId);
         model.addAttribute("student", studentInfo);
         model.addAttribute("profile", admissionService.getStudentProfile(studentInfo));
@@ -84,18 +90,29 @@ public class AdminController {
     }
 
     @GetMapping(value = "/university-details")
-    public String getUniversityDetails(Model model){
-        //TODO: need to change in university static value
-        University university = universityRepository.findOne(1);
+    public String getUniversityDetails(Model model, HttpServletRequest servletRequest){
+        University university = (University) servletRequest.getServletContext().getAttribute(servletRequest.getServerName());
         model.addAttribute("university", university);
         model.addAttribute("admissionSessionList", admissionSessionRepository.findAllUnitByUniversity(university));
         return "admin/university_details";
     }
 
     @GetMapping(value = "/show-university-profile")
-    public String showUniversityProfile(Model model){
-        //TODO: need to change in university static value
-        model.addAttribute("university", universityRepository.findOne(1));
+    public String showUniversityProfile(Model model, HttpServletRequest servletRequest){
+        University university = (University) servletRequest.getServletContext().getAttribute(servletRequest.getServerName());
+        model.addAttribute("university", university);
         return "admin/edit_university_profile";
+    }
+
+    @RequestMapping(value = "/update/university-profile", method = RequestMethod.POST)
+    public String updateProfile(@RequestParam(value = "image-file", required = false) MultipartFile imageFile,
+                                @RequestParam(value = "email", required = true)@Valid @Email String email,
+                                @RequestParam(value = "contactNo", required = true) String contact,
+                                @RequestParam(value = "address", required = true) String address, HttpServletRequest servletRequest) throws IOException {
+        University university = (University) servletRequest.getServletContext().getAttribute(servletRequest.getServerName());
+        ProfileUpdateRequest updateRequest = new ProfileUpdateRequest(imageFile, email, address, contact);
+        updateRequest.setNonNullValueForUniversityUpdate(university);
+        universityRepository.saveAndFlush(university);
+        return "SUCCESS";
     }
 }

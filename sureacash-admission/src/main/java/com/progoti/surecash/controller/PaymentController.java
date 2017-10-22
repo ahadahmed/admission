@@ -4,7 +4,6 @@ import com.progoti.surecash.admission.domain.AdmissionPaymentRequest;
 import com.progoti.surecash.admission.request.ReconcileRequest;
 import com.progoti.surecash.admission.response.PaymentResponse;
 import com.progoti.surecash.admission.service.PaymentService;
-import com.progoti.surecash.admission.utility.SecurityUtils;
 import com.progoti.surecash.dto.PaymentRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -31,8 +31,8 @@ public class PaymentController {
     }
 
     @GetMapping("/show")
-    public String showPaymentPage(Model model) {
-        String userName = SecurityUtils.getUserName();
+    public String showPaymentPage(Model model, HttpServletRequest servletRequest) {
+        String userName = servletRequest.getUserPrincipal().getName();
         List<PaymentRequestDto> paymentRequests = paymentService.listPaymentRequests(userName);
         model.addAttribute("paymentRequests", paymentRequests);
         return "payment/payment.html";

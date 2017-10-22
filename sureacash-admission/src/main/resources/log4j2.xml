@@ -19,7 +19,7 @@
     </RollingFile>
   </Appenders>
   <Loggers>
-    <Logger name="com.progoti.nobopay.nobopayandroidapi" level="info" additivity="true">
+    <Logger name="com.progoti.surecash" level="info" additivity="true">
       <AppenderRef ref="RollingFile"/>
     </Logger>
     <Root level="info">

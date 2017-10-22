@@ -11,5 +11,4 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface StudentInfoRepository extends JpaRepository<StudentInfo, Integer>{
-	StudentInfo findOneByUserNameAndUniversity(String userName, University university);
 }

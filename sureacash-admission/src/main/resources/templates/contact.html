@@ -1,0 +1,57 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout::layout_header(~{::title}, ~{}, ~{})">
+  <title>Contact Us</title>
+</head>
+
+<body>
+<nav th:replace="layout::layout_nav(8)">
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-1 col-lg-10 col-lg-offset-1">
+      <!--Page Body-->
+      <h2>Contact Us</h2>
+      <hr />
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="card">
+            <img th:if="${contact.universityLogo == null}" th:src="@{/images/university-blank-logo.png}"
+                 class="img-responsive" alt="University logo" />
+            <img th:if="${contact.universityLogo != null}"
+                 th:src="@{${'data:image/jpeg;base64,' + T(com.progoti.surecash.admission.utility.Constants).getBase64ImageData(contact.universityLogo)}}"
+                 class="img-responsive" alt="University logo" />
+            <div class="card-heading" th:text="${contact.universityName}">ABC University</div>
+            <div class="card-body">
+              <p><strong th:text="${contact.universityAddress}"></strong></p>
+              <p><strong>Contact No:</strong> <span th:text="${contact.contactNo}"></span></p>
+              <p><strong>Email:</strong> <span th:text="${contact.contactEmail}"></span></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="card">
+            <img th:src="@{/images/surecash-logo-full.png}" class="img-responsive" alt="Surecash logo" />
+            <div class="card-heading">Powered by Surecash</div>
+            <div class="card-body">
+              <p><strong>76/B (4F), Road 11, Banani, Dhaka 1213, Bangladesh</strong></p>
+              <p><strong>Hotline:</strong> 09606060607</p>
+              <p><strong>Phone:</strong> +88 02 988 3295</p>
+              <p><strong>Fax:</strong> +88 028610845</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--End Page Body-->
+    </div>
+  </div>
+</div>
+
+<footer th:replace="layout::layout_footer">
+</footer>
+
+</body>
+</html>

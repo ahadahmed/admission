@@ -15,8 +15,11 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
+
+import com.progoti.surecash.admission.domain.University;
 
 @Component
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -29,6 +32,9 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 	
 	private final String delimiter = ":";
 	private boolean postOnly = true;
+	
+	@Autowired
+	private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
@@ -42,7 +48,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
 		String username = super.obtainUsername(request);
 		String password = super.obtainPassword(request);
-		String universityId = obtainUniversityId(request).trim();
+		int universityId = obtainUniversityId(request);
 
 		if (username == null) {
 			username = "";
@@ -60,6 +66,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
 		// Allow subclasses to set the "details" property
 		setDetails(request, authRequest);
+		this.setAuthenticationSuccessHandler(this.customAuthenticationSuccessHandler);
 
 		return this.getAuthenticationManager().authenticate(authRequest);
 
@@ -72,11 +79,11 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 	public void setAuthenticationManager(AuthenticationManager authenticationManager) {
 		super.setAuthenticationManager(authenticationManager);
 	}
-
 	
-
-
-	
+	@Override
+	public void setAuthenticationSuccessHandler(AuthenticationSuccessHandler successHandler) {
+		super.setAuthenticationSuccessHandler(successHandler);
+	}
 
 
 
@@ -87,8 +94,9 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
 
 
-	private String obtainUniversityId(HttpServletRequest request) {
-		return request.getParameter("universityId");
+	private int obtainUniversityId(HttpServletRequest request) {
+		University univ = (University) request.getServletContext().getAttribute(request.getServerName());
+		return univ.getId();
 	}
 	
 	

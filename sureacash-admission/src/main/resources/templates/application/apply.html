@@ -1,0 +1,45 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout::layout_header(~{::title}, ~{::link}, ~{::script})">
+  <title>Apply</title>
+  <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.0/jquery.validate.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+  <script type="text/javascript" th:src="@{/js/external/jquery.number.min.js}"></script>
+  <script type="text/javascript" th:src="@{/js/views/apply.js}"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+</head>
+
+<body>
+<nav th:replace="layout::layout_nav(1)">
+</nav>
+
+<div class="loader">
+  <div class="spinner"></div>
+</div>
+
+<div id="alert-id" class="alert alert-danger sc-hidden sc-alert">
+  <a href="#" class="close" onclick="hideAlert()">&times;</a>
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+      <span id="error-message-id"></span>
+    </div>
+  </div>
+</div>
+
+<div th:replace="application/academic_info::academic_info"></div>
+<div th:replace="application/unit_selection::unit_selection"></div>
+<div th:replace="application/personal_info::personal_info"></div>
+<div th:replace="application/application_preview::application_preview"></div>
+<div th:replace="application/application_confirmation::application_confirmation"></div>
+
+<footer th:replace="layout::layout_footer">
+</footer>
+
+<script th:inline="javascript">
+    $(document).ready(function () {
+        base = [[@{/}]];
+    });
+</script>
+
+</body>
+</html>
