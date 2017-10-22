@@ -83,4 +83,9 @@ public class HomeController {
     public String showUserDashboard(Model model, HttpServletRequest request) {
         return "application/user_dashboard";
     }
+
+    @GetMapping("/howtopay")
+    public String howToPay() {
+	    return "how-to-pay";
+    }
 }

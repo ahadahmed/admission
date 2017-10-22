@@ -1,0 +1,121 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout::layout_header(~{::title}, ~{}, ~{})">
+  <title>How to pay</title>
+</head>
+
+<body>
+<nav th:replace="layout::layout_nav(7)">
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-1 col-lg-10 col-lg-offset-1">
+      <!--Page Body-->
+      <h2>How to pay</h2>
+      <hr />
+
+      <div class="row">
+        <div class="col-md-6">
+          <h5>You can make any Payments using your SureCash mobile account by following these steps:</h5>
+          <ul>
+            <li>Dial SureCash USSD code as shown in the diagram to get menu.</li>
+            <li>Choose <strong>Payment</strong> option by replying <strong>2</strong>.</li>
+            <li>Enter the payment keyword of the organization/institute/merchant for payment.</li>
+            <li>Enter your bill number for utility payment /customer ID for educational institution payment.</li>
+            <li>Enter your 4-digit PIN to confirm the payment.</li>
+            <li>Please check confirmation SMS of successful payment.</li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <ul class="nav nav-tabs" style="background: #faf1d7;">
+            <li class="active"><a data-toggle="tab" href="#fsibl-ussd">FSIBL USSD Menu</a></li>
+            <li><a data-toggle="tab" href="#bcbl-ussd">BCBL USSD Menu</a></li>
+            <li><a data-toggle="tab" href="#jbl-ussd">JBL USSD Menu</a></li>
+          </ul>
+          <div class="tab-content" style="border: 7px solid #dedede;">
+            <div id="fsibl-ussd" class="tab-pane fade in active">
+              <table class="table table-hover">
+                <tbody>
+                <tr>
+                  <td class="col-xs-6">Airtel</td>
+                  <td class="col-xs-6">*257#</td>
+                </tr>
+                <tr>
+                  <td class="col-xs-6">Banglalink</td>
+                  <td class="col-xs-6">*495#</td>
+                </tr>
+                <tr>
+                  <td class="col-xs-6">Robi/Grameen Phone</td>
+                  <td class="col-xs-6">09606060606 or 09609090909</td>
+                </tr>
+                <tr>
+                  <td class="col-xs-6">Teletalk</td>
+                  <td class="col-xs-6">*375#</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div id="bcbl-ussd" class="tab-pane fade">
+              <table class="table table-hover">
+                <tbody>
+                <tr>
+                  <td class="col-xs-6">Airtel</td>
+                  <td class="col-xs-6">*257#</td>
+                </tr>
+                <tr>
+                  <td class="col-xs-6">Banglalink</td>
+                  <td class="col-xs-6">*495#</td>
+                </tr>
+                <tr>
+                  <td class="col-xs-6">Robi/Grameen Phone</td>
+                  <td class="col-xs-6">09606060606 or 09609090909</td>
+                </tr>
+                <tr>
+                  <td class="col-xs-6">Teletalk</td>
+                  <td class="col-xs-6">*375#</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div id="jbl-ussd" class="tab-pane fade">
+              <table class="table table-hover">
+                <tbody>
+                <tr>
+                  <td class="col-xs-6">Airtel</td>
+                  <td class="col-xs-6">*257#</td>
+                </tr>
+                <tr>
+                  <td class="col-xs-6">Banglalink</td>
+                  <td class="col-xs-6">*495#</td>
+                </tr>
+                <tr>
+                  <td class="col-xs-6">Robi/Grameen Phone</td>
+                  <td class="col-xs-6">09606060606 or 09609090909</td>
+                </tr>
+                <tr>
+                  <td class="col-xs-6">Teletalk</td>
+                  <td class="col-xs-6">*375#</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row margin-top-20">
+        <div class="col-sm-12">
+          <img class="img-responsive" src="" th:src="@{/images/payment-ussd.png}" alt="Ussd payment" width="100%" height="100%">
+        </div>
+      </div>
+
+      <!--End Page Body-->
+    </div>
+  </div>
+</div>
+
+<footer th:replace="layout::layout_footer">
+</footer>
+
+</body>
+</html>
