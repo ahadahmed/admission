@@ -29,8 +29,10 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#" style="padding: 11px;">
-        <img id="nav-brand-image" class="img-responsive" src="http://my-smashing.smashingapps.netdna-cdn.com/wp-content/uploads/2010/01/circular-logo/circularlogo_6.jpg"/>
+      <a class="navbar-brand" th:href="@{/home}" style="padding: 11px;">
+        <img id="nav-brand-image" class="img-responsive" src=""
+             th:src="@{${'data:image/jpeg;base64,' + T(com.progoti.surecash.admission.utility.Constants).getBase64ImageData(#request.getServletContext().getAttribute(#request.getServerName()).getLogo())}}"
+             alt="University logo" />
       </a>
       <a id="nav-brand-text" class="navbar-brand nav-item" th:href="@{/home}" th:text="${#request.getServletContext().getAttribute(#request.getServerName()).getName()}">ABC University </a>
     </div>
