@@ -7,22 +7,22 @@ import com.progoti.surecash.admission.repository.AdmissionSessionRepository;
 import com.progoti.surecash.admission.repository.UnitRepository;
 import com.progoti.surecash.admission.repository.UniversityRepository;
 import com.progoti.surecash.admission.request.AcademicInformationRequest;
-import com.progoti.surecash.admission.response.UnitInfo;
 import com.progoti.surecash.admission.response.StudentInfoResponse;
+import com.progoti.surecash.admission.response.UnitInfo;
 import com.progoti.surecash.admission.utility.Constants;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Types;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Shaown on 1:27 PM.
@@ -33,14 +33,22 @@ public class AcademicDaoImpl implements AcademicDao {
     String hscTable;
     @Value("${ssc.table.name}")
     String sscTable;
-    @Autowired
+
     private JdbcTemplate jdbcTemplate;
-    @Autowired
     private UnitRepository unitRepository;
-    @Autowired
     private AdmissionSessionRepository admissionSessionRepository;
-    @Autowired
     private UniversityRepository universityRepository;
+
+    @Autowired
+    public AcademicDaoImpl(JdbcTemplate jdbcTemplate,
+            UnitRepository unitRepository,
+            AdmissionSessionRepository admissionSessionRepository,
+            UniversityRepository universityRepository) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.unitRepository = unitRepository;
+        this.admissionSessionRepository = admissionSessionRepository;
+        this.universityRepository = universityRepository;
+    }
 
     @Override
     public StudentInfoResponse getStudentInfo(AcademicInformationRequest request, University university) {
@@ -95,6 +103,7 @@ public class AcademicDaoImpl implements AcademicDao {
             String fees = Constants.DECIMAL_FORMAT.format(unitPrice.get(unit.getId()));
             unitInfoList.add(new UnitInfo(unit.getId(), unit.getCode(), unit.getName(), fees));
         }
+        unitInfoList.sort(Comparator.comparing(UnitInfo::getUnitDescription));
         return unitInfoList;
     }
 }
