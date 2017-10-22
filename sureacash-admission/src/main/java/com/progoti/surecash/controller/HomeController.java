@@ -55,7 +55,7 @@ public class HomeController {
         UserDetailsImpl userDetails = SecurityUtils.getUserDetails();
         ProfileResponse profile = admissionService.getStudentProfile(studentInfoRepository.findOne(userDetails.getUser().getStudentId().getId()));
         model.addAttribute("profile", profile);
-        return "edit_profile";
+        return "application/edit_profile";
     }
 
 	@PostMapping(value = "/submit-enquiry")
@@ -77,5 +77,10 @@ public class HomeController {
         University university = (University) request.getServletContext().getAttribute(request.getServerName());
         model.addAttribute("contact", UniversityConverter.toContactDto(university));
         return "contact";
+    }
+
+    @GetMapping("/user/dashboard")
+    public String showUserDashboard(Model model, HttpServletRequest request) {
+        return "application/user_dashboard";
     }
 }

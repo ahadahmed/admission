@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout::layout_header(~{::title}, ~{}, ~{::script})">
+    <title>Dashboard</title>
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+        /*]]>*/
+    </script>
+</head>
+
+<body>
+<nav th:replace="layout::layout_nav(15)">
+</nav>
+
+<div class="container-fluid" style="margin-top:10rem">
+    <div class="row" style="padding-right: 20%;">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <b>Applicant Dashboard</b>
+            </div>
+            <div class="panel-body" style="padding-left: 5%;">
+                <p>The following steps has to be followed by Applicant</p>
+                <table border=0 class="underlined">
+                    <tr>
+                        <td>
+                            <ol>
+                                <li><p>From <b>Application</b> menu, Applicant needs to verify his/her application</p></li>
+                                <li><p>From <b>Payment</b> menu, Applicant will get his/her Application ID and needs to pay application fee using <b>SureCash</b> </p></li>
+                                <li><p>From <b>Profile</b> menu, Applicant has to upload image</p></li>
+                                <li><p>From <b>Enquiry</b> menu, Applicant can submit any enquiry regarding admission</p></li>
+                                <li><p>From <b>Admit Card</b> menu, Applicant can download his/her admit card</p></li>
+                            </ol>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="layout::layout_footer">
+</footer>
+
+</body>
+</html>
