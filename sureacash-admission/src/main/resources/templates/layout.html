@@ -30,10 +30,11 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" th:href="@{/home}" style="padding: 11px;">
-        <img th:if="${#request.getServletContext().getAttribute(#request.getServerName()).getLogo() == null}" th:src="@{/images/university-blank-logo.png}"
+        <img id="nav-brand-image" th:if="${#request.getServletContext().getAttribute(#request.getServerName()).getLogo() == null}"
+             th:src="@{/images/university-blank-logo.png}" src=""
              class="img-responsive" alt="University logo" />
-        <img th:if="${#request.getServletContext().getAttribute(#request.getServerName()).getLogo() != null}"
-             id="nav-brand-image" class="img-responsive" src=""
+        <img id="nav-brand-image" th:if="${#request.getServletContext().getAttribute(#request.getServerName()).getLogo() != null}"
+             class="img-responsive" src=""
              th:src="@{${'data:image/jpeg;base64,' + T(com.progoti.surecash.admission.utility.Constants).getBase64ImageData(#request.getServletContext().getAttribute(#request.getServerName()).getLogo())}}"
              alt="University logo" />
       </a>
