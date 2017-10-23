@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.3.final using JasperReports Library version 6.4.3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b17ca883-b1d4-4599-b3c5-653ef852b531">
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="81" splitType="Stretch">
+			<image>
+				<reportElement x="10" y="10" width="50" height="50" uuid="7b9fdf3f-ee84-496d-9aa4-341bfa982430"/>
+				<imageExpression><![CDATA["https://lh3.googleusercontent.com/7P3DsQan_NHSE3PwEM9PwqVgdpqI-HsXwhJx-vwx2hjrUzy882Q7z3HVR2cL96IR2g=w300"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="80" y="17" width="400" height="30" uuid="d226155f-e967-4e11-971d-66919bc0b8f9"/>
+				<textFieldExpression><![CDATA[$P{univname}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement x="200" y="10" width="100" height="30" uuid="cadedb61-9364-4a7f-9758-269b21514c42"/>
+				<text><![CDATA[Admit Card]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="126" splitType="Stretch">
+			<staticText>
+				<reportElement x="23" y="8" width="100" height="30" uuid="44db37a7-28c7-42db-bc51-d67b94fd4fa8"/>
+				<text><![CDATA[Name: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="43" width="100" height="30" uuid="54d3230b-b0cd-4939-b4f3-66f42b9c893c"/>
+				<text><![CDATA[Roll No:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="80" width="100" height="30" uuid="3403b326-d678-4ac1-8f22-6d2a148fcf3d"/>
+				<text><![CDATA[Registration No:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="146" y="82" width="298" height="30" uuid="ca9a6873-efd0-4ff1-9d44-ef7b90e5bfac"/>
+				<textFieldExpression><![CDATA[$P{stName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="144" y="8" width="300" height="30" uuid="a67a6889-02ea-41f8-8681-cc37010302b4"/>
+				<textFieldExpression><![CDATA[$P{rollNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="145" y="46" width="299" height="30" uuid="cd3d2a87-edbd-4216-97bc-33ef7d3332c7"/>
+				<textFieldExpression><![CDATA[$P{regNo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

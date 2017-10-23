@@ -5,24 +5,35 @@ import com.progoti.surecash.admission.domain.Enquiry;
 import com.progoti.surecash.admission.domain.University;
 import com.progoti.surecash.admission.domain.UserDetailsImpl;
 import com.progoti.surecash.admission.repository.EnquiryRepository;
+import com.progoti.surecash.admission.service.AdmitCardGenService;
 import com.progoti.surecash.admission.utility.Constants;
 import com.progoti.surecash.admission.utility.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class HomeController {
 
+	private final ApplicationContext appContext;
+
+	private final AdmitCardGenService admitCardGenService;
+
 	private EnquiryRepository enquiryRepository;
 
 	@Autowired
-    public HomeController(EnquiryRepository enquiryRepository) {
+    public HomeController(EnquiryRepository enquiryRepository, ApplicationContext appContext, AdmitCardGenService admitCardGenService) {
         this.enquiryRepository = enquiryRepository;
+        this.appContext = appContext;
+        this.admitCardGenService = admitCardGenService;
     }
 
     @GetMapping(value = { "/", "/home" })
@@ -72,4 +83,17 @@ public class HomeController {
     public String howToPay() {
 	    return "how-to-pay";
     }
+
+	@RequestMapping(path = "/pdf", method = RequestMethod.GET)
+	public ModelAndView report() {
+
+		JasperReportsPdfView view = new JasperReportsPdfView();
+		view.setUrl("classpath:reports/Blank_A4.jrxml");
+		view.setApplicationContext(appContext);
+
+		Map<String, Object> params = new HashMap<>();
+		params.put("datasource", admitCardGenService.findAll());
+
+		return new ModelAndView(view, params);
+	}
 }
