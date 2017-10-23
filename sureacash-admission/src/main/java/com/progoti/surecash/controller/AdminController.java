@@ -65,6 +65,7 @@ public class AdminController {
 
     }
 
+    // TODO: need to change this expensive query
     @GetMapping(value = "/unit-details")
     public String getAdminSearch(Model model, @RequestParam(value = "unitId", required = true) Integer unitId, HttpServletRequest servletRequest) {
         University university = (University) servletRequest.getServletContext().getAttribute(servletRequest.getServerName());

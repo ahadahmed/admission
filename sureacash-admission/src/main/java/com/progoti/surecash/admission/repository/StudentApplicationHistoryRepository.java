@@ -31,14 +31,8 @@ public interface StudentApplicationHistoryRepository extends JpaRepository<Stude
             "GROUP BY u.id")
     List<AdminDashboardDto> findUniversityStatus(@Param("university") University university);
 
-    @Query(value = "select sah from StudentApplicationHistory sah join sah.unit u where sah.unit = :unit and u.university = :university and sah.active = :isActive")
+    @Query(value = "select sah from StudentApplicationHistory sah join fetch sah.studentInfo where sah.unit = :unit and sah.unit.university = :university and sah.active = :isActive")
     List<StudentApplicationHistory> findAllByUniversityAndUnitAndActive(@Param("university") University university, @Param("unit") Unit unit, @Param("isActive") Boolean isActive);
-
-//    @Query("select h from StudentApplicationHistory h join h.studentInfo s join h.unit where s.userName = :userName")
-//    List<StudentApplicationHistory> loadHistoryByUserName(@Param("userName") String userName);
-//
-//    @Query("select h from StudentApplicationHistory h join h.studentInfo s join h.unit where s.userName = :userName and h.active = true")
-//    List<StudentApplicationHistory> loadActiveHistoryByUserName(@Param("userName") String userName);
 
     @Query(value = "select sah from StudentApplicationHistory sah join sah.unit u where u.university = :university and sah.studentInfo = :studentInfo")
     List<StudentApplicationHistory> findAllByStudentInfoAndUniversity(@Param("studentInfo")StudentInfo studentInfo, @Param("university")University university);

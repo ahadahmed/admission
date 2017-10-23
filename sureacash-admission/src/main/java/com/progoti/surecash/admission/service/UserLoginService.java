@@ -28,7 +28,7 @@ public class UserLoginService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         String[] usernameAndUnivid = userName.trim().split(":");
-        University university = univeRepository.findOne(Integer.valueOf(usernameAndUnivid[1]));
+        University university = univeRepository.getOne(Integer.valueOf(usernameAndUnivid[1]));
         // This is very expensive query. We have to fix it. This is very critical issue.
         User user = userRepository.findOneByUserNameAndUniv(usernameAndUnivid[0], university);
                 
