@@ -55,7 +55,6 @@ public class AdminController {
             totalQuotaApplicant += dto.getQuotaApplicant();
 
         }
-        model.addAttribute("university", university);
         model.addAttribute("statusList", universityStatusList);
         model.addAttribute("unit", universityStatusList.size());
         model.addAttribute("totalApplicant", totalApplicant);
@@ -69,7 +68,6 @@ public class AdminController {
     @GetMapping(value = "/unit-details")
     public String getAdminSearch(Model model, @RequestParam(value = "unitId", required = true) Integer unitId, HttpServletRequest servletRequest) {
         University university = (University) servletRequest.getServletContext().getAttribute(servletRequest.getServerName());
-        model.addAttribute("university", university);
         List<StudentApplicationHistory> applicantList = studentApplicationHistoryRepository.findAllByUniversityAndUnitAndActive(university, unitRepository.getOne(unitId), Boolean.TRUE);
         model.addAttribute("applicantList", applicantList);
         return "admin/unit_details";
@@ -78,8 +76,6 @@ public class AdminController {
 
     @GetMapping(value = "/applicant-details")
     public String getApplicantDetails(Model model, @RequestParam(value = "studentId", required = true) Integer studentId, HttpServletRequest servletRequest){
-        University university = (University) servletRequest.getServletContext().getAttribute(servletRequest.getServerName());
-        model.addAttribute("university", university);
         StudentInfo studentInfo = studentInfoRepository.getOne(studentId);
         model.addAttribute("student", studentInfo);
         model.addAttribute("profile", admissionService.getStudentProfile(studentInfo));
