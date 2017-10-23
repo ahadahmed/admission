@@ -39,10 +39,6 @@ public class HomeController {
 
 	@GetMapping(value = "/general-enquiry")
 	public String enquiryForm(Model model, @ModelAttribute("enquiry") Enquiry enquiry) {
-		UserDetailsImpl userDetails = SecurityUtils.getUserDetails();
-		if(userDetails != null && userDetails.getUser().getRole().getRoleName() == Constants.RoleName.ADMIN) {
-			return "redirect:/admin/dashboard";
-		}
 		model.addAttribute("submitted", false);
 		return "general_enquiry";
 	}

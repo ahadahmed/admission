@@ -1,6 +1,5 @@
 package com.progoti.surecash.admission.service;
 
-import com.progoti.surecash.admission.dao.AcademicDao;
 import com.progoti.surecash.admission.domain.StudentApplicationHistory;
 import com.progoti.surecash.admission.domain.StudentInfo;
 import com.progoti.surecash.admission.domain.University;
@@ -31,8 +30,6 @@ public class AdmissionServiceImpl implements AdmissionService {
     @Autowired
     private AdmissionSessionRepository admissionSessionRepository;
     @Autowired
-    private UniversityRepository universityRepository;
-    @Autowired
     private RoleRepository roleRepository;
     @Autowired
     private UserRepository userRepository;
@@ -41,9 +38,7 @@ public class AdmissionServiceImpl implements AdmissionService {
 
     @Override
     @Transactional
-    public CredentialResponse submitForm(ApplicationFormRequest request) {
-        University university = universityRepository.getOne(request.getUniversityId());
-
+    public CredentialResponse submitForm(ApplicationFormRequest request, University university) {
         StudentInfo studentInfo = new StudentInfo();
         doStudentInfoReflection(studentInfo, request);
         StudentInfo student = studentInfoRepository.save(studentInfo);

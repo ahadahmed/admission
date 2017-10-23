@@ -38,7 +38,7 @@ public class AcademicController {
     public CredentialResponse submitApplicationForm(@RequestBody @Valid ApplicationFormRequest request, HttpServletRequest servletRequest){
         University university = (University) servletRequest.getServletContext().getAttribute(servletRequest.getServerName());
         request.setUniversityId(university.getId());
-        return admissionService.submitForm(request);
+        return admissionService.submitForm(request, university);
     }
 
     @ExceptionHandler(IndexOutOfBoundsException.class)

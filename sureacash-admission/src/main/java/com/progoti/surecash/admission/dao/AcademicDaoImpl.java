@@ -37,7 +37,6 @@ public class AcademicDaoImpl implements AcademicDao {
     private JdbcTemplate jdbcTemplate;
     private UnitRepository unitRepository;
     private AdmissionSessionRepository admissionSessionRepository;
-    private UniversityRepository universityRepository;
 
     @Autowired
     public AcademicDaoImpl(JdbcTemplate jdbcTemplate,
@@ -47,7 +46,6 @@ public class AcademicDaoImpl implements AcademicDao {
         this.jdbcTemplate = jdbcTemplate;
         this.unitRepository = unitRepository;
         this.admissionSessionRepository = admissionSessionRepository;
-        this.universityRepository = universityRepository;
     }
 
     @Override
