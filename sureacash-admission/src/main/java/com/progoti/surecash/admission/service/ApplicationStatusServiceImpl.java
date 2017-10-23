@@ -79,7 +79,6 @@ public class ApplicationStatusServiceImpl implements ApplicationStatusService {
             history.setUnit(session.getUnit());
             history.setStudentInfo(new StudentInfo(studentInfoId));
             history.setPaid(false);
-            history.setUniversity(session.getUnit().getUniversity());
             histories.add(history);
         }
         historyRepository.save(histories);

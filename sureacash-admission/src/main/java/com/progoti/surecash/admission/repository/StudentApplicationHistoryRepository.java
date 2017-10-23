@@ -19,19 +19,20 @@ import java.util.List;
  */
 @Repository
 public interface StudentApplicationHistoryRepository extends JpaRepository<StudentApplicationHistory, Integer>{
-    StudentApplicationHistory findOneByApplicationIdAndUniversity(String applicantId, University university);
+    @Query(value = "select sah from StudentApplicationHistory sah join sah.unit u where sah.applicationId = :applicantId and u.university = :university")
+    StudentApplicationHistory findOneByApplicationIdAndUniversity(@Param("applicantId")String applicantId, @Param("university")University university);
 
     @Query(value = "SELECT NEW com.progoti.surecash.dto.AdminDashboardDto(u.id, u.name, u.code, COUNT(sah.id), " +
             "COUNT(CASE WHEN sah.paid IS NOT NULL THEN TRUE END), " +
             "COUNT(CASE WHEN (sah.quota IS NOT NULL OR sah.quota <> 'NONE') THEN TRUE END)) " +
             "FROM StudentApplicationHistory sah " +
             "INNER JOIN sah.unit u " +
-            "WHERE sah.university = :university AND sah.active = TRUE " +
+            "WHERE sah.active = TRUE AND u.university = :university " +
             "GROUP BY u.id")
     List<AdminDashboardDto> findUniversityStatus(@Param("university") University university);
 
-    @EntityGraph(value = "StudentApplicationHistory.detail", type = EntityGraph.EntityGraphType.FETCH)
-    List<StudentApplicationHistory> findAllByUniversityAndUnitAndActive(University university, Unit unit, Boolean isActive);
+    @Query(value = "select sah from StudentApplicationHistory sah join sah.unit u where sah.unit = :unit and u.university = :university and sah.active = :isActive")
+    List<StudentApplicationHistory> findAllByUniversityAndUnitAndActive(@Param("university") University university, @Param("unit") Unit unit, @Param("isActive") Boolean isActive);
 
 //    @Query("select h from StudentApplicationHistory h join h.studentInfo s join h.unit where s.userName = :userName")
 //    List<StudentApplicationHistory> loadHistoryByUserName(@Param("userName") String userName);
@@ -39,20 +40,23 @@ public interface StudentApplicationHistoryRepository extends JpaRepository<Stude
 //    @Query("select h from StudentApplicationHistory h join h.studentInfo s join h.unit where s.userName = :userName and h.active = true")
 //    List<StudentApplicationHistory> loadActiveHistoryByUserName(@Param("userName") String userName);
 
-    List<StudentApplicationHistory> findAllByStudentInfoAndUniversity(StudentInfo studentInfo, University university);
+    @Query(value = "select sah from StudentApplicationHistory sah join sah.unit u where u.university = :university and sah.studentInfo = :studentInfo")
+    List<StudentApplicationHistory> findAllByStudentInfoAndUniversity(@Param("studentInfo")StudentInfo studentInfo, @Param("university")University university);
 
     @Query(value = "SELECT si.hscGroup, COUNT(si.hscGroup) " +
             "FROM StudentApplicationHistory sah " +
-            "INNER JOIN sah.studentInfo si " +
-            "WHERE sah.university = :university AND sah.unit = :unit AND sah.active = TRUE " +
+            "JOIN sah.studentInfo si " +
+            "JOIN sah.unit u " +
+            "WHERE sah.unit = :unit AND u.university = :university AND sah.active = TRUE " +
             "GROUP BY si.hscGroup " +
             "ORDER BY si.hscGroup")
     List<Object[]> findGroupStatusByUnit(@Param("university") University university, @Param("unit") Unit unit);
 
     @Query(value = "SELECT si.hscBoard, COUNT(si.hscBoard) " +
             "FROM StudentApplicationHistory sah " +
-            "INNER JOIN sah.studentInfo si " +
-            "WHERE sah.university = :university AND sah.unit = :unit AND sah.active = TRUE " +
+            "JOIN sah.unit u " +
+            "JOIN sah.studentInfo si " +
+            "WHERE sah.unit = :unit AND u.university = :university AND sah.active = TRUE " +
             "GROUP BY si.hscBoard " +
             "ORDER BY si.hscBoard ")
     List<Object[]> findBoardStatusByUnit(@Param("university") University university, @Param("unit") Unit unit);

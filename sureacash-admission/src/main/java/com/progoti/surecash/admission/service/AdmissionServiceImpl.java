@@ -92,7 +92,6 @@ public class AdmissionServiceImpl implements AdmissionService {
             applicationHistory.setStudentInfo(studentInfo);
             applicationHistory.setPayableAmount(admissionSessionRepository.findOneByUnit(unitRepository.getOne(unitId)).getFormPrice());
             applicationHistory.setApplicationId(String.valueOf(Constants.applicationIdGenerator(unitId)));
-            applicationHistory.setUniversity(universityRepository.getOne(request.getUniversityId()));
             applicationHistory.setQuota(request.getQuota());
             applicationHistory.setActive(Boolean.TRUE);
             studentApplicationHistoryList.add(applicationHistory);

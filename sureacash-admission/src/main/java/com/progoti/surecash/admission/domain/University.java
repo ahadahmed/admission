@@ -32,9 +32,6 @@ public class University implements Serializable{
     @OneToMany(mappedBy = "university")
     private List<Unit> unit;
 
-    @OneToMany(mappedBy = "university")
-    private List<StudentApplicationHistory> studentApplicationHistoryList;
-
     @Column(name = "email")
     private String email;
 
@@ -96,14 +93,6 @@ public class University implements Serializable{
 
     public void setUnit(List<Unit> unit) {
         this.unit = unit;
-    }
-
-    public List<StudentApplicationHistory> getStudentApplicationHistoryList() {
-        return studentApplicationHistoryList;
-    }
-
-    public void setStudentApplicationHistoryList(List<StudentApplicationHistory> studentApplicationHistoryList) {
-        this.studentApplicationHistoryList = studentApplicationHistoryList;
     }
 
     public String getEmail() {

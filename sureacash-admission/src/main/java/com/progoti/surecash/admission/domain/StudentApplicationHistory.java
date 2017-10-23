@@ -45,10 +45,6 @@ public class StudentApplicationHistory implements Serializable{
     @Column(name = "update_date")
     private Date updateDate;
 
-    @ManyToOne
-    @JoinColumn(name = "university_id")
-    private University university;
-
     @Column(name = "is_paid")
     private Boolean paid;
 
@@ -121,14 +117,6 @@ public class StudentApplicationHistory implements Serializable{
 
     public void setStudentInfo(StudentInfo studentInfo) {
         this.studentInfo = studentInfo;
-    }
-
-    public University getUniversity() {
-        return university;
-    }
-
-    public void setUniversity(University university) {
-        this.university = university;
     }
 
     public Boolean getPaid() {
