@@ -1,24 +1,18 @@
 package com.progoti.surecash.controller;
 
 import com.progoti.surecash.admission.domain.AdmissionPaymentRequest;
-import com.progoti.surecash.admission.domain.University;
 import com.progoti.surecash.admission.request.ReconcileRequest;
 import com.progoti.surecash.admission.response.PaymentResponse;
 import com.progoti.surecash.admission.service.PaymentService;
-import com.progoti.surecash.dto.PaymentRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.List;
 
 @Controller
 @RequestMapping("/payment")
@@ -29,15 +23,6 @@ public class PaymentController {
     @Autowired
     public PaymentController(PaymentService paymentService) {
         this.paymentService = paymentService;
-    }
-
-    @GetMapping("/show")
-    public String showPaymentPage(Model model, HttpServletRequest servletRequest) {
-        String userName = servletRequest.getUserPrincipal().getName();
-        University university = (University) servletRequest.getServletContext().getAttribute(servletRequest.getServerName());
-        List<PaymentRequestDto> paymentRequests = paymentService.listPaymentRequests(userName, university);
-        model.addAttribute("paymentRequests", paymentRequests);
-        return "payment/payment.html";
     }
 
     @RequestMapping(value = "doPayment", method = RequestMethod.POST)

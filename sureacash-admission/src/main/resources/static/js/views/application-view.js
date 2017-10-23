@@ -23,7 +23,7 @@ function applyUnit(base) {
         if (ids.length > 0) {
             console.log(ids);
 
-            var url = base + "applicationStatus/apply";
+            var url = base + "user/applicationStatus/apply";
             startLoader();
             $.ajax({
                 url: url,
@@ -56,7 +56,7 @@ function applyUnit(base) {
 
 function deleteUnit(base, unitId, historyId) {
     if (confirm("Are you sure?")) {
-        var url = base + "applicationStatus/delete/" + historyId;
+        var url = base + "user/applicationStatus/delete/" + historyId;
         startLoader();
         $.ajax({
             url: url,
